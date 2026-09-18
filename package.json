@@ -1,0 +1,20 @@
+{
+  "name": "visage",
+  "version": "1.0.0",
+  "description": "Personal Identity Intelligence, Executive Exposure & People OSINT Suite.",
+  "scripts": {
+    "test": "node -c dashboard.js && node -c background.js",
+    "build": "node build.js"
+  },
+  "keywords": [
+    "osint",
+    "reconnaissance",
+    "identity",
+    "privacy",
+    "audit",
+    "people-osint",
+    "dorking"
+  ],
+  "author": "Visage Contributors",
+  "license": "MIT"
+}
