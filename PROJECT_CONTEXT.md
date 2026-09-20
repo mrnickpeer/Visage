@@ -19,15 +19,16 @@
 
 ---
 
-## 🧭 The 6-Step Identity Methodology (Functional Architecture)
+## 🧭 The 7-Step Identity Methodology (Functional Architecture)
 
 ```mermaid
 flowchart TD
     S1["Step 1: Identity Scope<br/>(Name, Alias, Primary Email, Phone, City)"] --> S2["Step 2: Username & Alias Matrix<br/>(Passive presence across 100+ public platforms)"]
     S2 --> S3["Step 3: Cryptographic Identity<br/>(PGP keyservers, Keybase proofs, GPG commit IDs)"]
     S3 --> S4["Step 4: Breach & Leak Telemetry<br/>(HIBP check, pastebin mentions, breached accounts)"]
-    S4 --> S5["Step 5: Person-Centric Dorking<br/>(Resumes/CVs, court records, presentations, leaks)"]
-    S5 --> S6["Step 6: Dossier Triage & Export<br/>(Tag findings ➔ Obsidian Markdown Person Dossier)"]
+    S4 --> S5["Step 5: Person-Centric Dorking<br/>(Resumes/CVs, presentations, leaks, web anchors)"]
+    S5 --> S6["Step 6: Public Records & Jurisdictions<br/>(County deeds, courts, voter rolls, LLCs)"]
+    S6 --> S7["Step 7: Dossier Triage & Export<br/>(Tag findings ➔ Obsidian Markdown Person Dossier)"]
 ```
 
 ### Step 1: Scope Target Identity
@@ -50,14 +51,19 @@ flowchart TD
   - Pastebin / Ghostbin telemetry lookups for credential pastes.
 
 ### Step 5: Person-Centric Dork Compiler
-Curated intent categories for individuals:
+Curated intent categories for individuals to establish location and institutional anchors:
 * 📄 **Curriculum Vitae & Resumes**: `filetype:pdf "First Last" ("curriculum vitae" | resume | "work experience")`
 * ⚖️ **Public & Legal Records**: Court filings, marriage licenses, corporate officer registrations.
 * 🎤 **Conferences & Presentations**: `filetype:pdf OR filetype:pptx "First Last" (speaker | conference | presentation)`
 * 🔑 **Pastes & Dumps**: Search pastes for leaked passwords, usernames, or phone numbers.
 * 🖼️ **Exif & Image Dorks**: Direct shortcuts to reverse-image search and photo metadata.
 
-### Step 6: Dossier Triage & Obsidian Export
+### Step 6: Public Records & Jurisdictional Intelligence
+* **Multi-Tier Sovereign Ground Truth**: Dynamic resolution across 50 US States + DC + PR.
+* **County / Parish**: Deed registers, tax assessors GIS, local civil dockets, Board of Elections voter lookups.
+* **State / Federal**: Secretary of State LLC filings, statewide court registers, professional licenses, official voter registration portals, PACER/court dockets.
+
+### Step 7: Dossier Triage & Obsidian Export
 * **Audit Log**: Add findings, classify risk (`Exposed Phone`, `Leaked Credential`, `Unlinked Account`), triage status (`Under Review`, `Confirmed`, `False Positive`, `Fixed`).
 * **Multi-Dialect Export**:
   - **Obsidian Person Dossier**: Formatted markdown note with Dataview metadata, tags, and callouts.
@@ -100,6 +106,6 @@ To ensure Visage passes Mozilla AMO and Chrome Web Store review on Day 1 without
 ## 🚀 How to Start Development in a New Session
 
 When opening a new session in `Visage-dev`:
-1. Point your assistant to this file: `/home/feature/Projects/Visage-dev/PROJECT_CONTEXT.md`.
+1. Point your assistant to this file: `PROJECT_CONTEXT.md`.
 2. Instruction to use:  
    > *"We are building Visage, the sister People-OSINT extension to Vantage, following the specification in PROJECT_CONTEXT.md."*

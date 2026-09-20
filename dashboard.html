@@ -1,0 +1,860 @@
+<!-- dashboard.html - Visage Personal Identity Intelligence Workstation -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visage - Identity Intelligence & People OSINT Suite</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="layout">
+    <!-- LEFT COLUMN: Identity Scope & Target Composer -->
+    <aside class="col-left">
+      <header>
+        <div class="brand">
+          <div class="brand-title">
+            <span class="brand-icon">👤</span>
+            <h1>Visage</h1>
+          </div>
+          <span class="sub-heading">Personal Identity & Exposure Suite</span>
+        </div>
+        <div class="header-right">
+          <label class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
+            <input type="checkbox" id="toggle-guidance" checked>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            <span class="toggle-label">🎓 Guidance</span>
+          </label>
+        </div>
+      </header>
+      
+      <!-- Target Scope Inputs -->
+      <section class="composer">
+        <div class="section-badge">STEP 1: IDENTITY SCOPE</div>
+
+        <div class="input-name-grid">
+          <div class="input-group">
+            <label for="target-first-name">First Name</label>
+            <input type="text" id="target-first-name" placeholder="e.g. Johnathan" autofocus>
+          </div>
+          <div class="input-group mi-col">
+            <label for="target-middle-name">M.I.</label>
+            <input type="text" id="target-middle-name" placeholder="e.g. R.">
+          </div>
+          <div class="input-group">
+            <label for="target-last-name">Last Name</label>
+            <input type="text" id="target-last-name" placeholder="e.g. Doe">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="target-handle">Primary Username / Alias <span class="guidance-item">(@handle)</span></label>
+          <input type="text" id="target-handle" placeholder="e.g. jdoe99">
+        </div>
+
+        <!-- Handle Permutation Generator -->
+        <div class="permutations-box" id="permutations-box">
+          <div class="permutations-header">
+            <span>Alias Permutations</span>
+            <button type="button" id="btn-gen-perms" class="btn-micro" title="Generate common handle variations from full name">Permute Name</button>
+          </div>
+          <div id="permutations-chips" class="permutations-chips">
+            <span class="empty-hint">Click 'Permute Name' to generate handle variations</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="target-org">Org / Employer <span class="guidance-item">(Company or Agency)</span></label>
+          <input type="text" id="target-org" placeholder="e.g. Acme Tech">
+        </div>
+
+        <div class="input-group">
+          <label for="target-email">Known Email <span class="guidance-item">(Corporate or Personal)</span></label>
+          <input type="email" id="target-email" placeholder="e.g. jdoe@example.com">
+        </div>
+
+        <div class="input-group">
+          <label for="target-phone">Phone Number <span class="guidance-item">(E.164 or Local)</span></label>
+          <input type="tel" id="target-phone" placeholder="e.g. +1 555-019-2834">
+        </div>
+
+        <div class="input-group">
+          <label for="target-location">City / Location <span class="guidance-item">(City, State or ZIP)</span></label>
+          <input type="text" id="target-location" placeholder="e.g. Charlotte, NC or 28202">
+          <div class="jurisdiction-preview" id="jurisdiction-preview" style="display: none;">
+            <span id="jur-badge-text" class="jur-badge-text">📍 Mecklenburg County, NC</span>
+            <button type="button" id="btn-jump-records" class="btn-micro" title="Open Public Records Desk for this jurisdiction">Records ↗</button>
+          </div>
+        </div>
+
+        <!-- Quick Scope Actions -->
+        <div class="scope-actions">
+          <button type="button" id="btn-save-profile" class="btn-secondary" title="Save this person's scope into local profiles">💾 Save Target</button>
+          <button type="button" id="btn-reset-scope" class="btn-secondary" title="Reset all input fields">🔄 Reset</button>
+        </div>
+      </section>
+
+      <!-- External Quick Pivots -->
+      <section class="pivots-section">
+        <div class="section-title-sm">Quick Identity Pivots</div>
+        <div class="pivot-buttons">
+          <button type="button" class="pivot-btn" id="pivot-reverse-image" title="Open Google Lens reverse image lookup">🖼️ Reverse Image</button>
+          <button type="button" class="pivot-btn" id="pivot-wayback" title="Search Wayback Machine archives for alias/email">🏛️ Wayback</button>
+          <button type="button" class="pivot-btn" id="pivot-fastpeople" title="Search public US directory records">👥 FastPeopleSearch</button>
+          <button type="button" class="pivot-btn" id="pivot-intelx" title="Search Intelligence X archives">🔍 IntelX</button>
+        </div>
+      </section>
+
+      <!-- Target Summary Card -->
+      <section class="target-card">
+        <div class="target-card-header">
+          <div class="avatar-ring" id="target-avatar">👤</div>
+          <div>
+            <div class="target-display-name" id="card-display-name">No Target Active</div>
+            <div class="target-display-meta" id="card-display-meta">Enter identity details above</div>
+          </div>
+        </div>
+        <div class="target-card-stats">
+          <div class="stat-pill"><span class="stat-num" id="stat-accounts">0</span> Accounts</div>
+          <div class="stat-pill"><span class="stat-num" id="stat-keys">0</span> Keys</div>
+          <div class="stat-pill"><span class="stat-num" id="stat-breaches">0</span> Breaches</div>
+          <div class="stat-pill"><span class="stat-num" id="stat-findings">0</span> Findings</div>
+        </div>
+      </section>
+
+      <!-- Companion Pivot to Vantage -->
+      <section class="companion-box">
+        <div class="companion-title">
+          <span>🔭 Vantage Companion</span>
+          <span class="badge-blue">INFRA OSINT</span>
+        </div>
+        <p class="companion-desc">Need to pivot from this person to their corporate domain infrastructure?</p>
+        <button type="button" id="btn-pivot-vantage" class="btn-companion">Open Domain in Vantage</button>
+      </section>
+    </aside>
+
+    <!-- RIGHT COLUMN: Guided Audit Methodology & Functional Tabs -->
+    <main class="col-right">
+      <!-- 7-Step Guided Audit Methodology Bar -->
+      <section id="guided-checklist" class="guided-checklist guidance-item">
+        <div class="checklist-header">
+          <div class="checklist-title">
+            <span class="checklist-icon">🧭</span>
+            <div>
+              <strong>Guided Identity Recon Methodology</strong>
+              <span class="checklist-subtitle">Standard 7-Step People OSINT Assessment</span>
+            </div>
+          </div>
+          <div class="checklist-actions">
+            <span id="checklist-progress-text" class="badge">0 / 7 Done</span>
+            <button type="button" id="btn-toggle-checklist" class="btn-ghost" title="Minimize or expand checklist">Minimize</button>
+          </div>
+        </div>
+        
+        <div id="checklist-steps" class="checklist-steps">
+          <div class="step-card" id="step-1-card">
+            <div class="step-header">
+              <span class="step-badge">Step 1</span>
+              <button type="button" class="step-help-btn" data-step="1" title="Methodology: What & Why for Step 1">?</button>
+              <span class="step-status" id="step-1-status">⏳</span>
+            </div>
+            <strong>Identity Scope</strong>
+            <p>Target name, aliases & seeds.</p>
+            <button type="button" id="step-btn-1" class="step-btn">Scope Target</button>
+          </div>
+
+          <div class="step-card" id="step-2-card">
+            <div class="step-header">
+              <span class="step-badge">Step 2</span>
+              <button type="button" class="step-help-btn" data-step="2" title="Methodology: What & Why for Step 2">?</button>
+              <span class="step-status" id="step-2-status">⏳</span>
+            </div>
+            <strong>Username Matrix</strong>
+            <p>100+ platform passive checks.</p>
+            <button type="button" id="step-btn-2" class="step-btn">Check Matrix</button>
+          </div>
+
+          <div class="step-card" id="step-3-card">
+            <div class="step-header">
+              <span class="step-badge">Step 3</span>
+              <button type="button" class="step-help-btn" data-step="3" title="Methodology: What & Why for Step 3">?</button>
+              <span class="step-status" id="step-3-status">⏳</span>
+            </div>
+            <strong>Cryptographic ID</strong>
+            <p>PGP keys, Keybase & GPG commits.</p>
+            <button type="button" id="step-btn-3" class="step-btn">Query Keys</button>
+          </div>
+
+          <div class="step-card" id="step-4-card">
+            <div class="step-header">
+              <span class="step-badge">Step 4</span>
+              <button type="button" class="step-help-btn" data-step="4" title="Methodology: What & Why for Step 4">?</button>
+              <span class="step-status" id="step-4-status">⏳</span>
+            </div>
+            <strong>Breach Telemetry</strong>
+            <p>Credential dumps & pastes.</p>
+            <button type="button" id="step-btn-4" class="step-btn">Audit Breaches</button>
+          </div>
+
+          <div class="step-card" id="step-5-card">
+            <div class="step-header">
+              <span class="step-badge">Step 5</span>
+              <button type="button" class="step-help-btn" data-step="5" title="Methodology: What & Why for Step 5">?</button>
+              <span class="step-status" id="step-5-status">⏳</span>
+            </div>
+            <strong>Person Dorks</strong>
+            <p>Resumes, filings & court records.</p>
+            <button type="button" id="step-btn-5" class="step-btn">Run Dorks</button>
+          </div>
+
+          <div class="step-card" id="step-6-card">
+            <div class="step-header">
+              <span class="step-badge">Step 6</span>
+              <button type="button" class="step-help-btn" data-step="6" title="Methodology: What & Why for Step 6">?</button>
+              <span class="step-status" id="step-6-status">⏳</span>
+            </div>
+            <strong>Public Records</strong>
+            <p>Deeds, courts & LLCs.</p>
+            <button type="button" id="step-btn-6" class="step-btn">Check Records</button>
+          </div>
+
+          <div class="step-card" id="step-7-card">
+            <div class="step-header">
+              <span class="step-badge">Step 7</span>
+              <button type="button" class="step-help-btn" data-step="7" title="Methodology: What & Why for Step 7">?</button>
+              <span class="step-status" id="step-7-status">⏳</span>
+            </div>
+            <strong>Dossier Export</strong>
+            <p>Triage & Obsidian markdown.</p>
+            <button type="button" id="step-btn-7" class="step-btn">Export Dossier</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation Tabs -->
+      <nav class="tabs">
+        <button class="tab-btn active" data-target="tab-matrix">Username Matrix</button>
+        <button class="tab-btn" data-target="tab-crypto">Cryptographic Identity</button>
+        <button class="tab-btn" data-target="tab-breach">Breach & Pastes</button>
+        <button class="tab-btn" data-target="tab-dorks">Person Dorks</button>
+        <button class="tab-btn" data-target="tab-records">Public Records</button>
+        <button class="tab-btn" data-target="tab-dossier">Dossier & Audit Log <span class="badge-pill" id="tab-audit-badge">0</span></button>
+        <button class="tab-btn" data-target="tab-profiles">Profiles</button>
+      </nav>
+
+      <!-- ========================================================= -->
+      <!-- TAB 1: USERNAME & ALIAS MATRIX -->
+      <!-- ========================================================= -->
+      <div class="tab-content active" id="tab-matrix">
+        <div class="toolbar">
+          <div>
+            <h2>Username & Alias Matrix</h2>
+            <p class="section-desc">Passively discover digital presence across 100+ public social, developer, forum, and media platforms.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-matrix-check-all" class="primary">Passive Matrix Scan</button>
+            <button type="button" id="btn-matrix-copy-found">Copy Found URLs</button>
+            <button type="button" id="btn-matrix-open-found" class="btn-secondary" title="Open all verified hits in staggered background tabs to avoid rate-limiting">Open Found (Staggered)</button>
+            <button type="button" id="btn-matrix-add-audit" class="btn-secondary">Send Found to Dossier</button>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>💡 Passive Username Enumeration & Zero-Touch OPSEC:</strong>
+          <p>Visage checks public profiles and CORS-enabled API endpoints without logging into an account. For platforms with strict anti-scraping or bot detection, direct formatted verification links are provided so you can inspect without generating telemetry linking to your investigation.</p>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="matrix-filter-bar">
+          <div class="filter-categories" id="matrix-category-chips">
+            <button type="button" class="cat-chip active" data-cat="all">All (100+)</button>
+            <button type="button" class="cat-chip" data-cat="dev">Developer (22)</button>
+            <button type="button" class="cat-chip" data-cat="social">Social & Microblog (28)</button>
+            <button type="button" class="cat-chip" data-cat="chat">Messaging & Forums (18)</button>
+            <button type="button" class="cat-chip" data-cat="media">Media & Creative (20)</button>
+            <button type="button" class="cat-chip" data-cat="gaming">Gaming & Misc (14)</button>
+          </div>
+          <div class="matrix-search-box">
+            <input type="text" id="matrix-search-input" placeholder="Filter platform name...">
+            <label class="checkbox-inline">
+              <input type="checkbox" id="matrix-filter-found">
+              <span>Show Found Only</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Matrix Scan Progress & Status -->
+        <div id="matrix-status-bar" class="matrix-status-bar" style="display: none;">
+          <div class="status-bar-info">
+            <span id="matrix-status-text">Scanning platforms...</span>
+            <span id="matrix-progress-count" class="badge">0 / 0</span>
+          </div>
+          <div class="progress-track"><div id="matrix-progress-fill" class="progress-fill"></div></div>
+        </div>
+
+        <!-- Matrix Grid -->
+        <div class="matrix-grid" id="matrix-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 2: CRYPTOGRAPHIC IDENTITY -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-crypto">
+        <div class="toolbar">
+          <div>
+            <h2>Cryptographic Identity & Public Key Telemetry</h2>
+            <p class="section-desc">Query OpenPGP keyservers, Keybase identity proofs, and GitHub commit signatures to link disparate emails and identities.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-fetch-crypto" class="primary">Query All Cryptographic Sources</button>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>🔐 The Power of Public Key Telemetry:</strong>
+          <p>PGP keys and Git signing certificates link multiple email addresses to a single individual because people rarely generate new keys for every job or alias. Discovering an old personal key can link an executive's corporate email to their personal Gmail, old college handle, or personal projects.</p>
+        </div>
+
+        <!-- Crypto Query Controls -->
+        <div class="crypto-controls">
+          <div class="crypto-inputs">
+            <input type="text" id="crypto-query-input" placeholder="Name, email, or Key ID (e.g. John Doe, jdoe@example.com)">
+            <select id="crypto-server-select" title="Keyserver host">
+              <option value="ubuntu">keyserver.ubuntu.com</option>
+              <option value="surf">pgp.surf.nl</option>
+            </select>
+          </div>
+          <div class="crypto-btn-group">
+            <button type="button" id="btn-query-pgp" class="btn-secondary">Query PGP Keyserver</button>
+            <button type="button" id="btn-query-keybase" class="btn-secondary">Query Keybase</button>
+            <button type="button" id="btn-query-github-keys" class="btn-secondary">Query GitHub Keys</button>
+          </div>
+        </div>
+
+        <div id="crypto-status" class="status-msg"></div>
+
+        <!-- Keybase Identity Proofs Card -->
+        <div id="keybase-card" class="result-card" style="display: none;">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="card-icon">🔑</span>
+              <strong>Keybase Cryptographic Proofs</strong>
+              <span id="keybase-username-badge" class="badge"></span>
+            </div>
+            <button type="button" id="btn-keybase-to-audit" class="btn-micro">Add to Dossier</button>
+          </div>
+          <div class="card-body" id="keybase-body">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- GitHub Identity & Commit Signatures Card -->
+        <div id="github-card" class="result-card" style="display: none;">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="card-icon">🐙</span>
+              <strong>GitHub Developer Identity & Signed Commits</strong>
+              <span id="github-user-badge" class="badge"></span>
+            </div>
+            <button type="button" id="btn-github-to-audit" class="btn-micro">Add to Dossier</button>
+          </div>
+          <div class="card-body" id="github-body">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- OpenPGP Keys Results -->
+        <div class="sub-section-header">
+          <h3>Discovered OpenPGP Keys</h3>
+          <span id="pgp-keys-count" class="badge">0 keys</span>
+        </div>
+        <div id="pgp-results-container" class="pgp-results-list">
+          <div class="empty-state">No PGP keys queried yet. Enter target name or email and click 'Query PGP Keyserver'.</div>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 3: BREACH & EXPOSURE TELEMETRY -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-breach">
+        <div class="toolbar">
+          <div>
+            <h2>Breach & Leak Telemetry</h2>
+            <p class="section-desc">Audit credential compromises, public database leaks, and pastebin dump mentions.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-audit-breaches-all" class="primary">Run Breach Telemetry</button>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>🚨 Exposure Intelligence vs. Active Exploitation:</strong>
+          <p>Identifying that a target's corporate or personal email appears in historic leaks (e.g. LinkedIn 2012, Dropbox, Adobe) proves credential reuse risk and confirms that the email address was actively utilized during that timeframe.</p>
+        </div>
+
+        <!-- Breach Intelligence Query Bar -->
+        <div class="breach-query-bar">
+          <input type="email" id="breach-email-input" placeholder="Email to check for breaches...">
+          <button type="button" id="btn-check-hibp-status" class="btn-secondary">Check Breach Status</button>
+        </div>
+
+        <!-- Breach Index Pivot Cards -->
+        <div class="breach-grid">
+          <div class="breach-card">
+            <div class="breach-card-top">
+              <span class="breach-logo">🛡️</span>
+              <div>
+                <strong>HaveIBeenPwned Exposure</strong>
+                <div class="text-muted text-xs">Direct public breach registry search</div>
+              </div>
+            </div>
+            <p class="breach-card-desc">Verify whether the target email appears in indexed public data breaches.</p>
+            <div class="breach-card-actions">
+              <button type="button" id="btn-open-hibp" class="btn-secondary">Open HIBP Search</button>
+              <button type="button" id="btn-log-hibp" class="btn-micro">Log to Dossier</button>
+            </div>
+          </div>
+
+          <div class="breach-card">
+            <div class="breach-card-top">
+              <span class="breach-logo">🌊</span>
+              <div>
+                <strong>Hudson Rock Cavalier</strong>
+                <div class="text-muted text-xs">Infostealer malware exposure check</div>
+              </div>
+            </div>
+            <p class="breach-card-desc">Check if the target's computer was compromised by RedLine, Vidar, or Raccoon stealer malware.</p>
+            <div class="breach-card-actions">
+              <button type="button" id="btn-open-hudsonrock" class="btn-secondary">Open Cavalier Lookup</button>
+              <button type="button" id="btn-log-hudsonrock" class="btn-micro">Log to Dossier</button>
+            </div>
+          </div>
+
+          <div class="breach-card">
+            <div class="breach-card-top">
+              <span class="breach-logo">📂</span>
+              <div>
+                <strong>BreachDirectory & DeHashed</strong>
+                <div class="text-muted text-xs">Credential leak databases</div>
+              </div>
+            </div>
+            <p class="breach-card-desc">Check public directory hashes, leaked passwords, and associated usernames.</p>
+            <div class="breach-card-actions">
+              <button type="button" id="btn-open-breachdir" class="btn-secondary">Open BreachDirectory</button>
+              <button type="button" id="btn-open-dehashed" class="btn-secondary">Open DeHashed</button>
+            </div>
+          </div>
+
+          <div class="breach-card">
+            <div class="breach-card-top">
+              <span class="breach-logo">🔒</span>
+              <div>
+                <strong>k-Anonymity Hash Range Check</strong>
+                <div class="text-muted text-xs">100% Client-Side Privacy Preserving</div>
+              </div>
+            </div>
+            <p class="breach-card-desc">Test a candidate password hash against 800M+ pwned passwords without transmitting your query.</p>
+            <div class="k-anon-box">
+              <input type="password" id="input-kanon-pwd" placeholder="Test candidate password..." autocomplete="off">
+              <button type="button" id="btn-kanon-check" class="btn-secondary">Check Range</button>
+            </div>
+            <div id="kanon-result" class="kanon-result"></div>
+          </div>
+        </div>
+
+        <!-- Leaked Pastes & Dumps Search Dorks -->
+        <div class="sub-section-header">
+          <h3>Pastebin & Dump Search Shortlinks</h3>
+          <span class="badge">Passive Dorking</span>
+        </div>
+        <div class="pastes-grid" id="pastes-grid">
+          <!-- Populated by JS with Pastebin, Ghostbin, Gist, Rentry dork links -->
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 5: PERSON-CENTRIC DORK COMPILER -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-dorks">
+        <div class="toolbar">
+          <div>
+            <h2>Person-Centric Dork Compiler</h2>
+            <p class="section-desc">Compile targeted search engine operators to surface resumes, legal filings, conference presentations, and exposed assets.</p>
+          </div>
+          <div class="toolbar-actions">
+            <div class="engines">
+              <label><input type="radio" name="dork-engine" value="google" checked> Google</label>
+              <label><input type="radio" name="dork-engine" value="bing"> Bing</label>
+              <label><input type="radio" name="dork-engine" value="ddg"> DDG</label>
+              <label><input type="radio" name="dork-engine" value="brave"> Brave</label>
+              <label><input type="radio" name="dork-engine" value="yandex"> Yandex</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dork Categories & Intent Selector -->
+        <div class="input-group">
+          <label for="dork-preset-select">Curated Intent Categories <span class="guidance-item">(pre-structured person dorks)</span></label>
+          <select id="dork-preset-select">
+            <option value="">-- Select Person Dork Category --</option>
+          </select>
+        </div>
+
+        <!-- Exposure Explanation Card for Selected Dork -->
+        <div id="dork-guidance-card" class="exposure-card guidance-item" style="display: none;">
+          <div class="exposure-card-header">
+            <span id="dork-risk-badge" class="risk-badge">HIGH EXPOSURE</span>
+            <span id="dork-card-title" class="exp-title"></span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-item">
+              <span class="exp-label">⚠️ What It Uncovers:</span>
+              <span id="dork-what-leaks" class="exp-desc"></span>
+            </div>
+            <div class="exp-item">
+              <span class="exp-label">🎯 Analyst Verification Sign:</span>
+              <span id="dork-true-positive" class="exp-desc"></span>
+            </div>
+            <div class="exp-item">
+              <span class="exp-label">🛡️ Privacy Remediation:</span>
+              <span id="dork-remediation" class="exp-desc"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Dork Filters Form -->
+        <div class="dork-builder-grid">
+          <div class="input-group">
+            <label for="df-name">Exact Name Phrase</label>
+            <input type="text" id="df-name" placeholder='"First Last"'>
+          </div>
+          <div class="input-group">
+            <label for="df-site">Target Site / Domain <span class="guidance-item">(site:)</span></label>
+            <input type="text" id="df-site" placeholder="linkedin.com, github.com, etc.">
+          </div>
+          <div class="input-group">
+            <label for="df-filetype">File Type <span class="guidance-item">(filetype:)</span></label>
+            <input type="text" id="df-filetype" placeholder="pdf, docx, pptx, xlsx">
+          </div>
+          <div class="input-group">
+            <label for="df-inurl">In URL <span class="guidance-item">(inurl:)</span></label>
+            <input type="text" id="df-inurl" placeholder="resume, cv, staff, user">
+          </div>
+          <div class="input-group">
+            <label for="df-intitle">In Title <span class="guidance-item">(intitle:)</span></label>
+            <input type="text" id="df-intitle" placeholder="curriculum vitae, bio, court">
+          </div>
+          <div class="input-group">
+            <label for="df-exact">Keywords / Terms <span class="guidance-item">("...")</span></label>
+            <input type="text" id="df-exact" placeholder='"confidential", "phone", "address"'>
+          </div>
+        </div>
+
+        <div class="temporal-and-verbatim">
+          <div class="temporal-row">
+            <div class="temporal-header">
+              <label>Time Recency Filter</label>
+            </div>
+            <div class="temporal-chips">
+              <button type="button" class="temporal-chip active" data-time="any">Any Time</button>
+              <button type="button" class="temporal-chip" data-time="y">Past Year</button>
+              <button type="button" class="temporal-chip" data-time="m">Past Month</button>
+              <button type="button" class="temporal-chip" data-time="w">Past Week</button>
+              <button type="button" class="temporal-chip" data-time="d">Past 24h</button>
+            </div>
+          </div>
+          <div class="serp-options">
+            <label class="checkbox-inline" title="Force verbatim search (&tbs=li:1) in Google to avoid synonym replacement">
+              <input type="checkbox" id="dork-verbatim" checked>
+              <span>Verbatim Search</span>
+              <span class="guidance-item tip-badge">Strict Google</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Compiled Query Preview -->
+        <section class="preview-area">
+          <div class="preview-header">
+            <span>Compiled Person Dork</span>
+            <span id="dork-token-count" class="badge">0 words</span>
+          </div>
+          <textarea id="dork-query-output" readonly></textarea>
+          <div class="actions">
+            <button type="button" id="btn-dork-search" class="primary">Search in New Tab</button>
+            <button type="button" id="btn-dork-copy">Copy Query</button>
+            <button type="button" id="btn-dork-reset">Reset Fields</button>
+            <button type="button" id="btn-dork-to-audit" class="btn-secondary">Send Dork to Dossier</button>
+          </div>
+        </section>
+
+        <!-- Curated Dork Library List -->
+        <div class="sub-section-header">
+          <div>
+            <h3>Quick-Launch Dork Library</h3>
+            <span class="badge">One-Click Search</span>
+          </div>
+          <button type="button" id="btn-launch-all-dorks" class="btn-micro" title="Launch all library dorks in staggered tabs (450ms interval) to avoid Google bot detection / CAPTCHAs">🚀 Launch All (Staggered)</button>
+        </div>
+        <div class="dork-library-list" id="dork-library-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 6: PUBLIC RECORDS & JURISDICTIONS -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-records">
+        <div class="toolbar">
+          <div>
+            <h2>Public Records & Jurisdictional Intelligence</h2>
+            <p class="section-desc">Resolve target jurisdiction across County/Parish, State, and Federal levels to audit property deeds, court dockets, corporate LLC filings, and licensing rolls.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-records-to-audit" class="btn-secondary">Log Jurisdiction to Dossier</button>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>🏛️ Multi-Tier Public Records Architecture:</strong>
+          <p>In the United States, personal and executive records are distributed across sovereign levels: <strong>County / Parish</strong> (Property deeds, tax assessments, local civil judgments, marriage records), <strong>State</strong> (Unified court systems, corporate LLC registrations, professional licenses, state prison records), and <strong>Federal</strong> (PACER dockets, FEC donor records, SEC filings). Visage automatically compiles verified direct portals and precision search operators for the target's jurisdiction.</p>
+        </div>
+
+        <!-- Jurisdiction Resolver Bar -->
+        <div class="jurisdiction-control-bar">
+          <div class="jur-input-group">
+            <label for="jur-country-select">Country</label>
+            <select id="jur-country-select">
+              <option value="US" selected>🇺🇸 United States</option>
+              <option value="CA" disabled>🇨🇦 Canada (Future)</option>
+              <option value="UK" disabled>🇬🇧 United Kingdom (Future)</option>
+              <option value="AU" disabled>🇦🇺 Australia (Future)</option>
+            </select>
+          </div>
+
+          <div class="jur-input-group">
+            <label for="jur-state-select">State / Territory</label>
+            <select id="jur-state-select">
+              <option value="">-- Select State --</option>
+            </select>
+          </div>
+
+          <div class="jur-input-group flex-grow">
+            <label for="jur-county-input">City, County / Parish, Metro, or ZIP Code</label>
+            <input type="text" id="jur-county-input" placeholder="e.g. Charlotte, NC, Wayne County, or 28202">
+          </div>
+
+          <div class="jur-btn-group">
+            <button type="button" id="btn-resolve-jur" class="primary">Resolve</button>
+            <button type="button" id="btn-sync-jur-scope" class="btn-secondary" title="Sync with Step 1 Scope location">Sync Scope</button>
+          </div>
+        </div>
+
+        <!-- Active Jurisdiction Status Banner -->
+        <div class="active-jurisdiction-banner" id="active-jur-banner">
+          <div class="jur-banner-header">
+            <span class="jur-flag">📍</span>
+            <div>
+              <div class="jur-banner-title" id="jur-banner-title">Resolved Jurisdiction: New York County, New York</div>
+              <div class="jur-banner-meta" id="jur-banner-meta">Applicable Target: John Doe • State Domain: ny.gov • County Seat / Metro: New York City</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 1: County & Local Government Records -->
+        <div class="records-tier-section">
+          <div class="tier-header">
+            <span class="tier-badge">TIER 1</span>
+            <h3>County & Local Government Records (<span id="tier1-county-name">New York County</span>)</h3>
+          </div>
+          <div class="records-cards-grid" id="tier1-county-cards">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Tier 2: State Government Portals -->
+        <div class="records-tier-section">
+          <div class="tier-header">
+            <span class="tier-badge">TIER 2</span>
+            <h3>State Government Portals & Unified Courts (<span id="tier2-state-name">New York</span>)</h3>
+          </div>
+          <div class="records-cards-grid" id="tier2-state-cards">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Tier 3: Federal & Nationwide Portals -->
+        <div class="records-tier-section">
+          <div class="tier-header">
+            <span class="tier-badge">TIER 3</span>
+            <h3>Federal & Nationwide Intelligence Indexes</h3>
+          </div>
+          <div class="records-cards-grid" id="tier3-federal-cards">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Tier 4: Dynamic Pre-Scoped Jurisdictional Dorks -->
+        <div class="records-tier-section">
+          <div class="tier-header">
+            <span class="tier-badge">TIER 4</span>
+            <h3>Precision Jurisdictional Dorks for <span id="tier4-target-name">Target</span></h3>
+          </div>
+          <div class="dorks-jurisdiction-grid" id="tier4-dorks-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 7: DOSSIER TRIAGE & OBSIDIAN EXPORT -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-dossier">
+        <div class="toolbar">
+          <div>
+            <h2>Dossier Findings & Triage Log</h2>
+            <p class="section-desc">Classify exposure severity, add analyst notes, and export comprehensive Obsidian Markdown vaults or GFM dossiers.</p>
+          </div>
+          <div class="toolbar-actions">
+            <select id="audit-filter-status" title="Filter list by triage status">
+              <option value="all">All Statuses</option>
+              <option value="investigating">Under Review</option>
+              <option value="confirmed">Confirmed Hit</option>
+              <option value="false_positive">False Positive</option>
+              <option value="mitigated">Mitigated</option>
+            </select>
+            <select id="audit-filter-severity" title="Filter list by risk severity">
+              <option value="all">All Severities</option>
+              <option value="critical">Critical</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="info">Info</option>
+            </select>
+            <button type="button" id="btn-add-manual-finding" class="btn-secondary">+ Add Finding</button>
+            <button type="button" id="btn-clear-fp" title="Remove all False Positive findings">Clear False Positives</button>
+            <button type="button" id="btn-clear-audit">Clear All</button>
+            <div class="export-dropdown">
+              <button type="button" id="btn-import-dossier" class="btn-secondary" title="Restore dossier from previously exported JSON or Obsidian Markdown">📥 Restore Dossier</button>
+              <input type="file" id="input-import-dossier" accept=".json,.md,text/markdown,application/json" style="display: none;">
+              <button type="button" id="btn-export-obsidian" class="primary">Export Obsidian (.md)</button>
+              <button type="button" id="btn-export-json" class="btn-secondary">Export JSON</button>
+              <button type="button" id="btn-export-csv" class="btn-secondary">Export CSV</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Findings Summary Bar -->
+        <div class="findings-summary-bar">
+          <div class="finding-stat"><span class="badge-critical" id="count-critical">0</span> Critical</div>
+          <div class="finding-stat"><span class="badge-high" id="count-high">0</span> High</div>
+          <div class="finding-stat"><span class="badge-medium" id="count-medium">0</span> Medium</div>
+          <div class="finding-stat"><span class="badge-low" id="count-low">0</span> Low</div>
+          <div class="finding-stat"><span class="badge-info" id="count-info">0</span> Info</div>
+          <div class="finding-stat" style="margin-left: auto;">
+            <button type="button" id="btn-copy-dossier-md" class="btn-micro">📋 Copy Obsidian Markdown</button>
+          </div>
+        </div>
+
+        <!-- Findings List -->
+        <div id="dossier-list" class="dossier-list">
+          <div class="empty-state">No exposure findings recorded yet. Send findings from the Username Matrix, PGP keys, Breach checks, or add a manual finding above.</div>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
+      <!-- TAB 8: SAVED TARGET PROFILES -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-profiles">
+        <div class="toolbar">
+          <div>
+            <h2>Target Identity Profiles</h2>
+            <p class="section-desc">Manage, restore, and backup investigated individuals and executive profiles.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-export-profiles" class="btn-secondary">Backup All (JSON)</button>
+            <label class="btn-file-upload">
+              <span>Import Profiles</span>
+              <input type="file" id="file-import-profiles" accept=".json">
+            </label>
+          </div>
+        </div>
+
+        <div id="profiles-grid" class="profiles-grid">
+          <div class="empty-state">No saved profiles yet. Scope an identity on the left and click 'Save Target'.</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: Methodology Step Explanation -->
+  <div id="step-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-step-title">Methodology Details</h3>
+        <button type="button" id="btn-close-step-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-step-body">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Manual Finding -->
+  <div id="manual-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Dossier Finding</h3>
+        <button type="button" id="btn-close-manual-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <label for="mf-title">Finding Title / Item</label>
+          <input type="text" id="mf-title" placeholder="e.g. Unredacted personal cell phone on resume PDF">
+        </div>
+        <div class="input-row-2">
+          <div class="input-group">
+            <label for="mf-category">Category</label>
+            <select id="mf-category">
+              <option value="Public Legal Record">Public Legal Record</option>
+              <option value="Real Property & Deeds">Real Property & Deeds</option>
+              <option value="Corporate LLC & Officer">Corporate LLC & Officer</option>
+              <option value="Professional License">Professional License</option>
+              <option value="Exposed PII (Phone/Address)">Exposed PII (Phone/Address)</option>
+              <option value="Leaked Credential">Leaked Credential</option>
+              <option value="Discovered Account">Discovered Account</option>
+              <option value="Cryptographic Key">Cryptographic Key</option>
+              <option value="Executive Exposure">Executive Exposure</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="mf-severity">Severity</label>
+            <select id="mf-severity">
+              <option value="critical">Critical</option>
+              <option value="high" selected>High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="info">Info</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="mf-url">Source URL / Evidence Link</label>
+          <input type="url" id="mf-url" placeholder="https://...">
+        </div>
+        <div class="input-group">
+          <label for="mf-notes">Analyst Notes</label>
+          <textarea id="mf-notes" rows="3" placeholder="Context, confidence, or verification details..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="btn-save-manual-finding" class="primary">Save Finding</button>
+          <button type="button" id="btn-cancel-manual-finding" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

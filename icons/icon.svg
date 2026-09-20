@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#2e1065"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Card -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)" stroke="url(#accent)" stroke-width="3"/>
+  
+  <!-- Scan lines / HUD grid -->
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#6366f1" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+  <circle cx="64" cy="64" r="38" fill="none" stroke="#a855f7" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
+
+  <!-- Target crosshairs / brackets -->
+  <path d="M 30 46 L 30 30 L 46 30" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 98 46 L 98 30 L 82 30" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 30 82 L 30 98 L 46 98" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 98 82 L 98 98 L 82 98" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Biometric Identity Face Silhouette -->
+  <!-- Head -->
+  <circle cx="64" cy="50" r="17" fill="none" stroke="url(#accent)" stroke-width="3.5"/>
+  <!-- Shoulder arch -->
+  <path d="M 36 94 C 36 76, 48 72, 64 72 C 80 72, 92 76, 92 94" fill="none" stroke="url(#accent)" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Biometric Nodes & Connecting Lines -->
+  <circle cx="64" cy="50" r="3.5" fill="#38bdf8"/>
+  <circle cx="56" cy="48" r="2.5" fill="#38bdf8"/>
+  <circle cx="72" cy="48" r="2.5" fill="#38bdf8"/>
+  <line x1="56" y1="48" x2="72" y2="48" stroke="#38bdf8" stroke-width="1" opacity="0.8"/>
+  <line x1="64" y1="42" x2="64" y2="58" stroke="#38bdf8" stroke-width="1" opacity="0.8"/>
+  
+  <!-- Key / Shield indicator in center chest -->
+  <circle cx="64" cy="80" r="4" fill="#a855f7"/>
+  <path d="M 64 84 L 64 89" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+</svg>
