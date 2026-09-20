@@ -795,7 +795,7 @@ button.primary:hover {
   gap: 0.6rem;
 }
 
-.matrix-search-box input {
+.matrix-search-box input[type="text"] {
   width: 180px;
   padding: 0.3rem 0.5rem;
 }
@@ -1323,6 +1323,14 @@ button.primary:hover {
   cursor: pointer;
   font-size: 0.76rem;
   user-select: none;
+  white-space: nowrap;
+}
+
+.checkbox-inline input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .tip-badge {
