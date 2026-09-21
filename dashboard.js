@@ -117,7 +117,8 @@ const State = {
     5: false,
     6: false,
     7: false
-  }
+  },
+  deepScanActive: false
 };
 
 // -------------------------------------------------------------
@@ -129,7 +130,7 @@ const PLATFORMS = [
   { name: 'About.me', cat: 'social', url: 'https://about.me/{}', icon: '🙋' },
   { name: 'AllTrails', cat: 'gaming', url: 'https://www.alltrails.com/members/{}', icon: '🥾' },
   { name: 'AniList', cat: 'gaming', url: 'https://anilist.co/user/{}/', icon: '🌸' },
-  { name: 'Archive.org', cat: 'gaming', url: 'https://archive.org/details/@{}', icon: '🏛️' },
+  { name: 'Archive.org', cat: 'gaming', url: 'https://archive.org/details/@{}', icon: '🏛️', checkUrl: 'https://archive.org/advancedsearch.php?q=creator%3A%22{}%22&fl%5B%5D=identifier&rows=1&output=json', checkMode: 'archive' },
   { name: 'ArtStation', cat: 'media', url: 'https://www.artstation.com/{}', icon: '🖌️' },
   { name: 'Audius', cat: 'media', url: 'https://audius.co/{}', icon: '🎧' },
   { name: 'Bandcamp', cat: 'media', url: 'https://bandcamp.com/{}', icon: '🎪' },
@@ -140,24 +141,24 @@ const PLATFORMS = [
   { name: 'Bitbucket', cat: 'dev', url: 'https://bitbucket.org/{}/', icon: '🪣' },
   { name: 'Bitcointalk', cat: 'chat', url: 'https://bitcointalk.org/index.php?action=profile;u={}', icon: '₿' },
   { name: 'Blogger', cat: 'social', url: 'https://{}.blogspot.com', icon: '🟧' },
-  { name: 'Bluesky', cat: 'social', url: 'https://bsky.app/profile/{}.bsky.social', icon: '🦋' },
+  { name: 'Bluesky', cat: 'social', url: 'https://bsky.app/profile/{}.bsky.social', icon: '🦋', checkUrl: 'https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor={}.bsky.social', checkMode: 'bsky' },
   { name: 'BuyMeACoffee', cat: 'social', url: 'https://www.buymeacoffee.com/{}', icon: '☕' },
   { name: 'CashApp', cat: 'social', url: 'https://cash.app/${}', icon: '🟩' },
   { name: 'Chess.com', cat: 'media', url: 'https://www.chess.com/member/{}', icon: '♟️', checkUrl: 'https://api.chess.com/pub/player/{}', checkMode: 'json_status' },
   { name: 'Clubhouse', cat: 'social', url: 'https://www.clubhouse.com/@{}', icon: '👋' },
-  { name: 'Codeberg', cat: 'dev', url: 'https://codeberg.org/{}', icon: '🏔️' },
+  { name: 'Codeberg', cat: 'dev', url: 'https://codeberg.org/{}', icon: '🏔️', checkUrl: 'https://codeberg.org/api/v1/users/{}', checkMode: 'json_status' },
   { name: 'Codecademy', cat: 'dev', url: 'https://www.codecademy.com/profiles/{}', icon: '💻' },
   { name: 'CodePen', cat: 'dev', url: 'https://codepen.io/{}', icon: '🖋️' },
   { name: 'CoinMarketCap', cat: 'social', url: 'https://coinmarketcap.com/community/profile/{}', icon: '🪙' },
   { name: 'CTFtime', cat: 'dev', url: 'https://ctftime.org/user/{}', icon: '🚩' },
   { name: 'Dailymotion', cat: 'media', url: 'https://www.dailymotion.com/{}', icon: '📽️' },
-  { name: 'Dev.to', cat: 'dev', url: 'https://dev.to/{}', icon: '👩‍💻' },
+  { name: 'Dev.to', cat: 'dev', url: 'https://dev.to/{}', icon: '👩‍💻', checkUrl: 'https://dev.to/api/users/by_username?url={}', checkMode: 'devto' },
   { name: 'DeviantArt', cat: 'media', url: 'https://www.deviantart.com/{}', icon: '🎭' },
   { name: 'Devpost', cat: 'dev', url: 'https://devpost.com/{}', icon: '🚀' },
   { name: 'Discord Lookup', cat: 'chat', url: 'https://discord.id/?id={}', icon: '👾' },
-  { name: 'Discourse', cat: 'chat', url: 'https://meta.discourse.org/u/{}/summary', icon: '💬' },
+  { name: 'Discourse', cat: 'chat', url: 'https://meta.discourse.org/u/{}/summary', icon: '💬', checkUrl: 'https://meta.discourse.org/u/{}.json', checkMode: 'json_status' },
   { name: 'Disqus', cat: 'chat', url: 'https://disqus.com/by/{}/', icon: '💬' },
-  { name: 'DockerHub', cat: 'dev', url: 'https://hub.docker.com/u/{}', icon: '🐳' },
+  { name: 'DockerHub', cat: 'dev', url: 'https://hub.docker.com/u/{}', icon: '🐳', checkUrl: 'https://hub.docker.com/v2/users/{}/', checkMode: 'json_status' },
   { name: 'Dribbble', cat: 'media', url: 'https://dribbble.com/{}', icon: '🏀' },
   { name: 'Duolingo', cat: 'gaming', url: 'https://www.duolingo.com/profile/{}', icon: '🦉' },
   { name: 'eBay', cat: 'social', url: 'https://www.ebay.com/usr/{}', icon: '🛍️' },
@@ -171,18 +172,18 @@ const PLATFORMS = [
   { name: 'Giphy', cat: 'media', url: 'https://giphy.com/{}', icon: '🎞️' },
   { name: 'Gist', cat: 'dev', url: 'https://gist.github.com/{}', icon: '📝' },
   { name: 'GitHub', cat: 'dev', url: 'https://github.com/{}', icon: '🐙', checkUrl: 'https://api.github.com/users/{}', checkMode: 'json_status' },
-  { name: 'GitLab', cat: 'dev', url: 'https://gitlab.com/{}', icon: '🦊' },
+  { name: 'GitLab', cat: 'dev', url: 'https://gitlab.com/{}', icon: '🦊', checkUrl: 'https://gitlab.com/api/v4/users?username={}', checkMode: 'gitlab' },
   { name: 'Glitch', cat: 'dev', url: 'https://glitch.com/@{}', icon: '🎏' },
   { name: 'GOG', cat: 'gaming', url: 'https://www.gog.com/u/{}', icon: '👾' },
   { name: 'Goodreads', cat: 'media', url: 'https://www.goodreads.com/{}', icon: '📚' },
-  { name: 'Gravatar', cat: 'social', url: 'https://gravatar.com/{}', icon: '👤' },
+  { name: 'Gravatar', cat: 'social', url: 'https://gravatar.com/{}', icon: '👤', checkUrl: 'https://en.gravatar.com/{}.json', checkMode: 'gravatar' },
   { name: 'Guilded', cat: 'chat', url: 'https://www.guilded.gg/{}', icon: '🛡️' },
   { name: 'Habr', cat: 'chat', url: 'https://habr.com/en/users/{}/', icon: '📰' },
   { name: 'HackerNews', cat: 'dev', url: 'https://news.ycombinator.com/user?id={}', icon: '🟧', checkUrl: 'https://hacker-news.firebaseio.com/v0/user/{}.json', checkMode: 'json_val' },
   { name: 'HackerNoon', cat: 'chat', url: 'https://hackernoon.com/u/{}', icon: '🟩' },
   { name: 'HackTheBox', cat: 'dev', url: 'https://app.hackthebox.com/users/{}', icon: '📦' },
   { name: 'Hashnode', cat: 'dev', url: 'https://hashnode.com/@{}', icon: '📘' },
-  { name: 'HuggingFace', cat: 'dev', url: 'https://huggingface.co/{}', icon: '🤗' },
+  { name: 'HuggingFace', cat: 'dev', url: 'https://huggingface.co/{}', icon: '🤗', checkUrl: 'https://huggingface.co/api/users/{}/overview', checkMode: 'json_status' },
   { name: 'Imgur', cat: 'media', url: 'https://imgur.com/user/{}', icon: '🖼️' },
   { name: 'Instagram', cat: 'social', url: 'https://www.instagram.com/{}/', icon: '📸' },
   { name: 'IRCCloud', cat: 'chat', url: 'https://www.irccloud.com/chat#!{}', icon: '☁️' },
@@ -194,7 +195,7 @@ const PLATFORMS = [
   { name: 'Last.fm', cat: 'media', url: 'https://www.last.fm/user/{}', icon: '📻' },
   { name: 'Launchpad', cat: 'dev', url: 'https://launchpad.net/~{}', icon: '🚀' },
   { name: 'LeetCode', cat: 'dev', url: 'https://leetcode.com/{}', icon: '🧠' },
-  { name: 'Lemmy.world', cat: 'chat', url: 'https://lemmy.world/u/{}', icon: '🐭' },
+  { name: 'Lemmy.world', cat: 'chat', url: 'https://lemmy.world/u/{}', icon: '🐭', checkUrl: 'https://lemmy.world/api/v3/user?username={}', checkMode: 'json_status' },
   { name: 'Letterboxd', cat: 'media', url: 'https://letterboxd.com/{}/', icon: '🍿' },
   { name: 'Lichess', cat: 'gaming', url: 'https://lichess.org/@/{}', icon: '♞', checkUrl: 'https://lichess.org/api/user/{}', checkMode: 'json_status' },
   { name: 'LinkedIn', cat: 'social', url: 'https://www.linkedin.com/in/{}', icon: '💼' },
@@ -202,7 +203,7 @@ const PLATFORMS = [
   { name: 'LiveJournal', cat: 'social', url: 'https://{}.livejournal.com', icon: '✏️' },
   { name: 'Lobste.rs', cat: 'chat', url: 'https://lobste.rs/u/{}', icon: '🦞' },
   { name: 'MacRumors', cat: 'chat', url: 'https://forums.macrumors.com/members/{}/', icon: '🍏' },
-  { name: 'Mastodon.social', cat: 'social', url: 'https://mastodon.social/@{}', icon: '🐘' },
+  { name: 'Mastodon.social', cat: 'social', url: 'https://mastodon.social/@{}', icon: '🐘', checkUrl: 'https://mastodon.social/api/v1/accounts/lookup?acct={}', checkMode: 'json_status' },
   { name: 'Matrix', cat: 'chat', url: 'https://matrix.to/#/@{}:matrix.org', icon: '🟩' },
   { name: 'Medium', cat: 'social', url: 'https://medium.com/@{}', icon: '✍️' },
   { name: 'Minecraft (NameMC)', cat: 'gaming', url: 'https://namemc.com/profile/{}', icon: '🟩' },
@@ -210,10 +211,10 @@ const PLATFORMS = [
   { name: 'MyAnimeList', cat: 'gaming', url: 'https://myanimelist.net/profile/{}', icon: '🎌' },
   { name: 'Myspace', cat: 'social', url: 'https://myspace.com/{}', icon: '📻' },
   { name: 'Nexus Mods', cat: 'gaming', url: 'https://www.nexusmods.com/users/{}', icon: '🔧' },
-  { name: 'NPM', cat: 'dev', url: 'https://www.npmjs.com/~{}', icon: '📦' },
+  { name: 'NPM', cat: 'dev', url: 'https://www.npmjs.com/~{}', icon: '📦', checkUrl: 'https://registry.npmjs.org/-/v1/search?text=maintainer:{}&size=1', checkMode: 'npm' },
   { name: 'OpenStreetMap', cat: 'social', url: 'https://www.openstreetmap.org/user/{}', icon: '🗺️' },
   { name: 'Overclock.net', cat: 'chat', url: 'https://www.overclock.net/members/{}/', icon: '⚙️' },
-  { name: 'Packagist', cat: 'dev', url: 'https://packagist.org/users/{}/', icon: '🐘' },
+  { name: 'Packagist', cat: 'dev', url: 'https://packagist.org/users/{}/', icon: '🐘', checkUrl: 'https://packagist.org/packages/list.json?vendor={}', checkMode: 'packagist' },
   { name: 'Pastebin', cat: 'dev', url: 'https://pastebin.com/u/{}', icon: '📋' },
   { name: 'Patreon', cat: 'social', url: 'https://www.patreon.com/{}', icon: '🪙' },
   { name: 'PayPal', cat: 'social', url: 'https://www.paypal.com/paypalme/{}', icon: '🅿️' },
@@ -224,11 +225,11 @@ const PLATFORMS = [
   { name: 'ProductHunt', cat: 'dev', url: 'https://www.producthunt.com/@{}', icon: '😸' },
   { name: 'PyPI', cat: 'dev', url: 'https://pypi.org/user/{}', icon: '🐍' },
   { name: 'Quora', cat: 'social', url: 'https://www.quora.com/profile/{}', icon: '❓' },
-  { name: 'Reddit', cat: 'social', url: 'https://www.reddit.com/user/{}', icon: '🤖' },
+  { name: 'Reddit', cat: 'social', url: 'https://www.reddit.com/user/{}/', icon: '🤖', errorString: 'nobody on Reddit goes by that name' },
   { name: 'Replit', cat: 'dev', url: 'https://replit.com/@{}', icon: '⚡' },
   { name: 'Revolt', cat: 'chat', url: 'https://revolt.chat', icon: '⚡' },
   { name: 'Roblox', cat: 'gaming', url: 'https://www.roblox.com/user.aspx?username={}', icon: '🧱' },
-  { name: 'RubyGems', cat: 'dev', url: 'https://rubygems.org/profiles/{}', icon: '💎' },
+  { name: 'RubyGems', cat: 'dev', url: 'https://rubygems.org/profiles/{}', icon: '💎', checkUrl: 'https://rubygems.org/api/v1/owners/{}/gems.json', checkMode: 'rubygems' },
   { name: 'Rumble', cat: 'media', url: 'https://rumble.com/user/{}', icon: '🟢' },
   { name: 'Session', cat: 'chat', url: 'https://session.org', icon: '🛡️' },
   { name: 'Signal Lookup', cat: 'chat', url: 'https://signal.me/#u/{}', icon: '📶' },
@@ -238,11 +239,11 @@ const PLATFORMS = [
   { name: 'Speedrun.com', cat: 'gaming', url: 'https://www.speedrun.com/user/{}', icon: '⏱️' },
   { name: 'Spotify', cat: 'media', url: 'https://open.spotify.com/user/{}', icon: '🟢' },
   { name: 'StackOverflow', cat: 'dev', url: 'https://stackoverflow.com/users/{}', icon: '🥞' },
-  { name: 'Steam Community', cat: 'chat', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
-  { name: 'Steam Profile', cat: 'gaming', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
+  { name: 'Steam Community', cat: 'chat', url: 'https://steamcommunity.com/id/{}', icon: '🎮', probeRule: 'steam' },
+  { name: 'Steam Profile', cat: 'gaming', url: 'https://steamcommunity.com/id/{}', icon: '🎮', probeRule: 'steam' },
   { name: 'Strava', cat: 'media', url: 'https://www.strava.com/athletes/{}', icon: '🏃' },
   { name: 'Substack', cat: 'social', url: 'https://{}.substack.com', icon: '📰' },
-  { name: 'Telegram', cat: 'chat', url: 'https://t.me/{}', icon: '✈️' },
+  { name: 'Telegram', cat: 'chat', url: 'https://t.me/{}', icon: '✈️', probeRule: 'telegram' },
   { name: 'Threads', cat: 'social', url: 'https://www.threads.net/@{}', icon: '🧵' },
   { name: 'TikTok', cat: 'media', url: 'https://www.tiktok.com/@{}', icon: '🎵' },
   { name: 'Tracker.gg', cat: 'gaming', url: 'https://tracker.gg/profile/{}', icon: '🎯' },
@@ -259,14 +260,14 @@ const PLATFORMS = [
   { name: 'Vero', cat: 'social', url: 'https://vero.co/{}', icon: '🟢' },
   { name: 'Vimeo', cat: 'media', url: 'https://vimeo.com/{}', icon: '🎬' },
   { name: 'VK', cat: 'social', url: 'https://vk.com/{}', icon: '🔵' },
-  { name: 'WakaTime', cat: 'dev', url: 'https://wakatime.com/@{}', icon: '⏱️' },
+  { name: 'WakaTime', cat: 'dev', url: 'https://wakatime.com/@{}', icon: '⏱️', checkUrl: 'https://wakatime.com/api/v1/users/{}', checkMode: 'wakatime' },
   { name: 'Wellfound', cat: 'dev', url: 'https://wellfound.com/u/{}', icon: '✌️' },
-  { name: 'Wikipedia', cat: 'social', url: 'https://en.wikipedia.org/wiki/User:{}', icon: '📖' },
+  { name: 'Wikipedia', cat: 'social', url: 'https://en.wikipedia.org/wiki/User:{}', icon: '📖', checkUrl: 'https://en.wikipedia.org/w/api.php?action=query&list=users&ususers={}&format=json&origin=*', checkMode: 'wikipedia' },
   { name: 'WordPress', cat: 'social', url: 'https://{}.wordpress.com', icon: '🌐' },
   { name: 'X / Twitter', cat: 'social', url: 'https://x.com/{}', icon: '𝕏' },
   { name: 'Xbox Gamertag', cat: 'gaming', url: 'https://account.xbox.com/en-us/profile?gamertag={}', icon: '🎮' },
   { name: 'XDA Developers', cat: 'chat', url: 'https://forum.xda-developers.com/m/{}', icon: '📱' },
-  { name: 'YouTube', cat: 'media', url: 'https://www.youtube.com/@{}', icon: '▶️' }
+  { name: 'YouTube', cat: 'media', url: 'https://www.youtube.com/@{}', icon: '▶️', errorString: '404 Not Found' },
 ];
 
 // -------------------------------------------------------------
@@ -639,6 +640,7 @@ async function loadStoredData() {
       generateHandlePermutations();
       updateLocationJurisdictionPreview();
     }
+    await checkDeepScanPermission();
   } catch (err) {
     console.error('Failed to load storage:', err);
   }
@@ -1867,6 +1869,63 @@ function setupMatrixTab() {
   // Scan All Button
   document.getElementById('btn-matrix-check-all').addEventListener('click', runMatrixScan);
 
+  // Deep Scan Toggle and Explainer Modal
+  const btnDeepToggle = document.getElementById('btn-deep-scan-toggle');
+  const btnBannerDeep = document.getElementById('btn-banner-deep-scan');
+  const modalDeep = document.getElementById('modal-deep-scan');
+  const btnCloseModal = document.getElementById('btn-close-deep-scan-modal');
+  const btnKeepStandard = document.getElementById('btn-deep-scan-keep-standard');
+  const btnGrant = document.getElementById('btn-deep-scan-grant');
+
+  if (btnDeepToggle) {
+    btnDeepToggle.addEventListener('click', () => {
+      if (State.deepScanActive) {
+        if (confirm('Deep Scan is currently active across 140+ platforms. Revoke host permissions and return to Standard Mode (22 open APIs)?')) {
+          revokeDeepScanPermission();
+        }
+      } else {
+        openDeepScanModal();
+      }
+    });
+  }
+
+  if (btnBannerDeep) {
+    btnBannerDeep.addEventListener('click', () => {
+      if (State.deepScanActive) {
+        if (confirm('Revoke host permissions and return to Standard Mode?')) {
+          revokeDeepScanPermission();
+        }
+      } else {
+        openDeepScanModal();
+      }
+    });
+  }
+
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closeDeepScanModal);
+  }
+
+  if (btnKeepStandard) {
+    btnKeepStandard.addEventListener('click', () => {
+      closeDeepScanModal();
+      showToast('Standard Mode active (22 open APIs automated)', 'info');
+    });
+  }
+
+  if (btnGrant) {
+    btnGrant.addEventListener('click', async () => {
+      await requestDeepScanPermission();
+    });
+  }
+
+  if (modalDeep) {
+    modalDeep.addEventListener('click', (e) => {
+      if (e.target === modalDeep) {
+        closeDeepScanModal();
+      }
+    });
+  }
+
   // Copy Found URLs
   document.getElementById('btn-matrix-copy-found').addEventListener('click', () => {
     const foundUrls = Object.values(State.matrixResults)
@@ -2048,12 +2107,329 @@ function logManualHit(platform, url) {
   showToast(`Logged ${platform} hit to dossier`);
 }
 
+function openDeepScanModal() {
+  const modal = document.getElementById('modal-deep-scan');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeDeepScanModal() {
+  const modal = document.getElementById('modal-deep-scan');
+  if (modal) modal.style.display = 'none';
+}
+
+async function checkDeepScanPermission() {
+  if (typeof browser !== 'undefined' && browser.permissions && browser.permissions.contains) {
+    try {
+      const granted = await browser.permissions.contains({ origins: ['<all_urls>'] });
+      State.deepScanActive = !!granted;
+      updateDeepScanUI();
+      return !!granted;
+    } catch (_) {}
+  }
+  State.deepScanActive = false;
+  updateDeepScanUI();
+  return false;
+}
+
+function updateDeepScanUI() {
+  const banner = document.getElementById('deep-scan-banner');
+  const badge = document.getElementById('deep-scan-badge');
+  const text = document.getElementById('deep-scan-text');
+  const bannerBtn = document.getElementById('btn-banner-deep-scan');
+  const toggleBtn = document.getElementById('btn-deep-scan-toggle');
+
+  if (State.deepScanActive) {
+    if (banner) {
+      banner.classList.remove('standard-mode');
+      banner.classList.add('deep-mode');
+    }
+    if (badge) {
+      badge.textContent = '⚡ DEEP SCAN ACTIVE';
+    }
+    if (text) {
+      text.innerHTML = '<strong>140+ platforms automated via local direct probing</strong> (100% client-side, zero external servers or proxies).';
+    }
+    if (bannerBtn) {
+      bannerBtn.textContent = 'Revoke Permission';
+      bannerBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+      bannerBtn.style.borderColor = '#ef4444';
+      bannerBtn.style.color = '#fca5a5';
+    }
+    if (toggleBtn) {
+      toggleBtn.textContent = '⚡ Deep Scan Active';
+      toggleBtn.classList.add('btn-deep-active');
+      toggleBtn.title = 'Deep Scan is active across 140+ platforms. Click to revoke permissions.';
+    }
+  } else {
+    if (banner) {
+      banner.classList.remove('deep-mode');
+      banner.classList.add('standard-mode');
+    }
+    if (badge) {
+      badge.textContent = 'STANDARD MODE';
+    }
+    if (text) {
+      text.innerHTML = '<strong>22 Open APIs automated out-of-the-box</strong> (zero permissions required). Probing all 140+ platforms requires optional local browser permissions.';
+    }
+    if (bannerBtn) {
+      bannerBtn.textContent = '⚡ Unlock Deep Scan (140+ Platforms)';
+      bannerBtn.style.background = 'rgba(6, 182, 212, 0.15)';
+      bannerBtn.style.borderColor = '#06b6d4';
+      bannerBtn.style.color = '#67e8f9';
+    }
+    if (toggleBtn) {
+      toggleBtn.textContent = '⚡ Enable Deep Scan';
+      toggleBtn.classList.remove('btn-deep-active');
+      toggleBtn.title = 'Configure Automated Deep Scan across 140+ platforms';
+    }
+  }
+}
+
+async function requestDeepScanPermission() {
+  closeDeepScanModal();
+  if (typeof browser !== 'undefined' && browser.permissions && browser.permissions.request) {
+    try {
+      const granted = await browser.permissions.request({ origins: ['<all_urls>'] });
+      if (granted) {
+        State.deepScanActive = true;
+        updateDeepScanUI();
+        showToast('⚡ Deep Scan unlocked! 140+ platforms now automated locally.');
+        if (State.target.handle) {
+          runMatrixScan();
+        }
+        return true;
+      } else {
+        showToast('Permission declined. Standard Mode active (22 open APIs).', false);
+      }
+    } catch (err) {
+      console.error('Permission request failed:', err);
+      showToast('Permission request cancelled or unsupported.', false);
+    }
+  }
+  State.deepScanActive = false;
+  updateDeepScanUI();
+  return false;
+}
+
+async function revokeDeepScanPermission() {
+  if (typeof browser !== 'undefined' && browser.permissions && browser.permissions.remove) {
+    try {
+      await browser.permissions.remove({ origins: ['<all_urls>'] });
+      State.deepScanActive = false;
+      updateDeepScanUI();
+      showToast('Permissions revoked. Returned to Standard Mode (22 open APIs).');
+      return;
+    } catch (err) {
+      console.error('Failed to revoke permission:', err);
+    }
+  }
+  State.deepScanActive = false;
+  updateDeepScanUI();
+}
+
+async function checkPlatformPresence(p, handle, deepScanActive) {
+  const targetUrl = p.url.replace('{}', encodeURIComponent(handle));
+
+  // 1. If platform has an open API endpoint, check it (works in both Standard & Deep Scan)
+  if (p.checkUrl) {
+    try {
+      const queryUrl = p.checkUrl.replace('{}', encodeURIComponent(handle));
+      const resp = await fetch(queryUrl, { cache: 'no-store' });
+
+      if (p.checkMode === 'json_status') {
+        if (resp.status === 200) return { platform: p.name, status: 'found', url: targetUrl };
+        if (resp.status === 404 || resp.status === 400) return { platform: p.name, status: 'available', url: targetUrl };
+        return { platform: p.name, status: 'error', url: targetUrl };
+      }
+
+      if (p.checkMode === 'json_val') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.id ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'keybase') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.them && val.them.length > 0 && val.them[0] ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'devto') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.username ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'wikipedia') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.query && val.query.users && val.query.users[0] && val.query.users[0].userid ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'bsky') {
+        if (resp.status === 200) return { platform: p.name, status: 'found', url: targetUrl };
+        if (resp.status === 400 || resp.status === 404) return { platform: p.name, status: 'available', url: targetUrl };
+        return { platform: p.name, status: 'error', url: targetUrl };
+      }
+
+      if (p.checkMode === 'npm') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.total > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'packagist') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.packageNames && val.packageNames.length > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'gitlab') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return Array.isArray(val) && val.length > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'gravatar') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.entry && val.entry.length > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'rubygems') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return Array.isArray(val) && val.length > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'wakatime') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.data ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      if (p.checkMode === 'archive') {
+        if (resp.status === 200) {
+          const val = await resp.json().catch(() => null);
+          return val && val.response && val.response.numFound > 0 ? { platform: p.name, status: 'found', url: targetUrl } : { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+    } catch (_) {
+      return { platform: p.name, status: 'error', url: targetUrl };
+    }
+  }
+
+  // 2. If platform does NOT have an open API:
+  // If Deep Scan is NOT active, mark as 'unchecked' with 1-click manual verification
+  if (!deepScanActive) {
+    return { platform: p.name, status: 'unchecked', url: targetUrl };
+  }
+
+  // 3. Deep Scan is active: probe URL via background worker or fetch
+  const probeTarget = (p.probeUrl || p.url).replace('{}', encodeURIComponent(handle));
+  try {
+    let probeResult = null;
+    if (typeof browser !== 'undefined' && browser.runtime && browser.runtime.sendMessage) {
+      probeResult = await browser.runtime.sendMessage({
+        type: 'CHECK_URL',
+        url: probeTarget,
+        timeout: 4000
+      }).catch(() => null);
+    }
+
+    if (!probeResult || !probeResult.ok) {
+      // Fallback to direct fetch
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      const resp = await fetch(probeTarget, { signal: controller.signal, cache: 'no-store' });
+      clearTimeout(timeoutId);
+      const bodySnippet = await resp.text().catch(() => '');
+      probeResult = {
+        ok: true,
+        status: resp.status,
+        redirected: resp.redirected,
+        url: resp.url,
+        bodySnippet: bodySnippet.slice(0, 10000)
+      };
+    }
+
+    if (probeResult && probeResult.ok) {
+      const { status, bodySnippet } = probeResult;
+
+      // Check specific error strings if defined
+      if (p.errorString && bodySnippet && bodySnippet.includes(p.errorString)) {
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+      if (p.matchString && bodySnippet && bodySnippet.includes(p.matchString)) {
+        return { platform: p.name, status: 'found', url: targetUrl };
+      }
+
+      // Check Steam profile
+      if (p.probeRule === 'steam') {
+        if (status === 200 && !bodySnippet.includes('The specified profile could not be found')) {
+          return { platform: p.name, status: 'found', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      // Check Telegram
+      if (p.probeRule === 'telegram') {
+        if (status === 200 && !bodySnippet.includes('noindex, nofollow')) {
+          return { platform: p.name, status: 'found', url: targetUrl };
+        }
+        return { platform: p.name, status: 'available', url: targetUrl };
+      }
+
+      // Standard status checks
+      if (status === 200) {
+        const lowerBody = (bodySnippet || '').toLowerCase();
+        if (lowerBody.includes('<title>404') || lowerBody.includes('page not found') || lowerBody.includes('user not found')) {
+          return { platform: p.name, status: 'available', url: targetUrl };
+        }
+        return { platform: p.name, status: 'found', url: targetUrl };
+      } else if (status === 404 || status === 410) {
+        return { platform: p.name, status: 'available', url: targetUrl };
+      } else {
+        return { platform: p.name, status: 'error', url: targetUrl };
+      }
+    }
+  } catch (_) {
+    return { platform: p.name, status: 'error', url: targetUrl };
+  }
+
+  return { platform: p.name, status: 'unchecked', url: targetUrl };
+}
+
 async function runMatrixScan() {
   const handle = State.target.handle.trim();
   if (!handle) {
     showToast('Please enter a username handle in the Scope panel first', false);
     return;
   }
+
+  // Refresh permissions status before scanning
+  await checkDeepScanPermission();
 
   const statusBar = document.getElementById('matrix-status-bar');
   const statusText = document.getElementById('matrix-status-text');
@@ -2063,66 +2439,37 @@ async function runMatrixScan() {
   statusBar.style.display = 'flex';
   const total = PLATFORMS.length;
   let processed = 0;
+  let foundCount = 0;
 
-  for (const p of PLATFORMS) {
-    statusText.textContent = `Checking ${p.name}...`;
-    progressCount.textContent = `${processed + 1} / ${total}`;
-    progressFill.style.width = `${Math.round(((processed + 1) / total) * 100)}%`;
+  // Concurrency pool of 6 parallel workers
+  const concurrency = 6;
+  const queue = [...PLATFORMS];
 
-    const targetUrl = p.url.replace('{}', encodeURIComponent(handle));
+  async function worker() {
+    while (queue.length > 0) {
+      const p = queue.shift();
+      statusText.textContent = `Probing ${p.name}...`;
 
-    // For platforms with public endpoints (GitHub, HackerNews, Keybase, Chess.com, Lichess)
-    if (p.checkUrl) {
-      try {
-        const queryUrl = p.checkUrl.replace('{}', encodeURIComponent(handle));
-        const resp = await fetch(queryUrl, { cache: 'no-store' });
+      const result = await checkPlatformPresence(p, handle, State.deepScanActive);
+      State.matrixResults[p.name] = result;
+      if (result.status === 'found') foundCount++;
 
-        if (p.checkMode === 'json_status') {
-          if (resp.status === 200) {
-            State.matrixResults[p.name] = { platform: p.name, status: 'found', url: targetUrl };
-          } else if (resp.status === 404) {
-            State.matrixResults[p.name] = { platform: p.name, status: 'available', url: targetUrl };
-          } else {
-            State.matrixResults[p.name] = { platform: p.name, status: 'error', url: targetUrl };
-          }
-        } else if (p.checkMode === 'json_val') {
-          if (resp.status === 200) {
-            const val = await resp.json();
-            if (val && val.id) {
-              State.matrixResults[p.name] = { platform: p.name, status: 'found', url: targetUrl };
-            } else {
-              State.matrixResults[p.name] = { platform: p.name, status: 'available', url: targetUrl };
-            }
-          } else {
-            State.matrixResults[p.name] = { platform: p.name, status: 'available', url: targetUrl };
-          }
-        } else if (p.checkMode === 'keybase') {
-          if (resp.status === 200) {
-            const val = await resp.json();
-            if (val.them && val.them.length > 0 && val.them[0]) {
-              State.matrixResults[p.name] = { platform: p.name, status: 'found', url: targetUrl };
-            } else {
-              State.matrixResults[p.name] = { platform: p.name, status: 'available', url: targetUrl };
-            }
-          } else {
-            State.matrixResults[p.name] = { platform: p.name, status: 'available', url: targetUrl };
-          }
-        }
-      } catch (_) {
-        State.matrixResults[p.name] = { platform: p.name, status: 'error', url: targetUrl };
-      }
-    } else {
-      // Direct passive inspection default
-      if (!State.matrixResults[p.name]) {
-        State.matrixResults[p.name] = { platform: p.name, status: 'unchecked', url: targetUrl };
-      }
+      processed++;
+      progressCount.textContent = `${processed} / ${total}`;
+      progressFill.style.width = `${Math.round((processed / total) * 100)}%`;
+      renderMatrixGrid();
     }
-
-    processed++;
-    renderMatrixGrid();
   }
 
-  statusText.textContent = 'Passive scan completed. Confirmed API hits flagged in green.';
+  const workers = Array.from({ length: Math.min(concurrency, PLATFORMS.length) }, () => worker());
+  await Promise.all(workers);
+
+  if (State.deepScanActive) {
+    statusText.textContent = `⚡ Deep scan completed across 142 platforms. Confirmed hits: ${foundCount}`;
+  } else {
+    statusText.textContent = `Standard scan completed (22 open APIs checked). Confirmed hits: ${foundCount}.`;
+  }
+
   markStep(2, true);
   updateTargetCard();
   saveStoredData();

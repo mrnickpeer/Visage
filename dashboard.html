@@ -397,10 +397,22 @@
             <p class="section-desc">Passively discover digital presence across 140+ public social, developer, forum, and media platforms.</p>
           </div>
           <div class="toolbar-actions">
+            <button type="button" id="btn-deep-scan-toggle" class="btn-secondary" title="Configure Automated Deep Scan across 140+ platforms">⚡ Enable Deep Scan</button>
             <button type="button" id="btn-matrix-check-all" class="primary">Passive Matrix Scan</button>
             <button type="button" id="btn-matrix-copy-found">Copy Found URLs</button>
             <button type="button" id="btn-matrix-open-found" class="btn-secondary" title="Open all verified hits in staggered background tabs to avoid rate-limiting">Open Found (Staggered)</button>
             <button type="button" id="btn-matrix-add-audit" class="btn-secondary">Send Found to Dossier</button>
+          </div>
+        </div>
+
+        <!-- Deep Scan Status & Opt-In Banner -->
+        <div id="deep-scan-banner" class="deep-scan-banner standard-mode">
+          <div class="banner-content">
+            <span class="banner-badge" id="deep-scan-badge">STANDARD MODE</span>
+            <span class="banner-text" id="deep-scan-text"><strong>22 Open APIs automated out-of-the-box</strong> (zero permissions required). Probing all 140+ platforms requires optional local browser permissions.</span>
+          </div>
+          <div class="banner-actions">
+            <button type="button" id="btn-banner-deep-scan" class="btn-micro" style="background: rgba(6, 182, 212, 0.15); border: 1px solid #06b6d4; color: #67e8f9; cursor: pointer;">⚡ Unlock Deep Scan (140+ Platforms)</button>
           </div>
         </div>
 
@@ -1305,6 +1317,53 @@
         <div class="modal-actions" style="margin-top: 0.25rem;">
           <button type="button" id="btn-confirm-consent" class="primary" style="background: #d97706; border-color: #f59e0b;" disabled>Confirm & Enable Mode</button>
           <button type="button" id="btn-cancel-consent" class="btn-secondary">Cancel (Stay in Self-Audit)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Deep Matrix Scan Explainer & Zero Data Collection Guarantee -->
+  <div id="modal-deep-scan" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 620px; border-color: rgba(6, 182, 212, 0.4);">
+      <div class="modal-header" style="background: rgba(6, 182, 212, 0.12); border-bottom-color: rgba(6, 182, 212, 0.3);">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.3rem;">⚡</span>
+          <h3 style="color: #06b6d4; margin: 0;">Automated Deep Matrix Scan (Optional)</h3>
+        </div>
+        <button type="button" id="btn-close-deep-scan-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p style="font-size: 0.88rem; color: #f1f5f9; line-height: 1.5; margin: 0;">
+          Automate account presence discovery across <strong>140+ public social, developer, forum, and media platforms</strong> directly from your workstation in real time.
+        </p>
+
+        <!-- Zero Data Collection Guarantee Box -->
+        <div class="privacy-guarantee-box">
+          <div class="privacy-guarantee-header">
+            <span>🔒</span>
+            <strong>Zero Data Collection & Local Execution Guarantee</strong>
+          </div>
+          <ul class="privacy-guarantee-list">
+            <li><strong>100% Client-Side:</strong> All platform checks are dispatched directly from your browser to public profile endpoints.</li>
+            <li><strong>Zero External Servers:</strong> Unlike web search tools that route targets through a remote proxy or backend server, your handles, emails, and queries <em>never</em> leave your computer.</li>
+            <li><strong>No Telemetry or Tracking:</strong> Visage operates with zero analytics, zero logging, and zero external tracking.</li>
+          </ul>
+        </div>
+
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div>
+            <strong style="color: #fff;">Why does your browser display a permission prompt?</strong><br>
+            Modern web browsers enforce strict Cross-Origin Resource Sharing (CORS) security rules. To verify whether a public profile exists across dozens of independent websites without relaying through a centralized server, your browser requires one-time permission to send cross-origin requests directly from your device.
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.04); padding: 0.6rem 0.8rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+            <strong style="color: #cbd5e1;">Prefer not to grant permission?</strong><br>
+            Standard Mode will remain completely functional! It automatically audits 22 open APIs (GitHub, HackerNews, Dev.to, Wikipedia, Bluesky, NPM, GitLab, DockerHub, etc.) and provides 1-click manual verification links for all remaining platforms. You can also revoke permissions anytime in your browser extension settings.
+          </div>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 0.5rem; display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" id="btn-deep-scan-keep-standard" class="btn-secondary">Keep Standard Mode</button>
+          <button type="button" id="btn-deep-scan-grant" class="primary" style="background: linear-gradient(135deg, #06b6d4, #3b82f6); border: none; font-weight: 600;">Grant Permission & Enable Deep Scan</button>
         </div>
       </div>
     </div>

@@ -113,3 +113,57 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
     }
   }
 });
+
+// Runtime message listener for multi-platform network probing
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'CHECK_URL') {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), message.timeout || 4000);
+
+    fetch(message.url, {
+      method: message.method || 'GET',
+      headers: {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        ...(message.headers || {})
+      },
+      redirect: 'follow',
+      signal: controller.signal
+    })
+      .then(async (resp) => {
+        clearTimeout(timeout);
+        let text = '';
+        try {
+          // Read up to first 64KB of body for error/presence signature verification
+          const reader = resp.body.getReader();
+          let bytesRead = 0;
+          const chunks = [];
+          while (bytesRead < 65536) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            bytesRead += value.length;
+          }
+          const blob = new Blob(chunks);
+          text = await blob.text();
+        } catch (_) {
+          try {
+            text = await resp.text();
+          } catch (__) {}
+        }
+
+        sendResponse({
+          ok: true,
+          status: resp.status,
+          redirected: resp.redirected,
+          url: resp.url,
+          bodySnippet: text.slice(0, 10000)
+        });
+      })
+      .catch((err) => {
+        clearTimeout(timeout);
+        sendResponse({ ok: false, error: err.message });
+      });
+
+    return true; // Keep message channel open for async response
+  }
+});

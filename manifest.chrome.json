@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Visage - Digital Footprint & Identity Privacy Workstation",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Digital Footprint & Identity Privacy Audit Workstation. Audit public exposure, check leaked credentials, and evaluate privacy risks.",
   "permissions": [
     "storage",
@@ -14,7 +14,20 @@
     "https://keybase.io/*",
     "https://api.github.com/*",
     "https://api.pwnedpasswords.com/*",
-    "https://nominatim.openstreetmap.org/*"
+    "https://nominatim.openstreetmap.org/*",
+    "https://gitlab.com/*",
+    "https://hub.docker.com/*",
+    "https://*.gravatar.com/*",
+    "https://rubygems.org/*",
+    "https://wakatime.com/*",
+    "https://codeberg.org/*",
+    "https://huggingface.co/*",
+    "https://mastodon.social/*",
+    "https://lemmy.world/*",
+    "https://meta.discourse.org/*"
+  ],
+  "optional_host_permissions": [
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
