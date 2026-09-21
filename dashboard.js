@@ -1077,17 +1077,28 @@ function setupAuditMode() {
     showToast(`Audit context: ${mode === 'self' ? 'Personal Privacy Self-Audit' : 'Defensive Exposure Assessment'}`);
   }
 
-  select.addEventListener('change', () => {
+  select.addEventListener('change', async () => {
     const selectedMode = select.value;
 
-    if (selectedMode === 'org' && !consentAccepted) {
-      // Prompt with consent modal before allowing the mode change
-      if (consentModal) {
-        if (chkConsent) chkConsent.checked = false;
-        if (btnConfirmConsent) btnConfirmConsent.disabled = true;
-        consentModal.style.display = 'flex';
+    if (selectedMode === 'org') {
+      if (!consentAccepted) {
+        try {
+          const stored = await browser.storage.local.get(['orgConsentAcknowledged']);
+          if (stored && stored.orgConsentAcknowledged) {
+            consentAccepted = true;
+          }
+        } catch (e) {}
       }
-      return;
+
+      if (!consentAccepted) {
+        // Prompt with consent modal before allowing the mode change
+        if (consentModal) {
+          if (chkConsent) chkConsent.checked = false;
+          if (btnConfirmConsent) btnConfirmConsent.disabled = true;
+          consentModal.style.display = 'flex';
+        }
+        return;
+      }
     }
 
     applyAuditMode(selectedMode);
@@ -1118,6 +1129,14 @@ function setupAuditMode() {
 
   if (btnCancelConsent) btnCancelConsent.addEventListener('click', cancelConsent);
   if (btnCloseConsent) btnCloseConsent.addEventListener('click', cancelConsent);
+
+  if (consentModal) {
+    consentModal.addEventListener('click', (e) => {
+      if (e.target === consentModal) {
+        cancelConsent();
+      }
+    });
+  }
 
   applyAuditModeUI(State.auditMode || 'self');
 }
