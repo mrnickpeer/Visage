@@ -37,6 +37,7 @@ function splitFullName(fullName) {
 
 // Global Application State
 const State = {
+  auditMode: 'self',
   target: {
     firstName: '',
     middleName: '',
@@ -448,6 +449,9 @@ async function openStaggeredTabs(urls, delayMs = 350) {
 document.addEventListener('DOMContentLoaded', async () => {
   setupNavigationTabs();
   setupGuidanceToggle();
+  setupEthicalCharterModal();
+  setupAuditMode();
+  setupPrivacyTab();
   setupScopeInputs();
   setupPermutations();
   setupMethodologyChecklist();
@@ -529,7 +533,15 @@ function ingestUrlParameters() {
 // -------------------------------------------------------------
 async function loadStoredData() {
   try {
-    const data = await browser.storage.local.get(['auditLogs', 'savedProfiles', 'currentTarget', 'stepProgress', 'jurisdictionCache']);
+    const data = await browser.storage.local.get(['auditLogs', 'savedProfiles', 'currentTarget', 'stepProgress', 'jurisdictionCache', 'auditMode']);
+    if (data.auditMode) {
+      State.auditMode = data.auditMode;
+      const select = document.getElementById('audit-mode-select');
+      if (select) {
+        select.value = data.auditMode;
+        applyAuditModeUI(data.auditMode);
+      }
+    }
     if (data.auditLogs) State.auditLogs = data.auditLogs;
     if (data.savedProfiles) State.savedProfiles = data.savedProfiles;
     if (data.jurisdictionCache) State.jurisdictionCache = data.jurisdictionCache;
@@ -561,7 +573,8 @@ async function saveStoredData() {
       savedProfiles: State.savedProfiles,
       currentTarget: State.target,
       stepProgress: State.stepProgress,
-      jurisdictionCache: State.jurisdictionCache
+      jurisdictionCache: State.jurisdictionCache,
+      auditMode: State.auditMode || 'self'
     });
   } catch (err) {
     console.error('Failed to persist state:', err);
@@ -744,32 +757,204 @@ function setupScopeInputs() {
     showToast('Scope reset');
   });
 
+  // Purge All Local Data
+  const btnPurge = document.getElementById('btn-purge-data');
+  if (btnPurge) {
+    btnPurge.addEventListener('click', async () => {
+      const ok = confirm(
+        "⚠️ Purge All Visage Data?\n\n" +
+        "This will permanently delete all saved target scopes, exposure findings, manual notes, and cached session data from your browser's local storage.\n\n" +
+        "This action cannot be undone."
+      );
+      if (!ok) return;
+
+      try {
+        await browser.storage.local.clear();
+        await browser.storage.local.set({ ethicalCharterAccepted: true });
+      } catch (err) {
+        console.error('Storage clear error:', err);
+      }
+
+      // Reset in-memory State
+      State.target = { firstName: '', middleName: '', lastName: '', name: '', handle: '', email: '', phone: '', location: '', org: '' };
+      State.jurisdiction = {
+        country: 'US',
+        stateCode: 'NY',
+        stateName: 'New York',
+        county: 'New York County',
+        city: 'New York City',
+        resolvedText: 'New York County, New York'
+      };
+      State.auditLogs = [];
+      State.savedProfiles = [];
+      State.cryptoResults = { pgp: [], keybase: null, github: null };
+      State.matrixResults = {};
+      State.jurisdictionCache = {};
+      State.stepProgress = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false };
+
+      applyTargetToInputs();
+      updateLocationJurisdictionPreview();
+      updateTargetCard();
+      const permChips = document.getElementById('permutations-chips');
+      if (permChips) permChips.innerHTML = '<span class="empty-hint">Click \'Permute Name\' to generate handle variations</span>';
+
+      updateUI();
+      showToast('All local Visage data and target scopes have been purged.');
+    });
+  }
+
   // Quick Pivots
-  document.getElementById('pivot-reverse-image').addEventListener('click', () => {
-    browser.tabs.create({ url: 'https://lens.google.com/' });
-  });
+  const pivotRevImg = document.getElementById('pivot-reverse-image');
+  if (pivotRevImg) {
+    pivotRevImg.addEventListener('click', () => {
+      browser.tabs.create({ url: 'https://lens.google.com/' });
+    });
+  }
 
-  document.getElementById('pivot-wayback').addEventListener('click', () => {
-    const query = State.target.handle || State.target.email || State.target.name;
-    const url = query ? `https://web.archive.org/web/*/${encodeURIComponent(query)}` : 'https://archive.org/';
-    browser.tabs.create({ url });
-  });
+  const pivotWayback = document.getElementById('pivot-wayback');
+  if (pivotWayback) {
+    pivotWayback.addEventListener('click', () => {
+      const query = State.target.handle || State.target.email || State.target.name;
+      const url = query ? `https://web.archive.org/web/*/${encodeURIComponent(query)}` : 'https://archive.org/';
+      browser.tabs.create({ url });
+    });
+  }
 
-  document.getElementById('pivot-fastpeople').addEventListener('click', () => {
-    const fname = State.target.firstName || (State.target.name ? State.target.name.split(' ')[0] : '');
-    const lname = State.target.lastName || (State.target.name ? State.target.name.split(' ').slice(-1)[0] : '');
-    if (fname && lname) {
-      const state = State.target.location ? `_${encodeURIComponent(State.target.location)}` : '';
-      browser.tabs.create({ url: `https://www.fastpeoplesearch.com/name/${encodeURIComponent(fname)}-${encodeURIComponent(lname)}${state}` });
+  const pivotGoogleTakedown = document.getElementById('pivot-google-takedown');
+  if (pivotGoogleTakedown) {
+    pivotGoogleTakedown.addEventListener('click', () => {
+      browser.tabs.create({ url: 'https://support.google.com/websearch/troubleshooter/3111061' });
+    });
+  }
+
+  const pivotPrivacyDesk = document.getElementById('pivot-privacy-desk');
+  if (pivotPrivacyDesk) {
+    pivotPrivacyDesk.addEventListener('click', () => {
+      switchTab('tab-privacy');
+    });
+  }
+}
+
+// -------------------------------------------------------------
+// Ethical Charter & Authorization Modal
+// -------------------------------------------------------------
+function setupEthicalCharterModal() {
+  const modal = document.getElementById('ethical-modal');
+  const btnOpen = document.getElementById('btn-open-charter');
+  const btnClose = document.getElementById('btn-close-ethical-modal');
+  const btnCloseSec = document.getElementById('btn-close-ethical-modal-secondary');
+  const chkAccept = document.getElementById('chk-accept-charter');
+  const btnAccept = document.getElementById('btn-accept-charter');
+
+  if (!modal) return;
+
+  function openModal() {
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  if (btnOpen) {
+    btnOpen.addEventListener('click', openModal);
+  }
+
+  if (btnClose) btnClose.addEventListener('click', closeModal);
+  if (btnCloseSec) btnCloseSec.addEventListener('click', closeModal);
+
+  if (chkAccept && btnAccept) {
+    chkAccept.addEventListener('change', () => {
+      btnAccept.disabled = !chkAccept.checked;
+    });
+
+    btnAccept.addEventListener('click', async () => {
+      try {
+        await browser.storage.local.set({ ethicalCharterAccepted: true });
+      } catch (err) {
+        console.error('Failed to persist charter acceptance:', err);
+      }
+      closeModal();
+      showToast('Ethical Charter acknowledged. Welcome to Visage.');
+    });
+  }
+
+  // Check first-run status
+  browser.storage.local.get(['ethicalCharterAccepted']).then(data => {
+    if (!data.ethicalCharterAccepted) {
+      openModal();
     } else {
-      browser.tabs.create({ url: 'https://www.fastpeoplesearch.com/' });
+      if (chkAccept) chkAccept.checked = true;
+      if (btnAccept) btnAccept.disabled = false;
     }
+  }).catch(err => {
+    console.warn('Storage check error for ethical charter:', err);
+  });
+}
+
+// -------------------------------------------------------------
+// Audit Mode & Context Configuration
+// -------------------------------------------------------------
+function applyAuditModeUI(mode) {
+  const bannerTitle = document.getElementById('banner-mode-title');
+  const bannerDesc = document.getElementById('banner-mode-desc');
+  const step1Badge = document.getElementById('step-1-badge');
+  const step7Btn = document.getElementById('step-btn-7');
+  const step7Card = document.getElementById('step-7-card');
+
+  if (mode === 'self') {
+    if (bannerTitle) bannerTitle.textContent = 'Personal Privacy Self-Audit Workstation';
+    if (bannerDesc) bannerDesc.textContent = 'You are conducting a defensive audit of your own digital footprint. Use findings to submit PII delisting requests, purge data broker aggregators, rotate exposed credentials, and harden your personal privacy perimeter.';
+    if (step1Badge) step1Badge.textContent = 'STEP 1: AUDIT SCOPE';
+    if (step7Btn) step7Btn.textContent = 'Remediation Plan';
+    if (step7Card) {
+      const strong = step7Card.querySelector('strong');
+      if (strong) strong.textContent = 'Remediation & Export';
+      const p = step7Card.querySelector('p');
+      if (p) p.textContent = 'Actionable hardening & delist export.';
+    }
+  } else {
+    if (bannerTitle) bannerTitle.textContent = 'Defensive Exposure Assessment Workstation';
+    if (bannerDesc) bannerDesc.textContent = 'Conducting an authorized footprint & exposure assessment for an organization or executive asset. Identify exposed corporate accounts, leaked credentials, and executive records to preempt targeted social engineering.';
+    if (step1Badge) step1Badge.textContent = 'STEP 1: TARGET SCOPE';
+    if (step7Btn) step7Btn.textContent = 'Export Report';
+    if (step7Card) {
+      const strong = step7Card.querySelector('strong');
+      if (strong) strong.textContent = 'Exposure Report';
+      const p = step7Card.querySelector('p');
+      if (p) p.textContent = 'Findings triage & Markdown export.';
+    }
+  }
+}
+
+function setupAuditMode() {
+  const select = document.getElementById('audit-mode-select');
+  if (!select) return;
+
+  select.addEventListener('change', () => {
+    State.auditMode = select.value;
+    applyAuditModeUI(select.value);
+    saveStoredData();
+    showToast(`Audit context switched to: ${select.value === 'self' ? 'Personal Privacy Self-Audit' : 'Defensive Assessment'}`);
   });
 
-  document.getElementById('pivot-intelx').addEventListener('click', () => {
-    const query = State.target.email || State.target.handle || State.target.name;
-    const url = query ? `https://intelx.io/?s=${encodeURIComponent(query)}` : 'https://intelx.io/';
-    browser.tabs.create({ url });
+  applyAuditModeUI(State.auditMode || 'self');
+}
+
+// -------------------------------------------------------------
+// TAB 6: PRIVACY & REMEDIATION DESK
+// -------------------------------------------------------------
+function setupPrivacyTab() {
+  const container = document.getElementById('tab-privacy');
+  if (!container) return;
+
+  container.querySelectorAll('.btn-open-external').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-url');
+      if (url) {
+        browser.tabs.create({ url });
+      }
+    });
   });
 }
 
@@ -3229,19 +3414,9 @@ function renderRecordsTab() {
   // Tier 3: Federal & Nationwide Indexes
   const t3Grid = document.getElementById('tier3-federal-cards');
   if (t3Grid) {
-    let voterRecordsUrl = 'https://voterrecords.com/';
-    if (State.target.firstName && State.target.lastName) {
-      const slug = `${State.target.firstName.toLowerCase()}-${State.target.lastName.toLowerCase()}`.replace(/[^a-z0-9-]/g, '');
-      voterRecordsUrl = `https://voterrecords.com/voters/${slug}/${jur.stateCode.toLowerCase()}`;
-    } else if (targetName && targetName !== 'Target Name') {
-      const nameParts = targetName.trim().replace(/[^a-zA-Z0-9\s-]/g, '').split(/\s+/).filter(Boolean);
-      if (nameParts.length >= 2) {
-        const slug = `${nameParts[0]}-${nameParts[nameParts.length - 1]}`;
-        voterRecordsUrl = `https://voterrecords.com/voters/${slug}/${jur.stateCode.toLowerCase()}`;
-      } else if (nameParts.length === 1) {
-        voterRecordsUrl = `https://voterrecords.com/voters/${nameParts[0]}/${jur.stateCode.toLowerCase()}`;
-      }
-    }
+    const usptoUrl = targetName && targetName !== 'Target Name'
+      ? `https://patents.google.com/?inventor=${encodeURIComponent(targetName)}`
+      : 'https://ppubs.uspto.gov/pubwebapp/static/pages/landing.html';
 
     const fedCards = [
       {
@@ -3252,11 +3427,11 @@ function renderRecordsTab() {
         url: targetName !== 'Target Name' ? `https://www.courtlistener.com/?q=${encodeURIComponent('"' + targetName + '"')}&type=r` : 'https://www.courtlistener.com/'
       },
       {
-        icon: '🗳️',
-        title: 'VoterRecords.com Public Voter Index',
-        scope: 'Voter Registry',
-        desc: 'Nationwide public voter registration database (100M+ open records). Discloses full residential street address, party affiliation, registration dates, and historical co-habitants.',
-        url: voterRecordsUrl
+        icon: '💡',
+        title: 'USPTO Patent & Trademark Public Search',
+        scope: 'Patents & Inventions',
+        desc: 'Official public register for patents and trademarks. Discloses inventor full names, assignees, residential city/state, and technical innovations.',
+        url: usptoUrl
       },
       {
         icon: '💵',
@@ -3268,30 +3443,9 @@ function renderRecordsTab() {
       {
         icon: '📈',
         title: 'SEC EDGAR Executive Filings',
-        scope: 'SEC & Equities',
-        desc: 'Search Form 4 insider transactions, executive equity holdings, CIK filings, and proxy statements.',
-        url: targetName !== 'Target Name' ? `https://www.sec.gov/edgar/searchedgar/companysearch?company_name=${encodeURIComponent(targetName)}` : 'https://www.sec.gov/edgar/searchedgar/companysearch'
-      },
-      {
-        icon: '🌐',
-        title: 'OpenCorporates Global Directory',
-        scope: 'Global Officers',
-        desc: 'World largest open corporate database. Search corporate directorships and LLC ownership nationwide.',
-        url: targetName !== 'Target Name' ? `https://opencorporates.com/officers?q=${encodeURIComponent(targetName)}` : 'https://opencorporates.com/'
-      },
-      {
-        icon: '✈️',
-        title: 'FAA Airmen & Aircraft Registry',
-        scope: 'Aviation Registry',
-        desc: 'Federal Aviation Administration pilot certifications and aircraft ownership registrations.',
-        url: 'https://registry.faa.gov/aircraftinquiry/'
-      },
-      {
-        icon: '📡',
-        title: 'FCC Universal Licensing System (ULS)',
-        scope: 'Radio & Comms',
-        desc: 'Federal Communications Commission amateur radio licenses (publicly lists full residential home address).',
-        url: 'https://wireless2.fcc.gov/UlsApp/UlsSearch/searchLicense.jsp'
+        scope: 'Executive Equity',
+        desc: 'Corporate director insider stock transactions (Form 3, 4, 5) and institutional beneficial ownership schedules (13D/13G).',
+        url: targetName !== 'Target Name' ? `https://www.sec.gov/edgar/searchedgar/companysearch?q=${encodeURIComponent(targetName)}` : 'https://www.sec.gov/edgar/searchedgar/companysearch'
       }
     ];
 
@@ -3304,24 +3458,24 @@ function renderRecordsTab() {
         </div>
         <div class="record-portal-desc">${escapeHtml(f.desc)}</div>
         <div class="record-portal-actions">
-          <button type="button" class="btn-micro btn-open-portal" data-url="${escapeHtml(f.url)}">Search Portal ↗</button>
+          <button type="button" class="btn-micro btn-open-portal" data-url="${escapeHtml(f.url)}">Open Federal Portal ↗</button>
           <button type="button" class="btn-micro btn-log-state-portal" data-title="${escapeHtml(f.title)}" data-url="${escapeHtml(f.url)}" data-category="${escapeHtml(f.scope)}">Log to Exposure Report</button>
         </div>
       </div>
     `).join('');
   }
 
-  // Tier 4: Precision Jurisdictional Dorks
+  // Tier 4: Jurisdictional Target Dorks
   const t4Grid = document.getElementById('tier4-dorks-grid');
   if (t4Grid) {
     const locFilter = jur.city && jur.city !== jur.county
-      ? `("${jur.county}" | "${jur.city}")`
-      : `"${jur.county}"`;
+      ? `("${jur.city}" | "${jur.county}" | "${jur.stateName}")`
+      : `("${jur.county}" | "${jur.stateName}")`;
 
     const dorks = [
       {
-        title: '🏠 Property Deeds & Assessments',
-        tag: 'Deeds & Real Estate',
+        title: '📜 Real Property, Deeds & Parcel Assessments',
+        tag: 'Property Deeds',
         query: `"${targetName}" ${locFilter} ("deed" | "mortgage" | "grantor" | "grantee" | "property assessment" | "parcel")`
       },
       {
@@ -3342,7 +3496,7 @@ function renderRecordsTab() {
       {
         title: '🗳️ Voter Registration & Party Enrollment',
         tag: 'Voter Records',
-        query: `"${targetName}" ("voter registration" | "voter record" | "registered to vote" | "party affiliation" | site:voterrecords.com) ${locFilter}`
+        query: `"${targetName}" ("voter registration" | "voter record" | "registered to vote" | "party affiliation") ${locFilter}`
       },
       {
         title: '🏛️ State & Municipal Campaign Finance',
@@ -3733,7 +3887,7 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
 | **State** | ${State.jurisdiction.stateName} Corporate Registrations | ${US_STATES[State.jurisdiction.stateCode]?.corpName || 'Division of Corporations'} | [Business Database](${US_STATES[State.jurisdiction.stateCode]?.corpUrl || '#'}) |
 | **State** | ${State.jurisdiction.stateName} Professional Licensing | ${US_STATES[State.jurisdiction.stateCode]?.licenseName || 'Professional Licensing'} | [Licensing Search](${US_STATES[State.jurisdiction.stateCode]?.licenseUrl || '#'}) |
 | **State** | ${State.jurisdiction.stateName} Voter Registration | ${US_STATES[State.jurisdiction.stateCode]?.voterName || 'State Voter Registry'} | [State Voter Portal](${US_STATES[State.jurisdiction.stateCode]?.voterUrl || '#'}) |
-| **Nationwide** | VoterRecords.com Public Index | Nationwide open voter registration & address records | [VoterRecords](https://voterrecords.com/) |
+| **Federal** | USPTO Public Patent Search | Inventor filings, assignee entities, patent records | [Google Patents](https://patents.google.com/) |
 | **Federal** | CourtListener / PACER | Federal District & Bankruptcy Dockets | [CourtListener](https://www.courtlistener.com/) |
 | **Federal** | FEC Individual Contributions | Political donor records (home address & employer) | [FEC Search](https://www.fec.gov/data/receipts/individual-contributions/) |
 | **Federal** | SEC EDGAR | Executive Form 4 insider equity holdings | [SEC EDGAR](https://www.sec.gov/edgar/searchedgar/companysearch) |
@@ -3765,6 +3919,20 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
   }
 
   md += `---
+
+## 🛡️ Remediation & Privacy Hardening Plan
+
+| Action / Remediation Item | Target Surface | Recommended Resource / Procedure | Status |
+| :--- | :--- | :--- | :--- |
+| **Search Engine PII Removal** | Google Search Results | Submit direct de-indexing via [Google PII Removal Request](https://support.google.com/websearch/troubleshooter/3111061) | [ ] Pending |
+| **Major Broker Suppression** | LexisNexis / Risk Sol. | Submit consumer opt-out suppression via [LexisNexis Opt-Out](https://optout.lexisnexis.com/) | [ ] Pending |
+| **Directory Delisting** | Whitepages & Aggregators | Submit listing suppression via [Whitepages Suppression](https://www.whitepages.com/suppression-requests) | [ ] Pending |
+| **Search Delisting** | Spokeo & BeenVerified | Delist profiles via [Spokeo Opt-Out](https://www.spokeo.com/optout) & [BeenVerified](https://www.beenverified.com/app/optout/search) | [ ] Pending |
+| **Credential Rotation** | Leaked / Exposed Passwords | Rotate passwords on all exposed domains, enable hardware FIDO2/WebAuthn MFA | [ ] Pending |
+| **Public Filing Scrub** | Resumes / PDFs / Archives | Scrub unredacted personal phone numbers and home addresses from public websites | [ ] Pending |
+| **Automated Opt-Out Agent** | Consumer Data Brokers | Deploy automated opt-out agents such as [Permission Slip by CR](https://www.permissionslipcr.com/) | [ ] Pending |
+
+---
 *Generated by [Visage](https://github.com/mrnickpeer/Visage) - Digital Footprint & Identity Privacy Workstation.*
 `;
 
@@ -4042,8 +4210,27 @@ function exportCsvDossier() {
     `"${l.timestamp}"`
   ]);
 
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const filename = `visage-findings-${(State.target.handle || 'profile')}.csv`;
+  const targetName = State.target.name || State.target.handle || 'Self';
+  const remediationItems = [
+    ['ACT-01', targetName, 'Search Engine PII Removal Request', 'Privacy Remediation', 'High', 'pending', 'https://support.google.com/websearch/troubleshooter/3111061', 'Submit official Google search de-indexing form for exposed personal PII or doxxing material.', new Date().toISOString()],
+    ['ACT-02', targetName, 'LexisNexis Consumer Opt-Out', 'Data Broker Suppression', 'High', 'pending', 'https://optout.lexisnexis.com/', 'Submit official consumer opt-out suppression request to LexisNexis Risk Solutions public records.', new Date().toISOString()],
+    ['ACT-03', targetName, 'Whitepages Directory Delisting', 'Directory Suppression', 'Medium', 'pending', 'https://www.whitepages.com/suppression-requests', 'Submit public listing suppression request to purge residential street address and relative associations.', new Date().toISOString()],
+    ['ACT-04', targetName, 'Spokeo & BeenVerified Delisting', 'Aggregator Opt-Out', 'Medium', 'pending', 'https://www.spokeo.com/optout', 'Submit delisting requests on Spokeo and BeenVerified self-service portals.', new Date().toISOString()],
+    ['ACT-05', targetName, 'Credential Rotation & Hardware MFA', 'Account Security', 'Critical', 'pending', '', 'Rotate passwords across all identified compromised services and enforce FIDO2 WebAuthn security keys.', new Date().toISOString()]
+  ];
+
+  const remediationRows = remediationItems.map(item => item.map(val => `"${String(val).replace(/"/g, '""')}"`).join(','));
+
+  const csv = [
+    headers.join(','),
+    ...rows.map(r => r.join(',')),
+    '',
+    '# ACTIONABLE REMEDIATION & HARDENING PLAN',
+    ...remediationRows
+  ].join('\n');
+
+  const fileSlug = (State.target.handle || State.target.lastName || State.target.name || 'profile').toLowerCase().replace(/[^a-z0-9]/g, '-');
+  const filename = `visage-findings-${fileSlug}.csv`;
   downloadFile(filename, 'text/csv', csv);
   markStep(7, true);
   showToast(`Exported ${filename}`);

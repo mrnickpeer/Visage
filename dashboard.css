@@ -315,6 +315,96 @@ button.primary:hover {
   border-color: var(--border);
 }
 
+.btn-danger {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #fff;
+}
+
+.context-mode-box {
+  margin-bottom: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.context-mode-box label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.context-mode-box select {
+  background: #191b28;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.context-mode-box select:focus {
+  border-color: var(--primary);
+}
+
+/* Privacy & Remediation Desk Grid */
+.privacy-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.privacy-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.privacy-card:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.privacy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.privacy-card-icon {
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.privacy-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.privacy-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
 .btn-ghost {
   background: transparent;
   border: none;

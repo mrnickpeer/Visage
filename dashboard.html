@@ -19,6 +19,7 @@
           <span class="sub-heading">Digital Footprint & Privacy Suite</span>
         </div>
         <div class="header-right">
+          <button type="button" id="btn-open-charter" class="btn-ghost btn-micro" title="View Visage Ethical Charter & Terms of Use" style="margin-right: 6px;">⚖️ Charter</button>
           <label class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
             <input type="checkbox" id="toggle-guidance" checked>
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
@@ -29,7 +30,14 @@
       
       <!-- Target Scope Inputs -->
       <section class="composer">
-        <div class="section-badge">STEP 1: AUDIT SCOPE</div>
+        <div class="context-mode-box">
+          <label for="audit-mode-select">Audit Context</label>
+          <select id="audit-mode-select">
+            <option value="self" selected>🛡️ Personal Privacy Self-Audit</option>
+            <option value="org">🏢 Defensive Assessment (Executive / Org)</option>
+          </select>
+        </div>
+        <div class="section-badge" id="step-1-badge">STEP 1: AUDIT SCOPE</div>
 
         <div class="input-name-grid">
           <div class="input-group">
@@ -90,17 +98,18 @@
         <div class="scope-actions">
           <button type="button" id="btn-save-profile" class="btn-secondary" title="Save this profile into local profiles">💾 Save Profile</button>
           <button type="button" id="btn-reset-scope" class="btn-secondary" title="Reset all input fields">🔄 Reset</button>
+          <button type="button" id="btn-purge-data" class="btn-danger" title="Permanently erase all local profiles, logs, and findings from browser storage">🗑️ Purge All Data</button>
         </div>
       </section>
 
       <!-- External Quick Pivots -->
       <section class="pivots-section">
-        <div class="section-title-sm">Public Directory Checks</div>
+        <div class="section-title-sm">Quick Privacy & Remediation Pivots</div>
         <div class="pivot-buttons">
           <button type="button" class="pivot-btn" id="pivot-reverse-image" title="Open Google Lens reverse image lookup">🖼️ Reverse Image</button>
           <button type="button" class="pivot-btn" id="pivot-wayback" title="Search Wayback Machine archives for alias/email">🏛️ Wayback</button>
-          <button type="button" class="pivot-btn" id="pivot-fastpeople" title="Search public US directory records">👥 FastPeopleSearch</button>
-          <button type="button" class="pivot-btn" id="pivot-intelx" title="Search Intelligence X archives">🔍 IntelX</button>
+          <button type="button" class="pivot-btn" id="pivot-google-takedown" title="Open Google Official Personal Info Removal Request Form">🛡️ Google PII Form</button>
+          <button type="button" class="pivot-btn" id="pivot-privacy-desk" title="Jump to Privacy & Data Broker Opt-Out Desk">📋 Opt-Out Desk</button>
         </div>
       </section>
 
@@ -138,8 +147,8 @@
       <div class="defensive-banner">
         <span class="defensive-banner-icon">🛡️</span>
         <div class="defensive-banner-content">
-          <strong>Defensive Footprint & Privacy Workstation</strong>
-          <p>Visage is designed for individuals, security researchers, and privacy advocates to audit public digital footprints, evaluate exposed credentials, and mitigate social engineering risks. All queries run 100% locally in your browser.</p>
+          <strong id="banner-mode-title">Defensive Footprint & Privacy Workstation</strong>
+          <p id="banner-mode-desc">Visage is designed for individuals, security researchers, and privacy advocates to audit public digital footprints, evaluate exposed credentials, and mitigate social engineering risks. All queries run 100% locally in your browser.</p>
         </div>
       </div>
 
@@ -246,6 +255,7 @@
         <button class="tab-btn" data-target="tab-breach">Credential Exposure</button>
         <button class="tab-btn" data-target="tab-dorks">Search Footprint</button>
         <button class="tab-btn" data-target="tab-records">Public Records</button>
+        <button class="tab-btn" data-target="tab-privacy">Privacy & Remediation Desk</button>
         <button class="tab-btn" data-target="tab-dossier">Exposure Report <span class="badge-pill" id="tab-audit-badge">0</span></button>
         <button class="tab-btn" data-target="tab-profiles">Profiles</button>
       </nav>
@@ -716,6 +726,219 @@
       </div>
 
       <!-- ========================================================= -->
+      <!-- TAB 6: PRIVACY & REMEDIATION DESK -->
+      <!-- ========================================================= -->
+      <div class="tab-content" id="tab-privacy">
+        <div class="toolbar">
+          <div>
+            <h2>Privacy & Remediation Desk</h2>
+            <p class="section-desc">Official search engine takedown forms, data broker opt-out portals, and digital defense resources.</p>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>🛡️ Remediation-First Principle:</strong>
+          <p>Finding exposed personal data is only half the battle. Use the verified portals below to submit official Google/Bing search index removals, file broker opt-outs, and invoke statutory privacy protections (such as CCPA, CPA, or Daniel's Law).</p>
+        </div>
+
+        <!-- Section 1: Search Engine PII Removal -->
+        <div class="sub-section-header">
+          <div>
+            <h3>Search Engine PII Removal Forms</h3>
+            <span class="badge">Direct Takedowns</span>
+          </div>
+        </div>
+        <div class="privacy-cards-grid">
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🔎</span>
+              <div>
+                <strong>Google Personal Information (PII) Removal</strong>
+                <div class="text-muted text-xs">Official Google Search Troubleshooter</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Request removal of search results that expose personal contact information (phone, email, home address), financial details, or government IDs.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://support.google.com/websearch/troubleshooter/3111061">Open Google PII Form ↗</button>
+              <button type="button" class="btn-micro btn-open-external" data-url="https://search.google.com/search-console/remove-outdated-content">Outdated Content Removal ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🟦</span>
+              <div>
+                <strong>Microsoft Bing PII Report & Removal</strong>
+                <div class="text-muted text-xs">Bing Web Search Privacy Request</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Submit formal requests to Microsoft to delist search results containing personal phone numbers, addresses, or sensitive credentials.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.microsoft.com/en-us/concern/bing">Open Bing Report Form ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Major Data Broker Direct Opt-Out Portals -->
+        <div class="sub-section-header" style="margin-top: 1.5rem;">
+          <div>
+            <h3>Major Data Broker Direct Opt-Outs</h3>
+            <span class="badge">Record Suppression</span>
+          </div>
+        </div>
+        <div class="privacy-cards-grid">
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🏢</span>
+              <div>
+                <strong>LexisNexis Risk Solutions</strong>
+                <div class="text-muted text-xs">Major commercial aggregator</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Official Consumer Opt-Out / Do Not Sell My Personal Information request portal for LexisNexis public records databases.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://optout.lexisnexis.com/">Open Opt-Out Portal ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">📖</span>
+              <div>
+                <strong>Whitepages</strong>
+                <div class="text-muted text-xs">Directory suppression</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Submit direct listing suppression requests to remove your public directory listing, phone numbers, and associated relatives.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.whitepages.com/suppression-requests">Whitepages Suppression ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">👤</span>
+              <div>
+                <strong>Spokeo</strong>
+                <div class="text-muted text-xs">People search index</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Direct privacy suppression form to delist personal profiles and historical address records.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.spokeo.com/optout">Spokeo Opt-Out ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">✅</span>
+              <div>
+                <strong>BeenVerified</strong>
+                <div class="text-muted text-xs">Public record aggregator</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Self-service verification and opt-out portal to delist background profiles from BeenVerified search results.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.beenverified.com/app/optout/search">BeenVerified Opt-Out ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">⚡</span>
+              <div>
+                <strong>FastPeopleSearch Removal</strong>
+                <div class="text-muted text-xs">Removal request portal</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Official removal request portal to delist telephone numbers, historical addresses, and co-habitants.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.fastpeoplesearch.com/removal">Removal Request ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🛡️</span>
+              <div>
+                <strong>TruePeopleSearch Removal</strong>
+                <div class="text-muted text-xs">Removal request portal</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Direct suppression link to take down personal profiles from TruePeopleSearch directories.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.truepeoplesearch.com/removal">Removal Request ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Authoritative Privacy Frameworks & Guides -->
+        <div class="sub-section-header" style="margin-top: 1.5rem;">
+          <div>
+            <h3>Privacy Defense Organizations & Guides</h3>
+            <span class="badge">Trusted Resources</span>
+          </div>
+        </div>
+        <div class="privacy-cards-grid">
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">📱</span>
+              <div>
+                <strong>Consumer Reports: Permission Slip</strong>
+                <div class="text-muted text-xs">Automated data deletion app</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Non-profit app developed by Consumer Reports to automatically send data deletion and opt-out requests on your behalf.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://www.permissionslipcr.com/">Learn More ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🛡️</span>
+              <div>
+                <strong>EFF: Surveillance Self-Defense (SSD)</strong>
+                <div class="text-muted text-xs">Electronic Frontier Foundation</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Comprehensive digital security, operational security (OPSEC), and privacy defense guides for researchers and privacy advocates.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://ssd.eff.org/">Open EFF Guides ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">🏛️</span>
+              <div>
+                <strong>Privacy Rights Clearinghouse</strong>
+                <div class="text-muted text-xs">Data broker registry & guides</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">National non-profit advocacy group providing an exhaustive database of registered data brokers and state statutory rights.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://privacyrights.org/data-brokers">Browse Directory ↗</button>
+            </div>
+          </div>
+
+          <div class="privacy-card">
+            <div class="privacy-card-header">
+              <span class="privacy-card-icon">📰</span>
+              <div>
+                <strong>Freedom of the Press Foundation</strong>
+                <div class="text-muted text-xs">Digital security training</div>
+              </div>
+            </div>
+            <p class="privacy-card-desc">Best practices for secure identity hygiene, password managers, and multi-factor authentication for high-risk individuals.</p>
+            <div class="privacy-card-actions">
+              <button type="button" class="btn-micro btn-open-external" data-url="https://freedom.press/training/">Open Training Guides ↗</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================= -->
       <!-- TAB 7: EXPOSURE FINDINGS & TRIAGE REPORT -->
       <!-- ========================================================= -->
       <div class="tab-content" id="tab-dossier">
@@ -859,6 +1082,51 @@
         <div class="modal-actions">
           <button type="button" id="btn-save-manual-finding" class="primary">Save Finding</button>
           <button type="button" id="btn-cancel-manual-finding" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Ethical Charter & Authorization Rules -->
+  <div id="ethical-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 620px;">
+      <div class="modal-header">
+        <h3>⚖️ Ethical Charter & Rules of Engagement</h3>
+        <button type="button" id="btn-close-ethical-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="background: rgba(99, 102, 241, 0.08); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.85rem; line-height: 1.5;">
+          Visage is an open-source footprint analysis and privacy auditing suite engineered exclusively for <strong>defensive personal privacy audits</strong>, <strong>authorized security assessments</strong>, and <strong>academic/educational research</strong>.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span style="color: var(--primary); font-weight: bold; flex-shrink: 0;">1.</span>
+            <div><strong style="color: var(--text);">Explicit Authorization:</strong> You affirm that you are assessing your own identity (Self-Audit) or that you possess prior explicit authorization from the subject or organization.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span style="color: var(--primary); font-weight: bold; flex-shrink: 0;">2.</span>
+            <div><strong style="color: var(--text);">Zero-Tolerance for Harassment:</strong> Under no circumstances may intelligence or dossiers compiled by Visage be leveraged for harassment, stalking, doxxing, discrimination, extortion, or unlawful surveillance.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span style="color: var(--primary); font-weight: bold; flex-shrink: 0;">3.</span>
+            <div><strong style="color: var(--text);">Remediation-First Focus:</strong> We encourage operators to utilize gathered intelligence to delist unredacted personal PII, opt-out of data broker repositories, and remediate compromised credentials.</div>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <span style="color: var(--primary); font-weight: bold; flex-shrink: 0;">4.</span>
+            <div><strong style="color: var(--text);">Local Data Custody:</strong> All target data and findings are stored strictly within your local browser storage. You are solely responsible for managing, securing, and purging target scopes when audits conclude.</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 0.5rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+          <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.84rem; color: #fff;">
+            <input type="checkbox" id="chk-accept-charter" style="cursor: pointer; width: 16px; height: 16px;">
+            <span>I acknowledge and agree to abide by this Ethical Charter and Rules of Engagement.</span>
+          </label>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 0.25rem;">
+          <button type="button" id="btn-accept-charter" class="primary" disabled>Accept & Proceed</button>
+          <button type="button" id="btn-close-ethical-modal-secondary" class="btn-secondary">Close</button>
         </div>
       </div>
     </div>
