@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Visage",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Personal Identity Intelligence, Executive Exposure & People OSINT Suite.",
   "permissions": [
     "storage",
     "tabs",
-    "downloads",
     "contextMenus"
   ],
   "host_permissions": [
@@ -15,7 +14,6 @@
     "https://keybase.io/*",
     "https://api.github.com/*",
     "https://api.pwnedpasswords.com/*",
-    "https://haveibeenpwned.com/*",
     "https://nominatim.openstreetmap.org/*"
   ],
   "background": {

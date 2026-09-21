@@ -60,7 +60,7 @@ Visage performs only client-initiated, read-only queries to public OSINT interme
 ## ⚖️ 5. Compliance with Store Developer Policies
 
 - **Google Chrome Web Store Single-Purpose Policy**: Visage serves the sole purpose of assisting security professionals and investigators in personal identity intelligence and exposure auditing.
-- **Mozilla Add-on Data Disclosure Policy**: Visage requests only permissions necessary for local operation (`storage`, `tabs`, `downloads`, `contextMenus`).
+- **Mozilla Add-on Data Disclosure Policy**: Visage requests only permissions necessary for local operation (`storage`, `tabs`, `contextMenus`).
 
 ---
 

@@ -79,7 +79,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   if (info.menuItemId === "visage-add-link" || info.menuItemId === "visage-add-page") {
     const targetUrl = info.linkUrl || info.pageUrl || (tab && tab.url);
-    if (!targetUrl || targetUrl.startsWith("about:") || targetUrl.startsWith("moz-extension://") || targetUrl.startsWith("chrome-extension://")) return;
+    if (!targetUrl || targetUrl.startsWith("about:") || targetUrl.startsWith("moz-extension://") || targetUrl.startsWith("chrome://") || targetUrl.startsWith("chrome-extension://")) return;
 
     try {
       const data = await browser.storage.local.get(["auditLogs"]);

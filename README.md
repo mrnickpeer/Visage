@@ -75,8 +75,8 @@ npm run build
 ```
 
 The build process produces:
-- `dist/visage-firefox-v1.0.1.zip` (Ready for Mozilla AMO submission)
-- `dist/visage-chrome-v1.0.1.zip` (Ready for Chrome Web Store submission)
+- `dist/visage-firefox-v1.0.3.zip` (Ready for Mozilla AMO submission)
+- `dist/visage-chrome-v1.0.3.zip` (Ready for Chrome Web Store submission)
 - `dist/firefox/` (Unpacked Firefox add-on directory)
 - `dist/chrome/` (Unpacked Chrome extension directory)
 

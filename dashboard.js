@@ -3598,7 +3598,9 @@ function renderAuditLogs() {
         </div>
       </div>
       <div class="finding-body">
-        ${item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="finding-evidence">${escapeHtml(item.url)} ↗</a>` : ''}
+        ${item.url ? (/^https?:\/\//i.test(item.url)
+          ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="finding-evidence">${escapeHtml(item.url)} ↗</a>`
+          : `<span class="finding-evidence">${escapeHtml(item.url)}</span>`) : ''}
         <input type="text" class="finding-notes-input" data-id="${escapeHtml(item.id)}" value="${escapeHtml(item.notes || '')}" placeholder="Add analyst notes or evidence details...">
       </div>
       <div class="finding-footer">
@@ -4050,22 +4052,13 @@ function exportCsvDossier() {
 function downloadFile(filename, mimeType, content) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
-
-  if (browser && browser.downloads && browser.downloads.download) {
-    browser.downloads.download({
-      url: url,
-      filename: filename,
-      saveAs: true
-    });
-  } else {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 // -------------------------------------------------------------
