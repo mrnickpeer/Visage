@@ -12,6 +12,19 @@
 
 ---
 
+## 📸 Workstation Screenshots
+
+### 1. 7-Step Identity Reconnaissance & 100+ Platform Username Matrix
+![Visage Username & Alias Matrix](screenshots/visage_matrix.png)
+
+### 2. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
+![Visage Cryptographic Identity](screenshots/visage_crypto.png)
+
+### 3. 50-State Public Records & Jurisdictional Intelligence Desk
+![Visage Public Records Desk](screenshots/visage_records.png)
+
+---
+
 ## 🧭 The 7-Step Identity Audit Methodology
 
 Visage guides investigators through an end-to-end, reproducible identity audit workflow:
