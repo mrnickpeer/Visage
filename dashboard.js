@@ -4,7 +4,7 @@
  *
  * Implements the 7-Step Identity Reconnaissance Methodology:
  *  Step 1: Identity Scope Normalization & Permutations
- *  Step 2: Passive Username & Alias Matrix (100+ Platforms)
+ *  Step 2: Passive Username & Alias Matrix (140+ Platforms)
  *  Step 3: Cryptographic Identity (OpenPGP, Keybase, GitHub)
  *  Step 4: Breach & Leak Telemetry (HIBP, k-Anonymity, Pastes)
  *  Step 5: Person-Centric Dork Compiler
@@ -121,120 +121,152 @@ const State = {
 };
 
 // -------------------------------------------------------------
-// 100+ Platform Directory for Step 2 (Username Matrix)
+// 140+ Platform Directory for Step 2 (Username Matrix)
+// Strictly Alphabetized (A-Z)
 // -------------------------------------------------------------
 const PLATFORMS = [
-  // Developer & Tech (22)
+  { name: '500px', cat: 'media', url: 'https://500px.com/p/{}', icon: '📸' },
+  { name: 'About.me', cat: 'social', url: 'https://about.me/{}', icon: '🙋' },
+  { name: 'AllTrails', cat: 'gaming', url: 'https://www.alltrails.com/members/{}', icon: '🥾' },
+  { name: 'AniList', cat: 'gaming', url: 'https://anilist.co/user/{}/', icon: '🌸' },
+  { name: 'Archive.org', cat: 'gaming', url: 'https://archive.org/details/@{}', icon: '🏛️' },
+  { name: 'ArtStation', cat: 'media', url: 'https://www.artstation.com/{}', icon: '🖌️' },
+  { name: 'Audius', cat: 'media', url: 'https://audius.co/{}', icon: '🎧' },
+  { name: 'Bandcamp', cat: 'media', url: 'https://bandcamp.com/{}', icon: '🎪' },
+  { name: 'Beacons.ai', cat: 'social', url: 'https://beacons.ai/{}', icon: '📡' },
+  { name: 'Behance', cat: 'media', url: 'https://www.behance.net/{}', icon: '🎨' },
+  { name: 'Bento.me', cat: 'social', url: 'https://bento.me/{}', icon: '🍱' },
+  { name: 'BGG Forum', cat: 'chat', url: 'https://boardgamegeek.com/user/{}', icon: '🎲' },
+  { name: 'Bitbucket', cat: 'dev', url: 'https://bitbucket.org/{}/', icon: '🪣' },
+  { name: 'Bitcointalk', cat: 'chat', url: 'https://bitcointalk.org/index.php?action=profile;u={}', icon: '₿' },
+  { name: 'Blogger', cat: 'social', url: 'https://{}.blogspot.com', icon: '🟧' },
+  { name: 'Bluesky', cat: 'social', url: 'https://bsky.app/profile/{}.bsky.social', icon: '🦋' },
+  { name: 'BuyMeACoffee', cat: 'social', url: 'https://www.buymeacoffee.com/{}', icon: '☕' },
+  { name: 'CashApp', cat: 'social', url: 'https://cash.app/${}', icon: '🟩' },
+  { name: 'Chess.com', cat: 'media', url: 'https://www.chess.com/member/{}', icon: '♟️', checkUrl: 'https://api.chess.com/pub/player/{}', checkMode: 'json_status' },
+  { name: 'Clubhouse', cat: 'social', url: 'https://www.clubhouse.com/@{}', icon: '👋' },
+  { name: 'Codeberg', cat: 'dev', url: 'https://codeberg.org/{}', icon: '🏔️' },
+  { name: 'Codecademy', cat: 'dev', url: 'https://www.codecademy.com/profiles/{}', icon: '💻' },
+  { name: 'CodePen', cat: 'dev', url: 'https://codepen.io/{}', icon: '🖋️' },
+  { name: 'CoinMarketCap', cat: 'social', url: 'https://coinmarketcap.com/community/profile/{}', icon: '🪙' },
+  { name: 'CTFtime', cat: 'dev', url: 'https://ctftime.org/user/{}', icon: '🚩' },
+  { name: 'Dailymotion', cat: 'media', url: 'https://www.dailymotion.com/{}', icon: '📽️' },
+  { name: 'Dev.to', cat: 'dev', url: 'https://dev.to/{}', icon: '👩‍💻' },
+  { name: 'DeviantArt', cat: 'media', url: 'https://www.deviantart.com/{}', icon: '🎭' },
+  { name: 'Devpost', cat: 'dev', url: 'https://devpost.com/{}', icon: '🚀' },
+  { name: 'Discord Lookup', cat: 'chat', url: 'https://discord.id/?id={}', icon: '👾' },
+  { name: 'Discourse', cat: 'chat', url: 'https://meta.discourse.org/u/{}/summary', icon: '💬' },
+  { name: 'Disqus', cat: 'chat', url: 'https://disqus.com/by/{}/', icon: '💬' },
+  { name: 'DockerHub', cat: 'dev', url: 'https://hub.docker.com/u/{}', icon: '🐳' },
+  { name: 'Dribbble', cat: 'media', url: 'https://dribbble.com/{}', icon: '🏀' },
+  { name: 'Duolingo', cat: 'gaming', url: 'https://www.duolingo.com/profile/{}', icon: '🦉' },
+  { name: 'eBay', cat: 'social', url: 'https://www.ebay.com/usr/{}', icon: '🛍️' },
+  { name: 'Epic Games', cat: 'gaming', url: 'https://www.epicgames.com/id/{}', icon: '🎯' },
+  { name: 'Etsy', cat: 'social', url: 'https://www.etsy.com/people/{}', icon: '🧶' },
+  { name: 'Facebook', cat: 'social', url: 'https://www.facebook.com/{}', icon: '📘' },
+  { name: 'Fiverr', cat: 'social', url: 'https://www.fiverr.com/{}', icon: '🟢' },
+  { name: 'Flickr', cat: 'social', url: 'https://www.flickr.com/people/{}', icon: '📷' },
+  { name: 'FreeCodeCamp', cat: 'dev', url: 'https://www.freecodecamp.org/{}', icon: '🔥' },
+  { name: 'Gab', cat: 'social', url: 'https://gab.com/{}', icon: '🐸' },
+  { name: 'Giphy', cat: 'media', url: 'https://giphy.com/{}', icon: '🎞️' },
+  { name: 'Gist', cat: 'dev', url: 'https://gist.github.com/{}', icon: '📝' },
   { name: 'GitHub', cat: 'dev', url: 'https://github.com/{}', icon: '🐙', checkUrl: 'https://api.github.com/users/{}', checkMode: 'json_status' },
   { name: 'GitLab', cat: 'dev', url: 'https://gitlab.com/{}', icon: '🦊' },
-  { name: 'Bitbucket', cat: 'dev', url: 'https://bitbucket.org/{}/', icon: '🪣' },
-  { name: 'DockerHub', cat: 'dev', url: 'https://hub.docker.com/u/{}', icon: '🐳' },
-  { name: 'PyPI', cat: 'dev', url: 'https://pypi.org/user/{}', icon: '🐍' },
-  { name: 'NPM', cat: 'dev', url: 'https://www.npmjs.com/~{}', icon: '📦' },
-  { name: 'Packagist', cat: 'dev', url: 'https://packagist.org/users/{}/', icon: '🐘' },
-  { name: 'RubyGems', cat: 'dev', url: 'https://rubygems.org/profiles/{}', icon: '💎' },
-  { name: 'HackerNews', cat: 'dev', url: 'https://news.ycombinator.com/user?id={}', icon: '🟧', checkUrl: 'https://hacker-news.firebaseio.com/v0/user/{}.json', checkMode: 'json_val' },
-  { name: 'StackOverflow', cat: 'dev', url: 'https://stackoverflow.com/users/{}', icon: '🥞' },
-  { name: 'HuggingFace', cat: 'dev', url: 'https://huggingface.co/{}', icon: '🤗' },
-  { name: 'Kaggle', cat: 'dev', url: 'https://www.kaggle.com/{}', icon: '📊' },
-  { name: 'Replit', cat: 'dev', url: 'https://replit.com/@{}', icon: '⚡' },
-  { name: 'Codeberg', cat: 'dev', url: 'https://codeberg.org/{}', icon: '🏔️' },
-  { name: 'SourceForge', cat: 'dev', url: 'https://sourceforge.net/u/{}/profile', icon: '📁' },
-  { name: 'Dev.to', cat: 'dev', url: 'https://dev.to/{}', icon: '👩‍💻' },
-  { name: 'Hashnode', cat: 'dev', url: 'https://hashnode.com/@{}', icon: '📘' },
-  { name: 'LeetCode', cat: 'dev', url: 'https://leetcode.com/{}', icon: '🧠' },
-  { name: 'CodePen', cat: 'dev', url: 'https://codepen.io/{}', icon: '🖋️' },
-  { name: 'Launchpad', cat: 'dev', url: 'https://launchpad.net/~{}', icon: '🚀' },
-  { name: 'Gist', cat: 'dev', url: 'https://gist.github.com/{}', icon: '📝' },
   { name: 'Glitch', cat: 'dev', url: 'https://glitch.com/@{}', icon: '🎏' },
-
-  // Social & Microblogging (28)
-  { name: 'X / Twitter', cat: 'social', url: 'https://x.com/{}', icon: '𝕏' },
-  { name: 'Bluesky', cat: 'social', url: 'https://bsky.app/profile/{}.bsky.social', icon: '🦋' },
-  { name: 'Reddit', cat: 'social', url: 'https://www.reddit.com/user/{}', icon: '🤖' },
-  { name: 'Mastodon.social', cat: 'social', url: 'https://mastodon.social/@{}', icon: '🐘' },
-  { name: 'Threads', cat: 'social', url: 'https://www.threads.net/@{}', icon: '🧵' },
-  { name: 'Instagram', cat: 'social', url: 'https://www.instagram.com/{}/', icon: '📸' },
-  { name: 'LinkedIn', cat: 'social', url: 'https://www.linkedin.com/in/{}', icon: '💼' },
-  { name: 'Pinterest', cat: 'social', url: 'https://www.pinterest.com/{}/', icon: '📌' },
-  { name: 'Tumblr', cat: 'social', url: 'https://{}.tumblr.com', icon: '📜' },
-  { name: 'Medium', cat: 'social', url: 'https://medium.com/@{}', icon: '✍️' },
-  { name: 'Substack', cat: 'social', url: 'https://{}.substack.com', icon: '📰' },
-  { name: 'Linktree', cat: 'social', url: 'https://linktr.ee/{}', icon: '🌲' },
-  { name: 'About.me', cat: 'social', url: 'https://about.me/{}', icon: '🙋' },
-  { name: 'Gravatar', cat: 'social', url: 'https://gravatar.com/{}', icon: '👤' },
-  { name: 'Quora', cat: 'social', url: 'https://www.quora.com/profile/{}', icon: '❓' },
-  { name: 'Patreon', cat: 'social', url: 'https://www.patreon.com/{}', icon: '🪙' },
-  { name: 'BuyMeACoffee', cat: 'social', url: 'https://www.buymeacoffee.com/{}', icon: '☕' },
-  { name: 'Ko-fi', cat: 'social', url: 'https://ko-fi.com/{}', icon: '🍵' },
-  { name: 'Flickr', cat: 'social', url: 'https://www.flickr.com/people/{}', icon: '📷' },
-  { name: 'Facebook', cat: 'social', url: 'https://www.facebook.com/{}', icon: '📘' },
-  { name: 'VK', cat: 'social', url: 'https://vk.com/{}', icon: '🔵' },
-  { name: 'Vero', cat: 'social', url: 'https://vero.co/{}', icon: '🟢' },
-  { name: 'Post.news', cat: 'social', url: 'https://post.news/@/{}', icon: '📫' },
-  { name: 'Gab', cat: 'social', url: 'https://gab.com/{}', icon: '🐸' },
-  { name: 'Truth Social', cat: 'social', url: 'https://truthsocial.com/@{}', icon: '🔴' },
-  { name: 'Myspace', cat: 'social', url: 'https://myspace.com/{}', icon: '📻' },
-  { name: 'Keybase', cat: 'social', url: 'https://keybase.io/{}', icon: '🔑', checkUrl: 'https://keybase.io/_/api/1.0/user/lookup.json?usernames={}', checkMode: 'keybase' },
-  { name: 'Polywork', cat: 'social', url: 'https://www.polywork.com/{}', icon: '🟣' },
-
-  // Messaging & Forums (18)
-  { name: 'Telegram', cat: 'chat', url: 'https://t.me/{}', icon: '✈️' },
-  { name: 'Discourse', cat: 'chat', url: 'https://meta.discourse.org/u/{}/summary', icon: '💬' },
-  { name: 'Session', cat: 'chat', url: 'https://session.org', icon: '🛡️' },
-  { name: 'Matrix', cat: 'chat', url: 'https://matrix.to/#/@{}:matrix.org', icon: '🟩' },
-  { name: 'IRCCloud', cat: 'chat', url: 'https://www.irccloud.com/chat#!{}', icon: '☁️' },
-  { name: 'HackerNoon', cat: 'chat', url: 'https://hackernoon.com/u/{}', icon: '🟩' },
-  { name: 'Lemmy.world', cat: 'chat', url: 'https://lemmy.world/u/{}', icon: '🐭' },
-  { name: 'Revolt', cat: 'chat', url: 'https://revolt.chat', icon: '⚡' },
-  { name: 'Guilded', cat: 'chat', url: 'https://www.guilded.gg/{}', icon: '🛡️' },
-  { name: 'Steam Community', cat: 'chat', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
-  { name: 'Lobste.rs', cat: 'chat', url: 'https://lobste.rs/u/{}', icon: '🦞' },
-  { name: 'BGG Forum', cat: 'chat', url: 'https://boardgamegeek.com/user/{}', icon: '🎲' },
-  { name: 'XDA Developers', cat: 'chat', url: 'https://forum.xda-developers.com/m/{}', icon: '📱' },
-  { name: 'MacRumors', cat: 'chat', url: 'https://forums.macrumors.com/members/{}/', icon: '🍏' },
-  { name: 'Overclock.net', cat: 'chat', url: 'https://www.overclock.net/members/{}/', icon: '⚙️' },
-  { name: 'Bitcointalk', cat: 'chat', url: 'https://bitcointalk.org/index.php?action=profile;u={}', icon: '₿' },
-  { name: 'Discord Lookup', cat: 'chat', url: 'https://discord.id/?id={}', icon: '👾' },
-  { name: 'Signal Lookup', cat: 'chat', url: 'https://signal.me/#u/{}', icon: '📶' },
-
-  // Media & Creative (20)
-  { name: 'YouTube', cat: 'media', url: 'https://www.youtube.com/@{}', icon: '▶️' },
-  { name: 'Twitch', cat: 'media', url: 'https://www.twitch.tv/{}', icon: '🟣' },
-  { name: 'TikTok', cat: 'media', url: 'https://www.tiktok.com/@{}', icon: '🎵' },
-  { name: 'Vimeo', cat: 'media', url: 'https://vimeo.com/{}', icon: '🎬' },
-  { name: 'SoundCloud', cat: 'media', url: 'https://soundcloud.com/{}', icon: '☁️' },
-  { name: 'Spotify', cat: 'media', url: 'https://open.spotify.com/user/{}', icon: '🟢' },
-  { name: 'Bandcamp', cat: 'media', url: 'https://bandcamp.com/{}', icon: '🎪' },
-  { name: 'Behance', cat: 'media', url: 'https://www.behance.net/{}', icon: '🎨' },
-  { name: 'Dribbble', cat: 'media', url: 'https://dribbble.com/{}', icon: '🏀' },
-  { name: 'ArtStation', cat: 'media', url: 'https://www.artstation.com/{}', icon: '🖌️' },
-  { name: '500px', cat: 'media', url: 'https://500px.com/p/{}', icon: '📸' },
-  { name: 'DeviantArt', cat: 'media', url: 'https://www.deviantart.com/{}', icon: '🎭' },
-  { name: 'Unsplash', cat: 'media', url: 'https://unsplash.com/@{}', icon: '📷' },
-  { name: 'Letterboxd', cat: 'media', url: 'https://letterboxd.com/{}/', icon: '🍿' },
-  { name: 'Last.fm', cat: 'media', url: 'https://www.last.fm/user/{}', icon: '📻' },
-  { name: 'Goodreads', cat: 'media', url: 'https://www.goodreads.com/{}', icon: '📚' },
-  { name: 'Strava', cat: 'media', url: 'https://www.strava.com/athletes/{}', icon: '🏃' },
-  { name: 'Chess.com', cat: 'media', url: 'https://www.chess.com/member/{}', icon: '♟️', checkUrl: 'https://api.chess.com/pub/player/{}', checkMode: 'json_status' },
-  { name: 'Dailymotion', cat: 'media', url: 'https://www.dailymotion.com/{}', icon: '📽️' },
-  { name: 'Mixcloud', cat: 'media', url: 'https://www.mixcloud.com/{}/', icon: '🎧' },
-
-  // Gaming & Miscellaneous (14)
-  { name: 'Steam Profile', cat: 'gaming', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
-  { name: 'Roblox', cat: 'gaming', url: 'https://www.roblox.com/user.aspx?username={}', icon: '🧱' },
-  { name: 'Epic Games', cat: 'gaming', url: 'https://www.epicgames.com/id/{}', icon: '🎯' },
-  { name: 'Itch.io', cat: 'gaming', url: 'https://{}.itch.io', icon: '🕹️' },
-  { name: 'Speedrun.com', cat: 'gaming', url: 'https://www.speedrun.com/user/{}', icon: '⏱️' },
-  { name: 'Nexus Mods', cat: 'gaming', url: 'https://www.nexusmods.com/users/{}', icon: '🔧' },
   { name: 'GOG', cat: 'gaming', url: 'https://www.gog.com/u/{}', icon: '👾' },
+  { name: 'Goodreads', cat: 'media', url: 'https://www.goodreads.com/{}', icon: '📚' },
+  { name: 'Gravatar', cat: 'social', url: 'https://gravatar.com/{}', icon: '👤' },
+  { name: 'Guilded', cat: 'chat', url: 'https://www.guilded.gg/{}', icon: '🛡️' },
+  { name: 'Habr', cat: 'chat', url: 'https://habr.com/en/users/{}/', icon: '📰' },
+  { name: 'HackerNews', cat: 'dev', url: 'https://news.ycombinator.com/user?id={}', icon: '🟧', checkUrl: 'https://hacker-news.firebaseio.com/v0/user/{}.json', checkMode: 'json_val' },
+  { name: 'HackerNoon', cat: 'chat', url: 'https://hackernoon.com/u/{}', icon: '🟩' },
+  { name: 'HackTheBox', cat: 'dev', url: 'https://app.hackthebox.com/users/{}', icon: '📦' },
+  { name: 'Hashnode', cat: 'dev', url: 'https://hashnode.com/@{}', icon: '📘' },
+  { name: 'HuggingFace', cat: 'dev', url: 'https://huggingface.co/{}', icon: '🤗' },
+  { name: 'Imgur', cat: 'media', url: 'https://imgur.com/user/{}', icon: '🖼️' },
+  { name: 'Instagram', cat: 'social', url: 'https://www.instagram.com/{}/', icon: '📸' },
+  { name: 'IRCCloud', cat: 'chat', url: 'https://www.irccloud.com/chat#!{}', icon: '☁️' },
+  { name: 'Itch.io', cat: 'gaming', url: 'https://{}.itch.io', icon: '🕹️' },
+  { name: 'Kaggle', cat: 'dev', url: 'https://www.kaggle.com/{}', icon: '📊' },
+  { name: 'Keybase', cat: 'social', url: 'https://keybase.io/{}', icon: '🔑', checkUrl: 'https://keybase.io/_/api/1.0/user/lookup.json?usernames={}', checkMode: 'keybase' },
+  { name: 'Kick', cat: 'media', url: 'https://kick.com/{}', icon: '🟢' },
+  { name: 'Ko-fi', cat: 'social', url: 'https://ko-fi.com/{}', icon: '🍵' },
+  { name: 'Last.fm', cat: 'media', url: 'https://www.last.fm/user/{}', icon: '📻' },
+  { name: 'Launchpad', cat: 'dev', url: 'https://launchpad.net/~{}', icon: '🚀' },
+  { name: 'LeetCode', cat: 'dev', url: 'https://leetcode.com/{}', icon: '🧠' },
+  { name: 'Lemmy.world', cat: 'chat', url: 'https://lemmy.world/u/{}', icon: '🐭' },
+  { name: 'Letterboxd', cat: 'media', url: 'https://letterboxd.com/{}/', icon: '🍿' },
   { name: 'Lichess', cat: 'gaming', url: 'https://lichess.org/@/{}', icon: '♞', checkUrl: 'https://lichess.org/api/user/{}', checkMode: 'json_status' },
-  { name: 'AniList', cat: 'gaming', url: 'https://anilist.co/user/{}/', icon: '🌸' },
+  { name: 'LinkedIn', cat: 'social', url: 'https://www.linkedin.com/in/{}', icon: '💼' },
+  { name: 'Linktree', cat: 'social', url: 'https://linktr.ee/{}', icon: '🌲' },
+  { name: 'LiveJournal', cat: 'social', url: 'https://{}.livejournal.com', icon: '✏️' },
+  { name: 'Lobste.rs', cat: 'chat', url: 'https://lobste.rs/u/{}', icon: '🦞' },
+  { name: 'MacRumors', cat: 'chat', url: 'https://forums.macrumors.com/members/{}/', icon: '🍏' },
+  { name: 'Mastodon.social', cat: 'social', url: 'https://mastodon.social/@{}', icon: '🐘' },
+  { name: 'Matrix', cat: 'chat', url: 'https://matrix.to/#/@{}:matrix.org', icon: '🟩' },
+  { name: 'Medium', cat: 'social', url: 'https://medium.com/@{}', icon: '✍️' },
+  { name: 'Minecraft (NameMC)', cat: 'gaming', url: 'https://namemc.com/profile/{}', icon: '🟩' },
+  { name: 'Mixcloud', cat: 'media', url: 'https://www.mixcloud.com/{}/', icon: '🎧' },
   { name: 'MyAnimeList', cat: 'gaming', url: 'https://myanimelist.net/profile/{}', icon: '🎌' },
+  { name: 'Myspace', cat: 'social', url: 'https://myspace.com/{}', icon: '📻' },
+  { name: 'Nexus Mods', cat: 'gaming', url: 'https://www.nexusmods.com/users/{}', icon: '🔧' },
+  { name: 'NPM', cat: 'dev', url: 'https://www.npmjs.com/~{}', icon: '📦' },
+  { name: 'OpenStreetMap', cat: 'social', url: 'https://www.openstreetmap.org/user/{}', icon: '🗺️' },
+  { name: 'Overclock.net', cat: 'chat', url: 'https://www.overclock.net/members/{}/', icon: '⚙️' },
+  { name: 'Packagist', cat: 'dev', url: 'https://packagist.org/users/{}/', icon: '🐘' },
+  { name: 'Pastebin', cat: 'dev', url: 'https://pastebin.com/u/{}', icon: '📋' },
+  { name: 'Patreon', cat: 'social', url: 'https://www.patreon.com/{}', icon: '🪙' },
+  { name: 'PayPal', cat: 'social', url: 'https://www.paypal.com/paypalme/{}', icon: '🅿️' },
+  { name: 'Pinterest', cat: 'social', url: 'https://www.pinterest.com/{}/', icon: '📌' },
+  { name: 'PlayStation Network', cat: 'gaming', url: 'https://psnprofiles.com/{}', icon: '🎮' },
+  { name: 'Polywork', cat: 'social', url: 'https://www.polywork.com/{}', icon: '🟣' },
+  { name: 'Post.news', cat: 'social', url: 'https://post.news/@/{}', icon: '📫' },
+  { name: 'ProductHunt', cat: 'dev', url: 'https://www.producthunt.com/@{}', icon: '😸' },
+  { name: 'PyPI', cat: 'dev', url: 'https://pypi.org/user/{}', icon: '🐍' },
+  { name: 'Quora', cat: 'social', url: 'https://www.quora.com/profile/{}', icon: '❓' },
+  { name: 'Reddit', cat: 'social', url: 'https://www.reddit.com/user/{}', icon: '🤖' },
+  { name: 'Replit', cat: 'dev', url: 'https://replit.com/@{}', icon: '⚡' },
+  { name: 'Revolt', cat: 'chat', url: 'https://revolt.chat', icon: '⚡' },
+  { name: 'Roblox', cat: 'gaming', url: 'https://www.roblox.com/user.aspx?username={}', icon: '🧱' },
+  { name: 'RubyGems', cat: 'dev', url: 'https://rubygems.org/profiles/{}', icon: '💎' },
+  { name: 'Rumble', cat: 'media', url: 'https://rumble.com/user/{}', icon: '🟢' },
+  { name: 'Session', cat: 'chat', url: 'https://session.org', icon: '🛡️' },
+  { name: 'Signal Lookup', cat: 'chat', url: 'https://signal.me/#u/{}', icon: '📶' },
+  { name: 'Snapchat', cat: 'social', url: 'https://www.snapchat.com/add/{}', icon: '👻' },
+  { name: 'SoundCloud', cat: 'media', url: 'https://soundcloud.com/{}', icon: '☁️' },
+  { name: 'SourceForge', cat: 'dev', url: 'https://sourceforge.net/u/{}/profile', icon: '📁' },
+  { name: 'Speedrun.com', cat: 'gaming', url: 'https://www.speedrun.com/user/{}', icon: '⏱️' },
+  { name: 'Spotify', cat: 'media', url: 'https://open.spotify.com/user/{}', icon: '🟢' },
+  { name: 'StackOverflow', cat: 'dev', url: 'https://stackoverflow.com/users/{}', icon: '🥞' },
+  { name: 'Steam Community', cat: 'chat', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
+  { name: 'Steam Profile', cat: 'gaming', url: 'https://steamcommunity.com/id/{}', icon: '🎮' },
+  { name: 'Strava', cat: 'media', url: 'https://www.strava.com/athletes/{}', icon: '🏃' },
+  { name: 'Substack', cat: 'social', url: 'https://{}.substack.com', icon: '📰' },
+  { name: 'Telegram', cat: 'chat', url: 'https://t.me/{}', icon: '✈️' },
+  { name: 'Threads', cat: 'social', url: 'https://www.threads.net/@{}', icon: '🧵' },
+  { name: 'TikTok', cat: 'media', url: 'https://www.tiktok.com/@{}', icon: '🎵' },
+  { name: 'Tracker.gg', cat: 'gaming', url: 'https://tracker.gg/profile/{}', icon: '🎯' },
+  { name: 'TradingView', cat: 'social', url: 'https://www.tradingview.com/u/{}/', icon: '📈' },
   { name: 'Trakt.tv', cat: 'gaming', url: 'https://trakt.tv/users/{}', icon: '📺' },
-  { name: 'Duolingo', cat: 'gaming', url: 'https://www.duolingo.com/profile/{}', icon: '🦉' },
-  { name: 'AllTrails', cat: 'gaming', url: 'https://www.alltrails.com/members/{}', icon: '🥾' },
-  { name: 'Archive.org', cat: 'gaming', url: 'https://archive.org/details/@{}', icon: '🏛️' }
+  { name: 'Trello', cat: 'dev', url: 'https://trello.com/u/{}', icon: '📋' },
+  { name: 'Truth Social', cat: 'social', url: 'https://truthsocial.com/@{}', icon: '🔴' },
+  { name: 'TryHackMe', cat: 'dev', url: 'https://tryhackme.com/p/{}', icon: '🎩' },
+  { name: 'Tumblr', cat: 'social', url: 'https://{}.tumblr.com', icon: '📜' },
+  { name: 'Twitch', cat: 'media', url: 'https://www.twitch.tv/{}', icon: '🟣' },
+  { name: 'Unsplash', cat: 'media', url: 'https://unsplash.com/@{}', icon: '📷' },
+  { name: 'Upwork', cat: 'social', url: 'https://www.upwork.com/freelancers/~{}', icon: '💼' },
+  { name: 'Venmo', cat: 'social', url: 'https://venmo.com/u/{}', icon: '💳' },
+  { name: 'Vero', cat: 'social', url: 'https://vero.co/{}', icon: '🟢' },
+  { name: 'Vimeo', cat: 'media', url: 'https://vimeo.com/{}', icon: '🎬' },
+  { name: 'VK', cat: 'social', url: 'https://vk.com/{}', icon: '🔵' },
+  { name: 'WakaTime', cat: 'dev', url: 'https://wakatime.com/@{}', icon: '⏱️' },
+  { name: 'Wellfound', cat: 'dev', url: 'https://wellfound.com/u/{}', icon: '✌️' },
+  { name: 'Wikipedia', cat: 'social', url: 'https://en.wikipedia.org/wiki/User:{}', icon: '📖' },
+  { name: 'WordPress', cat: 'social', url: 'https://{}.wordpress.com', icon: '🌐' },
+  { name: 'X / Twitter', cat: 'social', url: 'https://x.com/{}', icon: '𝕏' },
+  { name: 'Xbox Gamertag', cat: 'gaming', url: 'https://account.xbox.com/en-us/profile?gamertag={}', icon: '🎮' },
+  { name: 'XDA Developers', cat: 'chat', url: 'https://forum.xda-developers.com/m/{}', icon: '📱' },
+  { name: 'YouTube', cat: 'media', url: 'https://www.youtube.com/@{}', icon: '▶️' }
 ];
 
 // -------------------------------------------------------------
@@ -383,7 +415,7 @@ const STEP_EXPLANATIONS = {
   },
   2: {
     title: 'Step 2: Username & Alias Matrix (Passive Presence)',
-    what: 'Test the audited handle and generated permutations across 100+ popular public developer, social, chat, media, and gaming platforms.',
+    what: 'Test the audited handle and generated permutations across 140+ popular public developer, social, chat, media, and gaming platforms.',
     why: 'Discovers active digital presence and legacy accounts registered years ago that still link to old emails, forgotten photos, or personal interests.',
     opsec: 'Visage performs zero-touch passive status queries without requiring extension login. For platforms with strict anti-scraping protections, direct formatted review links allow manual inspection.'
   },
@@ -486,11 +518,14 @@ async function openStaggeredTabs(urls, delayMs = 350) {
   }
 }
 
+let pendingAuditTabAfterConsent = null;
+
 // -------------------------------------------------------------
 // Initialization & Storage
 // -------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', async () => {
   setupNavigationTabs();
+  setupIdentityTab();
   setupGuidanceToggle();
   setupEthicalCharterModal();
   setupAuditMode();
@@ -628,6 +663,7 @@ async function saveStoredData() {
 // UI Updates & Tabs
 // -------------------------------------------------------------
 function updateUI() {
+  renderIdentityTab();
   updateTargetCard();
   updateMethodologyChecklistUI();
   renderAuditLogs();
@@ -636,6 +672,8 @@ function updateUI() {
   renderDorkLibrary();
   renderPastesDorks();
   renderRecordsTab();
+  const currentTab = document.querySelector('.tab-btn.active')?.getAttribute('data-target') || 'tab-identity';
+  syncActiveStepToTab(currentTab);
 }
 
 function setupNavigationTabs() {
@@ -646,6 +684,8 @@ function setupNavigationTabs() {
       switchTab(targetId);
     });
   });
+  const currentTab = document.querySelector('.tab-btn.active')?.getAttribute('data-target') || 'tab-identity';
+  syncActiveStepToTab(currentTab);
 }
 
 function switchTab(targetId) {
@@ -655,10 +695,27 @@ function switchTab(targetId) {
   const activeBtn = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
   const activeContent = document.getElementById(targetId);
 
-  if (activeBtn) activeBtn.classList.add('active');
-  if (activeContent) activeContent.classList.add('active');
+  // If the active tab was hidden in self-mode (e.g. records or crypto), ensure its tab button is visible
+  if (activeBtn) {
+    activeBtn.style.display = '';
+    activeBtn.classList.add('active');
+  }
+  if (activeContent) {
+    activeContent.classList.add('active');
+  }
 
-  if (targetId === 'tab-records') {
+  // Reset scroll on tab switch so tabs navigation and top of content are immediately visible
+  const colRight = document.querySelector('.col-right');
+  if (colRight) {
+    colRight.scrollTop = 0;
+  }
+
+  // Keep guided methodology checklist step synchronized with active tab
+  syncActiveStepToTab(targetId);
+
+  if (targetId === 'tab-identity') {
+    renderIdentityTab();
+  } else if (targetId === 'tab-records') {
     const stateSelect = document.getElementById('jur-state-select');
     const countyInput = document.getElementById('jur-county-input');
     if (stateSelect && State.jurisdiction.stateCode) {
@@ -671,15 +728,119 @@ function switchTab(targetId) {
   }
 }
 
+function syncActiveStepToTab(targetId) {
+  document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active-step'));
+
+  let activeCardId = null;
+  if (targetId === 'tab-identity') {
+    activeCardId = 'step-1-card';
+  } else if (targetId === 'tab-matrix') {
+    activeCardId = 'step-2-card';
+  } else if (targetId === 'tab-crypto') {
+    activeCardId = 'step-3-card';
+  } else if (targetId === 'tab-breach') {
+    activeCardId = 'step-4-card';
+  } else if (targetId === 'tab-dorks') {
+    activeCardId = 'step-5-card';
+  } else if (targetId === 'tab-records') {
+    activeCardId = 'step-6-card';
+  } else if (targetId === 'tab-privacy') {
+    if (State.auditMode === 'self') {
+      activeCardId = 'step-7-card';
+    }
+  } else if (targetId === 'tab-dossier') {
+    if (State.auditMode === 'org') {
+      activeCardId = 'step-7-card';
+    }
+  }
+
+  if (activeCardId) {
+    const card = document.getElementById(activeCardId);
+    if (card) card.classList.add('active-step');
+  }
+}
+
+function setupIdentityTab() {
+  const btnSave = document.getElementById('btn-tab-id-save');
+  const btnReset = document.getElementById('btn-tab-id-reset');
+  const btnProceed = document.getElementById('btn-tab-id-proceed');
+  const btnFocus = document.getElementById('btn-focus-composer');
+
+  if (btnSave) {
+    btnSave.addEventListener('click', () => {
+      const realSaveBtn = document.getElementById('btn-save-profile');
+      if (realSaveBtn) realSaveBtn.click();
+    });
+  }
+
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      const realResetBtn = document.getElementById('btn-reset-scope');
+      if (realResetBtn) realResetBtn.click();
+    });
+  }
+
+  if (btnProceed) {
+    btnProceed.addEventListener('click', () => {
+      switchTab('tab-matrix');
+    });
+  }
+
+  if (btnFocus) {
+    btnFocus.addEventListener('click', () => {
+      const fInput = document.getElementById('target-first-name');
+      if (fInput) {
+        fInput.focus();
+        fInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
+
+  // Jump to specific capabilities from overview cards
+  document.querySelectorAll('.id-module-card[data-jump]').forEach(card => {
+    card.addEventListener('click', () => {
+      const jumpTarget = card.getAttribute('data-jump');
+      if (jumpTarget) switchTab(jumpTarget);
+    });
+  });
+}
+
+function renderIdentityTab() {
+  const target = State.target;
+  const fullName = target.name || (target.firstName ? [target.firstName, target.middleName, target.lastName].filter(Boolean).join(' ') : '');
+  const displayName = fullName || (target.handle ? `@${target.handle}` : 'No Profile Active');
+  const targetMeta = target.handle ? `@${target.handle}` : (target.email || 'Fill target seeds in the left pane to initialize audit');
+
+  const titleEl = document.getElementById('tab-id-target-name');
+  const metaEl = document.getElementById('tab-id-target-meta');
+  if (titleEl) titleEl.textContent = displayName;
+  if (metaEl) metaEl.textContent = targetMeta;
+
+  const nameEl = document.getElementById('id-val-name');
+  const handleEl = document.getElementById('id-val-handle');
+  const emailEl = document.getElementById('id-val-email');
+  const phoneEl = document.getElementById('id-val-phone');
+  const orgEl = document.getElementById('id-val-org');
+  const locEl = document.getElementById('id-val-location');
+
+  if (nameEl) nameEl.textContent = fullName || '—';
+  if (handleEl) handleEl.textContent = target.handle ? `@${target.handle}` : '—';
+  if (emailEl) emailEl.textContent = target.email || '—';
+  if (phoneEl) phoneEl.textContent = target.phone || '—';
+  if (orgEl) orgEl.textContent = target.org || '—';
+  if (locEl) locEl.textContent = State.jurisdiction?.resolvedText || target.location || '—';
+}
+
 function setupGuidanceToggle() {
   const toggle = document.getElementById('toggle-guidance');
+  const checklist = document.getElementById('guided-checklist');
   if (!toggle) return;
 
   toggle.addEventListener('change', () => {
     const isChecked = toggle.checked;
-    document.querySelectorAll('.guidance-item').forEach(el => {
-      el.style.display = isChecked ? '' : 'none';
-    });
+    if (checklist) {
+      checklist.style.display = isChecked ? '' : 'none';
+    }
   });
 }
 
@@ -710,6 +871,7 @@ function setupScopeInputs() {
 
     updateLocationJurisdictionPreview();
     updateTargetCard();
+    renderIdentityTab();
     saveStoredData();
 
     // Check if step 1 is satisfied
@@ -739,10 +901,35 @@ function setupScopeInputs() {
   locInput.addEventListener('input', onInputChange);
   orgInput.addEventListener('input', onInputChange);
 
+  // Focus on any scope composer input highlights Step 1 card
+  const scopeInputs = [fNameInput, mNameInput, lNameInput, handleInput, emailInput, phoneInput, locInput, orgInput];
+  scopeInputs.forEach(input => {
+    if (input) {
+      input.addEventListener('focus', () => {
+        document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active-step'));
+        const step1Card = document.getElementById('step-1-card');
+        if (step1Card) step1Card.classList.add('active-step');
+      });
+    }
+  });
+
   // Jump to Records Desk
   const btnJumpRecords = document.getElementById('btn-jump-records');
   if (btnJumpRecords) {
     btnJumpRecords.addEventListener('click', () => {
+      if (State.auditMode === 'self') {
+        const consentModal = document.getElementById('consent-modal');
+        const chkConsent = document.getElementById('chk-consent-confirm');
+        const btnConfirmConsent = document.getElementById('btn-confirm-consent');
+        if (consentModal) {
+          pendingAuditTabAfterConsent = 'tab-records';
+          if (chkConsent) chkConsent.checked = false;
+          if (btnConfirmConsent) btnConfirmConsent.disabled = true;
+          consentModal.style.display = 'flex';
+          showToast('Public Records require Defensive Assessment mode authorization.', 'info');
+          return;
+        }
+      }
       switchTab('tab-records');
       markStep(6, true);
     });
@@ -940,6 +1127,7 @@ function setupEthicalCharterModal() {
 // -------------------------------------------------------------
 function applyAuditModeUI(mode) {
   const banner = document.getElementById('defensive-banner');
+  if (banner) banner.style.display = 'flex';
   const bannerIcon = document.getElementById('banner-icon');
   const bannerTitle = document.getElementById('banner-mode-title');
   const bannerDesc = document.getElementById('banner-mode-desc');
@@ -969,19 +1157,49 @@ function applyAuditModeUI(mode) {
   const stepBtn7 = document.getElementById('step-btn-7');
 
   // Nav tabs
+  const tabIdentityBtn = document.querySelector('.tab-btn[data-target="tab-identity"]');
+  const tabMatrixBtn = document.querySelector('.tab-btn[data-target="tab-matrix"]');
   const tabCryptoBtn = document.querySelector('.tab-btn[data-target="tab-crypto"]');
   const tabRecordsBtn = document.querySelector('.tab-btn[data-target="tab-records"]');
   const tabBreachBtn = document.querySelector('.tab-btn[data-target="tab-breach"]');
   const tabDorksBtn = document.querySelector('.tab-btn[data-target="tab-dorks"]');
   const tabPrivacyBtn = document.querySelector('.tab-btn[data-target="tab-privacy"]');
+  const tabDossierBtn = document.querySelector('.tab-btn[data-target="tab-dossier"]');
+  const tabProfilesBtn = document.querySelector('.tab-btn[data-target="tab-profiles"]');
 
   // Tab privacy headers
   const privacyTabTitle = document.getElementById('privacy-tab-title');
   const privacyTabDesc = document.getElementById('privacy-tab-desc');
 
+  // Guidance toggle wrapper & checklist
+  const guidanceToggleWrapper = document.getElementById('guidance-toggle-wrapper');
+  const toggleGuidance = document.getElementById('toggle-guidance');
+  const checklist = document.getElementById('guided-checklist');
+  const tabsNav = document.getElementById('min-tabs-nav') || document.getElementById('main-tabs-nav') || document.querySelector('.tabs');
+
   if (mode === 'self') {
-    // Banner styling - clean green
-    if (banner) banner.classList.remove('banner-warning');
+    // Hide #min-tabs-nav when Personal Privacy Self-Audit mode is selected
+    if (tabsNav) {
+      tabsNav.style.display = 'none';
+    }
+
+    // Hide guidance toggle in Personal Privacy Self-Audit mode and ensure checklist is visible
+    if (guidanceToggleWrapper) {
+      guidanceToggleWrapper.style.display = 'none';
+    }
+    if (toggleGuidance) {
+      toggleGuidance.checked = true;
+    }
+    if (checklist) {
+      checklist.style.display = '';
+    }
+
+    // Banner styling - clean green with 10px top spacing in self-audit mode
+    if (banner) {
+      banner.classList.remove('banner-warning');
+      banner.classList.add('banner-self');
+      banner.style.marginTop = '10px';
+    }
     if (bannerIcon) bannerIcon.textContent = '🛡️';
     if (bannerTitle) bannerTitle.textContent = 'Personal Privacy Self-Audit Workstation';
     if (bannerDesc) bannerDesc.textContent = 'You are conducting a defensive audit of your own digital footprint. Use findings to submit PII delisting requests, purge data broker aggregators, rotate exposed credentials, and harden your personal privacy perimeter.';
@@ -1013,24 +1231,62 @@ function applyAuditModeUI(mode) {
     if (stepBtn7) stepBtn7.textContent = 'Opt-Out Desk';
 
     // Navigation tabs: hide technical tabs
+    if (tabIdentityBtn) {
+      tabIdentityBtn.style.display = '';
+      tabIdentityBtn.textContent = 'Identity';
+    }
+    if (tabMatrixBtn) {
+      tabMatrixBtn.style.display = '';
+      tabMatrixBtn.textContent = 'Account Matrix';
+    }
     if (tabCryptoBtn) tabCryptoBtn.style.display = 'none';
     if (tabRecordsBtn) tabRecordsBtn.style.display = 'none';
-    if (tabBreachBtn) tabBreachBtn.textContent = 'Data Leaks';
-    if (tabDorksBtn) tabDorksBtn.textContent = 'Google Exposure';
-    if (tabPrivacyBtn) tabPrivacyBtn.textContent = 'Clean Up & Opt-Out';
+    if (tabBreachBtn) {
+      tabBreachBtn.style.display = '';
+      tabBreachBtn.textContent = 'Data Leaks';
+    }
+    if (tabDorksBtn) {
+      tabDorksBtn.style.display = '';
+      tabDorksBtn.textContent = 'Google Exposure';
+    }
+    if (tabPrivacyBtn) {
+      tabPrivacyBtn.style.display = '';
+      tabPrivacyBtn.textContent = 'Clean Up & Opt-Out';
+    }
+    if (tabDossierBtn) tabDossierBtn.style.display = '';
+    if (tabProfilesBtn) tabProfilesBtn.style.display = '';
 
-    // If currently viewing a hidden tab, switch to matrix
+    // If currently viewing a hidden tab, switch to identity or matrix
     const currentTab = document.querySelector('.tab-btn.active')?.getAttribute('data-target');
     if (currentTab === 'tab-crypto' || currentTab === 'tab-records') {
       switchTab('tab-matrix');
+    } else if (currentTab) {
+      syncActiveStepToTab(currentTab);
     }
 
     // Privacy tab headers
     if (privacyTabTitle) privacyTabTitle.textContent = 'Clean Up & Opt-Out Desk';
     if (privacyTabDesc) privacyTabDesc.textContent = 'Take direct action on your audit findings: delist your PII from search engines, opt out of commercial data brokers, and download your personal action plan.';
   } else {
-    // Banner styling - warm amber warning
-    if (banner) banner.classList.add('banner-warning');
+    // Show #min-tabs-nav in Defensive Exposure Assessment mode
+    if (tabsNav) {
+      tabsNav.style.display = '';
+    }
+
+    // Show guidance toggle in Defensive Exposure Assessment mode and sync checklist visibility
+    if (guidanceToggleWrapper) {
+      guidanceToggleWrapper.style.display = 'inline-flex';
+    }
+    if (checklist && toggleGuidance) {
+      checklist.style.display = toggleGuidance.checked ? '' : 'none';
+    }
+
+    // Banner styling - warm amber warning with default spacing below tabs
+    if (banner) {
+      banner.classList.remove('banner-self');
+      banner.classList.add('banner-warning');
+      banner.style.marginTop = '';
+    }
     if (bannerIcon) bannerIcon.textContent = '🏢';
     if (bannerTitle) bannerTitle.textContent = 'Defensive Exposure Assessment Mode (Executive / Org)';
     if (bannerDesc) bannerDesc.textContent = 'Authorized security assessment mode active. Operating on third-party individuals or executive assets requires prior written authorization or explicit consent. All findings must remain confidential and strictly defensive.';
@@ -1061,12 +1317,42 @@ function applyAuditModeUI(mode) {
     if (step7Desc) step7Desc.textContent = 'Findings triage & Markdown export.';
     if (stepBtn7) stepBtn7.textContent = 'Export Report';
 
-    // Navigation tabs: show all
-    if (tabCryptoBtn) tabCryptoBtn.style.display = '';
-    if (tabRecordsBtn) tabRecordsBtn.style.display = '';
-    if (tabBreachBtn) tabBreachBtn.textContent = 'Credential Exposure';
-    if (tabDorksBtn) tabDorksBtn.textContent = 'Search Footprint';
-    if (tabPrivacyBtn) tabPrivacyBtn.textContent = 'Privacy & Remediation Desk';
+    // Navigation tabs: show all with concise capability names
+    if (tabIdentityBtn) {
+      tabIdentityBtn.style.display = '';
+      tabIdentityBtn.textContent = 'Identity';
+    }
+    if (tabMatrixBtn) {
+      tabMatrixBtn.style.display = '';
+      tabMatrixBtn.textContent = 'Accounts';
+    }
+    if (tabCryptoBtn) {
+      tabCryptoBtn.style.display = '';
+      tabCryptoBtn.textContent = 'Crypto';
+    }
+    if (tabRecordsBtn) {
+      tabRecordsBtn.style.display = '';
+      tabRecordsBtn.textContent = 'Public Records';
+    }
+    if (tabBreachBtn) {
+      tabBreachBtn.style.display = '';
+      tabBreachBtn.textContent = 'Credential Exposure';
+    }
+    if (tabDorksBtn) {
+      tabDorksBtn.style.display = '';
+      tabDorksBtn.textContent = 'Search Footprint';
+    }
+    if (tabPrivacyBtn) {
+      tabPrivacyBtn.style.display = '';
+      tabPrivacyBtn.textContent = 'Privacy Desk';
+    }
+    if (tabDossierBtn) tabDossierBtn.style.display = '';
+    if (tabProfilesBtn) tabProfilesBtn.style.display = '';
+
+    const currentTab = document.querySelector('.tab-btn.active')?.getAttribute('data-target');
+    if (currentTab) {
+      syncActiveStepToTab(currentTab);
+    }
 
     // Privacy tab headers
     if (privacyTabTitle) privacyTabTitle.textContent = 'Privacy & Remediation Desk';
@@ -1161,11 +1447,17 @@ function setupAuditMode() {
       }
       if (consentModal) consentModal.style.display = 'none';
       applyAuditMode('org');
+      if (pendingAuditTabAfterConsent) {
+        switchTab(pendingAuditTabAfterConsent);
+        if (pendingAuditTabAfterConsent === 'tab-records') markStep(6, true);
+        pendingAuditTabAfterConsent = null;
+      }
     });
   }
 
   function cancelConsent() {
     if (consentModal) consentModal.style.display = 'none';
+    pendingAuditTabAfterConsent = null;
     select.value = 'self';
     applyAuditMode('self');
   }
@@ -1178,6 +1470,14 @@ function setupAuditMode() {
       if (e.target === consentModal) {
         cancelConsent();
       }
+    });
+  }
+
+  const btnDismissBanner = document.getElementById('btn-dismiss-banner');
+  if (btnDismissBanner) {
+    btnDismissBanner.addEventListener('click', () => {
+      const banner = document.getElementById('defensive-banner');
+      if (banner) banner.style.display = 'none';
     });
   }
 
@@ -1364,60 +1664,80 @@ function generateHandlePermutations() {
 // Guided Audit Methodology Checklist
 // -------------------------------------------------------------
 function setupMethodologyChecklist() {
-  // Step navigation buttons
-  document.getElementById('step-btn-1').addEventListener('click', () => {
-    const fInput = document.getElementById('target-first-name');
-    if (fInput) fInput.focus();
-  });
-  document.getElementById('step-btn-2').addEventListener('click', () => {
-    switchTab('tab-matrix');
-  });
-  document.getElementById('step-btn-3').addEventListener('click', () => {
-    switchTab('tab-crypto');
-  });
-  document.getElementById('step-btn-4').addEventListener('click', () => {
-    switchTab('tab-breach');
-  });
-  document.getElementById('step-btn-5').addEventListener('click', () => {
-    switchTab('tab-dorks');
-  });
-  document.getElementById('step-btn-6').addEventListener('click', () => {
-    switchTab('tab-records');
-  });
-  document.getElementById('step-btn-7').addEventListener('click', () => {
-    if (State.auditMode === 'self') {
-      switchTab('tab-privacy');
-      markStep(7, true);
-    } else {
-      switchTab('tab-dossier');
+  const stepActions = {
+    1: () => {
+      switchTab('tab-identity');
+      const fInput = document.getElementById('target-first-name');
+      if (fInput) {
+        fInput.focus();
+        fInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    },
+    2: () => switchTab('tab-matrix'),
+    3: () => switchTab('tab-crypto'),
+    4: () => switchTab('tab-breach'),
+    5: () => switchTab('tab-dorks'),
+    6: () => switchTab('tab-records'),
+    7: () => {
+      if (State.auditMode === 'self') {
+        switchTab('tab-privacy');
+        markStep(7, true);
+      } else {
+        switchTab('tab-dossier');
+      }
     }
-  });
+  };
+
+  // Card-level click handlers for seamless navigation
+  for (let i = 1; i <= 7; i++) {
+    const card = document.getElementById(`step-${i}-card`);
+    const btn = document.getElementById(`step-btn-${i}`);
+    if (card) {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.step-help-btn')) return;
+        if (stepActions[i]) stepActions[i]();
+      });
+    }
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (stepActions[i]) stepActions[i]();
+      });
+    }
+  }
 
   // Minimize / Expand Checklist
   const btnToggle = document.getElementById('btn-toggle-checklist');
   const checklistSteps = document.getElementById('checklist-steps');
-  btnToggle.addEventListener('click', () => {
-    if (checklistSteps.style.display === 'none') {
-      checklistSteps.style.display = 'grid';
-      btnToggle.textContent = 'Minimize';
-    } else {
-      checklistSteps.style.display = 'none';
-      btnToggle.textContent = 'Expand';
-    }
-  });
+  if (btnToggle && checklistSteps) {
+    btnToggle.addEventListener('click', () => {
+      if (checklistSteps.style.display === 'none') {
+        checklistSteps.style.display = 'grid';
+        btnToggle.textContent = 'Minimize';
+      } else {
+        checklistSteps.style.display = 'none';
+        btnToggle.textContent = 'Expand';
+      }
+    });
+  }
 
   // Step Help Modals
   document.querySelectorAll('.step-help-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const stepNum = btn.getAttribute('data-step');
       openStepModal(stepNum);
     });
   });
 
   // Modal Close
-  document.getElementById('btn-close-step-modal').addEventListener('click', () => {
-    document.getElementById('step-modal').style.display = 'none';
-  });
+  const btnCloseStepModal = document.getElementById('btn-close-step-modal');
+  if (btnCloseStepModal) {
+    btnCloseStepModal.addEventListener('click', () => {
+      const modal = document.getElementById('step-modal');
+      if (modal) modal.style.display = 'none';
+    });
+  }
 }
 
 function openStepModal(stepNum) {
@@ -1503,10 +1823,33 @@ function updateMethodologyChecklistUI() {
   }
 }
 
+function updateMatrixCategoryCounts() {
+  const counts = { all: PLATFORMS.length, dev: 0, social: 0, chat: 0, media: 0, gaming: 0 };
+  PLATFORMS.forEach(p => {
+    if (counts[p.cat] !== undefined) counts[p.cat]++;
+  });
+  const labels = {
+    all: `All (${counts.all})`,
+    dev: `Developer (${counts.dev})`,
+    social: `Social & Microblog (${counts.social})`,
+    chat: `Messaging & Forums (${counts.chat})`,
+    media: `Media & Creative (${counts.media})`,
+    gaming: `Gaming & Misc (${counts.gaming})`
+  };
+  document.querySelectorAll('#matrix-category-chips .cat-chip').forEach(chip => {
+    const cat = chip.getAttribute('data-cat');
+    if (labels[cat]) {
+      chip.textContent = labels[cat];
+    }
+  });
+}
+
 // -------------------------------------------------------------
 // STEP 2: USERNAME & ALIAS MATRIX
 // -------------------------------------------------------------
 function setupMatrixTab() {
+  updateMatrixCategoryCounts();
+
   // Category chips
   const chips = document.querySelectorAll('.cat-chip');
   chips.forEach(chip => {
@@ -1610,6 +1953,8 @@ function renderMatrixGrid() {
     }
     return true;
   });
+
+  filtered.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base', numeric: true }));
 
   if (filtered.length === 0) {
     container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">No matching platforms found.</div>';
@@ -3009,9 +3354,4470 @@ const CITY_TO_COUNTY = {
   // Missouri
   'kansas city': { county: 'Jackson County', state: 'MO' },
   'st louis': { county: 'St. Louis City', state: 'MO' },
+  'st. louis': { county: 'St. Louis City', state: 'MO' },
+  'saint louis': { county: 'St. Louis City', state: 'MO' },
+  // Indiana
+  'indianapolis': { county: 'Marion County', state: 'IN' },
+  // Utah
+  'salt lake city': { county: 'Salt Lake County', state: 'UT' },
+  // Wisconsin
+  'milwaukee': { county: 'Milwaukee County', state: 'WI' },
+  // Hawaii
+  'honolulu': { county: 'Honolulu County', state: 'HI' },
+  // Oklahoma
+  'oklahoma city': { county: 'Oklahoma County', state: 'OK' },
+  // California additional metros
+  'oakland': { county: 'Alameda County', state: 'CA' },
+  'riverside': { county: 'Riverside County', state: 'CA' },
+  'san bernardino': { county: 'San Bernardino County', state: 'CA' },
+  'anaheim': { county: 'Orange County', state: 'CA' },
+  'santa ana': { county: 'Orange County', state: 'CA' },
+  'irvine': { county: 'Orange County', state: 'CA' },
+  // Florida additional metros
+  'fort lauderdale': { county: 'Broward County', state: 'FL' },
+  'st. petersburg': { county: 'Pinellas County', state: 'FL' },
+  // Maryland / Virginia DC Suburbs
+  'bethesda': { county: 'Montgomery County', state: 'MD' },
+  'silver spring': { county: 'Montgomery County', state: 'MD' },
+  'rockville': { county: 'Montgomery County', state: 'MD' },
+  'fairfax': { county: 'Fairfax County', state: 'VA' },
+  'alexandria': { county: 'Fairfax County', state: 'VA' },
+  'arlington': { county: 'Fairfax County', state: 'VA' },
   // District of Columbia
-  'washington': { county: 'District of Columbia', state: 'DC' }
+  'washington': { county: 'District of Columbia', state: 'DC' },
+  'washington dc': { county: 'District of Columbia', state: 'DC' },
+  // Additional major metropolitan hubs
+  'clearwater': { county: 'Pinellas County', state: 'FL' },
+  'albuquerque': { county: 'Bernalillo County', state: 'NM' },
+  'louisville': { county: 'Jefferson County', state: 'KY' },
+  'omaha': { county: 'Douglas County', state: 'NE' },
+  'tulsa': { county: 'Tulsa County', state: 'OK' },
+  'overland park': { county: 'Johnson County', state: 'KS' },
+  'olathe': { county: 'Johnson County', state: 'KS' },
+  'pontiac': { county: 'Oakland County', state: 'MI' }
 };
+
+// -------------------------------------------------------------
+// IN-WORKSTATION DIRECT COUNTY DIRECTORY HUBS
+// Complete departmental directories (Assessor, Deeds, Tax Collector,
+// GIS, Courts, and Vital/DBA) for official county records with 0 ads.
+// -------------------------------------------------------------
+const COUNTY_NETR_HUBS = {
+  "IL:cook": {
+    "name": "Cook County",
+    "state": "IL",
+    "metro": "Chicago Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Cook County Assessor's Office",
+        "scope": "Property Assessment",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://www.cookcountyassessor.com/address-search",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Cook County Clerk - Recording Division",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://cookcountyclerkil.gov/recordings",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Cook County Treasurer's Office",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://www.cookcountytreasurer.com/setsearchparameters.aspx",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "CookCountyViewer Interactive Parcel GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, PIN lookup & aerial maps.",
+        "url": "https://cookviewer1.cookcountyil.gov/cookviewer/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Cook County Circuit Court Clerk",
+        "scope": "Civil & Court Dockets",
+        "desc": "Electronic court docket inquiry across Civil, Law, Chancery, Probate & Municipal divisions.",
+        "url": "https://www.cookcountyclerkofcourt.org/court-records",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Cook County Clerk (Vital & Assumed Names)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA / Sole Proprietorships), marriage records & vital statistics.",
+        "url": "https://cookcountyclerkil.gov/vital-records",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "IL:dupage": {
+    "name": "DuPage County",
+    "state": "IL",
+    "metro": "DuPage / West Suburbs",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "DuPage County Assessment Office",
+        "scope": "Property Assessment",
+        "desc": "County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://www.dupagecounty.gov/PropertyInfo/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "DuPage County Recorder",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.dupagecounty.gov/recorder/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "DuPage County Treasurer (Tax Lookup)",
+        "scope": "Property Taxes",
+        "desc": "Real estate tax bills, payment status & tax delinquency records.",
+        "url": "https://www.dupagecounty.gov/treasurer/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "DuPage County Parcel GIS Explorer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://dupage.maps.arcgis.com/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "DuPage County 18th Judicial Circuit Clerk",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court case records, civil lawsuits, probate & court dockets.",
+        "url": "https://epay.18thjudicial.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "DuPage County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names, marriage records & official county filings.",
+        "url": "https://www.dupagecounty.gov/clerk/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:los angeles": {
+    "name": "Los Angeles County",
+    "state": "CA",
+    "metro": "Los Angeles Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "LA County Office of the Assessor",
+        "scope": "Property Assessment",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://portal.assessor.lacounty.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "LA County Registrar-Recorder (Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://lavote.gov/home/records/property-records",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "LA County Treasurer and Tax Collector (TTC)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Secured property tax bills, installment payment status & delinquent tax rolls.",
+        "url": "https://ttc.lacounty.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "LA County GIS Parcel Boundary Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, zoning & aerial maps.",
+        "url": "https://assessor.lacounty.gov/gis/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Los Angeles Superior Court Online Services",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www.lacourt.org/online-services/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "LA County Registrar (FBN / DBA & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious Business Names (FBN / DBA), marriage certificates & vital records.",
+        "url": "https://lavote.gov/home/records/fictitious-business-names",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:san diego": {
+    "name": "San Diego County",
+    "state": "CA",
+    "metro": "San Diego Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "San Diego County Assessor",
+        "scope": "Property Rolls & Values",
+        "desc": "County property appraisal records, assessed valuation & parcel ownership.",
+        "url": "https://arcc.sdcounty.ca.gov/Pages/assessor.aspx",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "San Diego County Recorder of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded deeds, mortgages, liens, deeds of trust & title filings.",
+        "url": "https://arcc.sdcounty.ca.gov/Pages/recorder.aspx",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "San Diego County Treasurer-Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Secured property tax bills, payment verification & tax collection records.",
+        "url": "https://www.sdttc.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "SanGIS Interactive Parcel Map",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Joint city/county geographic information system parcel lookup and boundary maps.",
+        "url": "https://www.sangis.org/",
+        "label": "SanGIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "San Diego Superior Court Portal",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil case records, probate, family dockets & judgments.",
+        "url": "https://www.sdcourt.ca.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "San Diego County Clerk (FBN & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Fictitious business names, business licenses & marriage certificates.",
+        "url": "https://arcc.sdcounty.ca.gov/Pages/fictitious.aspx",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:orange": {
+    "name": "Orange County",
+    "state": "CA",
+    "metro": "Orange County / Anaheim",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Orange County Assessor",
+        "scope": "Property Rolls",
+        "desc": "Property tax assessment rolls, parcel specs & residential valuations.",
+        "url": "https://www.ocgov.com/government/assessor-department",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Orange County Clerk-Recorder (Real Estate)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Real property recorded documents, deeds, grant deeds, mortgages & liens.",
+        "url": "https://cr.ocgov.com/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Orange County Treasurer-Tax Collector",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://www.ttc.ocgov.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "OC Land Records & Parcel GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://ocgis.com/ocpw/landrecords/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Orange County Superior Court Services",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil, probate, family law & small claims court records search.",
+        "url": "https://www.occourts.org/online-services",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Orange County Clerk (Fictitious Names)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business name filings, marriage certificates & official records.",
+        "url": "https://cr.ocgov.com/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:santa clara": {
+    "name": "Santa Clara County",
+    "state": "CA",
+    "metro": "Silicon Valley / San Jose",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Santa Clara County Assessor",
+        "scope": "Property Rolls",
+        "desc": "Silicon Valley property ownership rolls, assessment records & valuations.",
+        "url": "https://www.sccassessor.org/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Santa Clara County Clerk-Recorder",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & conveyances.",
+        "url": "https://clerkrecorder.sccgov.org/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Santa Clara Dept of Tax & Collections",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://dtac.sccgov.org/property-tax-search",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Santa Clara County GIS Parcel Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://sccgov.maps.arcgis.com/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Santa Clara County Superior Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.scscourt.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Santa Clara County Clerk (FBN & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Fictitious business names (DBA), notary filings & marriage records.",
+        "url": "https://clerkrecorder.sccgov.org/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:alameda": {
+    "name": "Alameda County",
+    "state": "CA",
+    "metro": "Oakland / East Bay",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Alameda County Assessor",
+        "scope": "Property Assessment",
+        "desc": "County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://www.acgov.org/assessor/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Alameda County Clerk-Recorder",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, deeds of trust & liens.",
+        "url": "https://acgov.org/auditor/clerk/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Alameda County Treasurer-Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Real estate secured tax bills, payment status & tax delinquency lookup.",
+        "url": "https://www.acgov.org/treasurer/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Alameda County Public GIS Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://www.acgov.org/gis/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Alameda County Superior Court Portal",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil case records, probate, family dockets & judgments.",
+        "url": "https://www.alameda.courts.ca.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Alameda County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business names, business licenses & marriage certificates.",
+        "url": "https://acgov.org/auditor/clerk/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:san francisco": {
+    "name": "San Francisco",
+    "state": "CA",
+    "metro": "San Francisco (City & County)",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "SF Office of the Assessor-Recorder",
+        "scope": "Property Assessment",
+        "desc": "San Francisco real property assessment rolls, valuation & parcel lookup.",
+        "url": "https://sfassessor.org/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "San Francisco Official Land Records",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://sfassessor.org/recorder-services",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "San Francisco Treasurer & Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Property tax billing inquiry, payment confirmation & tax balances.",
+        "url": "https://sftreasurer.org/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "SF Property Information Map (PIM)",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive GIS parcel boundary tool with zoning, permits & building history.",
+        "url": "https://sfplanninggis.org/pim/",
+        "label": "SF PIM Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "San Francisco Superior Court Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil case records, probate, family dockets & judgments.",
+        "url": "https://www.sfsuperiorcourt.org/online-services",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "San Francisco County Clerk (FBN & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business names (DBA), domestic partnerships & marriage records.",
+        "url": "https://sfgov.org/countyclerk/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:riverside": {
+    "name": "Riverside County",
+    "state": "CA",
+    "metro": "Inland Empire / Riverside",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Riverside County Assessor",
+        "scope": "Property Assessment",
+        "desc": "County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://www.countynew.org/services/assessor",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Riverside County Recorder",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded deeds, mortgages, liens, deeds of trust & title filings.",
+        "url": "https://recorder.countyofriverside.us/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Riverside County Treasurer-Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Secured property tax bills, payment verification & tax collection records.",
+        "url": "https://countytreasurer.org/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Riverside County Map My County GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive GIS parcel boundary tool with land zoning & aerial imagery.",
+        "url": "https://gis.countyofriverside.us/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Riverside County Superior Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil case records, probate, family dockets & judgments.",
+        "url": "https://www.riverside.courts.ca.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Riverside County Clerk (FBN & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business names, business licenses & marriage certificates.",
+        "url": "https://recorder.countyofriverside.us/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CA:san bernardino": {
+    "name": "San Bernardino County",
+    "state": "CA",
+    "metro": "Inland Empire / San Bernardino",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "San Bernardino County Assessor",
+        "scope": "Property Assessment",
+        "desc": "Property tax assessment rolls, parcel specs & residential valuations.",
+        "url": "https://arc.sbcounty.gov/assessor/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "San Bernardino County Recorder of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://arc.sbcounty.gov/recorder/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "San Bernardino County Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://www.mytaxcollector.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "San Bernardino Open Data & Parcel Maps",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://sbcounty.maps.arcgis.com/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "San Bernardino Superior Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil, probate, family law & small claims court records search.",
+        "url": "https://www.sb-court.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "San Bernardino County Clerk (FBN)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business name filings, marriage certificates & official records.",
+        "url": "https://arc.sbcounty.gov/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "TX:harris": {
+    "name": "Harris County",
+    "state": "TX",
+    "metro": "Houston Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Harris Central Appraisal District (HCAD)",
+        "scope": "Property Assessment",
+        "desc": "Real property ownership, parcel valuations, building specs & tax appraisal rolls.",
+        "url": "https://hcad.org/property-search",
+        "label": "HCAD Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Harris County Clerk (Real Property Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://www.cclerk.hctx.net/applications/websearch/RP.aspx",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Harris County Tax Assessor-Collector",
+        "scope": "Tax Bills & Collections",
+        "desc": "Property tax statements, payment histories, installment receipts & tax rolls.",
+        "url": "https://www.hctax.net/Property/PropertyTax",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "HCAD Interactive Parcel Map Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial mapping.",
+        "url": "https://hcad.org/hcad-online-services/interactive-mapping",
+        "label": "HCAD Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Harris County District & County Court Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "Electronic court docket inquiry across Civil, Family, Probate & Criminal dockets.",
+        "url": "https://www.cclerk.hctx.net/applications/websearch/courtsearch.aspx",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Harris County Clerk (Assumed Names / DBA)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business name filings (DBA), marriage records & vital statistics.",
+        "url": "https://www.cclerk.hctx.net/applications/websearch/DBA.aspx",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "TX:dallas": {
+    "name": "Dallas County",
+    "state": "TX",
+    "metro": "Dallas Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Dallas Central Appraisal District (DCAD)",
+        "scope": "Property Assessment",
+        "desc": "Dallas County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://www.dallascad.org/",
+        "label": "DCAD Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Dallas County Clerk (Recording Division)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, deeds of trust, liens & property transfers.",
+        "url": "https://www.dallascounty.org/government/county-clerk/recording/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Dallas County Tax Office",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, tax billing statements & tax delinquency search.",
+        "url": "https://www.dallascounty.org/departments/tax/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "DCAD Interactive GIS Parcel Search",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.dallascad.org/SearchOwner.aspx",
+        "label": "DCAD Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Dallas County Court Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and county court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.dallascounty.org/services/record-search/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Dallas County Clerk (Assumed Names)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA / Sole Proprietorships) & marriage certificates.",
+        "url": "https://www.dallascounty.org/government/county-clerk/assumed-names.php",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "TX:travis": {
+    "name": "Travis County",
+    "state": "TX",
+    "metro": "Austin Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Travis Central Appraisal District (TCAD)",
+        "scope": "Property Assessment",
+        "desc": "Austin and Travis County property appraisal records & assessed valuation.",
+        "url": "https://traviscad.org/",
+        "label": "TCAD Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Travis County Clerk (Recording Division)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://countyclerk.traviscountytx.gov/departments/recording/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Travis County Tax Office (Property Taxes)",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://tax-office.traviscountytx.gov/properties/taxes",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Travis County Interactive Parcel Map",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://travis.prodigycad.com/maps",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Travis County District Clerk Court Records",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and county court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.traviscountytx.gov/district-clerk/online-services",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Travis County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names, marriage records & official county filings.",
+        "url": "https://countyclerk.traviscountytx.gov/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "TX:tarrant": {
+    "name": "Tarrant County",
+    "state": "TX",
+    "metro": "Fort Worth Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Tarrant Appraisal District (TAD)",
+        "scope": "Property Assessment",
+        "desc": "Tarrant County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://www.tad.org/",
+        "label": "TAD Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Tarrant County Clerk (Real Estate Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, deeds of trust, liens & property transfers.",
+        "url": "https://www.tarrantcountytx.gov/en/county-clerk/real-estate-records.html",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Tarrant County Tax Assessor-Collector",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, tax billing statements & tax delinquency search.",
+        "url": "https://taxonline.tarrantcounty.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "TAD Interactive Mapping Services",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.tad.org/gis-data/",
+        "label": "TAD Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Tarrant County Electronic Court Case Access",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and county court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.tarrantcountytx.gov/en/district-clerk/electronic-case-access.html",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Tarrant County Clerk (Assumed Names & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names, business licenses & marriage certificates.",
+        "url": "https://www.tarrantcountytx.gov/en/county-clerk.html",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "TX:bexar": {
+    "name": "Bexar County",
+    "state": "TX",
+    "metro": "San Antonio Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Bexar Appraisal District (BCAD)",
+        "scope": "Property Assessment",
+        "desc": "San Antonio and Bexar County property appraisal records & assessed valuation.",
+        "url": "https://www.bcad.org/",
+        "label": "BCAD Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Bexar County Clerk (Deed Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded deeds, mortgages, liens, deeds of trust & title filings.",
+        "url": "https://www.bexar.org/2946/County-Clerk",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Bexar County Tax Assessor-Collector",
+        "scope": "Property Taxes",
+        "desc": "Real estate tax bills, payment status & tax delinquency records.",
+        "url": "https://www.bexar.org/tax/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "BCAD Interactive Map Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://www.bcad.org/clientdb/Map.aspx",
+        "label": "BCAD Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Bexar County Court Records Portal",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and county court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://portal-txbexar.tylertech.cloud/Portal/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Bexar County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA), notary filings & marriage records.",
+        "url": "https://www.bexar.org/2946/County-Clerk",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "FL:miami-dade": {
+    "name": "Miami-Dade County",
+    "state": "FL",
+    "metro": "Miami Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Miami-Dade Property Appraiser (PA)",
+        "scope": "Property Appraisal",
+        "desc": "Property ownership, assessment rolls, square footage, building specs & parcel valuations.",
+        "url": "https://www.miamidade.gov/pa/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Miami-Dade Clerk of Court (Official Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://www.miamidadeclerk.gov/clerk/official-records.page",
+        "label": "Official Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Miami-Dade Tax Collector (Property Taxes)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://miamidade.county-taxes.com/public",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "MDCPropertySearch Interactive GIS Map",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, aerial imagery & zoning overlays.",
+        "url": "https://gisweb.miamidade.gov/MDCPropertySearch/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Miami-Dade Online Court System (OCS)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www2.miamidadeclerk.gov/ocs/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Miami-Dade County Clerk (Marriage & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Marriage certificates, vital records & county clerk filings.",
+        "url": "https://www.miamidadeclerk.gov/clerk/vital-records.page",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "FL:broward": {
+    "name": "Broward County",
+    "state": "FL",
+    "metro": "Fort Lauderdale Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Broward County Property Appraiser (BCPA)",
+        "scope": "Property Assessment",
+        "desc": "Broward County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://bcpa.net/",
+        "label": "BCPA Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Broward Clerk of Court (Official Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.browardclerk.org/Divisions/OfficialRecords",
+        "label": "Official Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Broward County Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Real estate secured tax bills, payment status & tax delinquency lookup.",
+        "url": "https://broward.county-taxes.com/public",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Broward Enterprise GIS Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://gis.broward.org/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Broward Clerk of Courts Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court case records, civil lawsuits, probate & court dockets.",
+        "url": "https://www.browardclerk.org/Web2",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Broward County Clerk (Marriage & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Marriage licenses, vital statistics & county recording documents.",
+        "url": "https://www.browardclerk.org/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "FL:orange": {
+    "name": "Orange County",
+    "state": "FL",
+    "metro": "Orlando Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Orange County Property Appraiser (OCPA)",
+        "scope": "Property Assessment",
+        "desc": "Orlando and Orange County property appraisal records & assessed valuation.",
+        "url": "https://www.ocpafl.org/",
+        "label": "OCPA Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Orange County Comptroller (Official Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://www.myorangeclerk.com/Divisions/Records/Official-Records",
+        "label": "Official Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Orange County Tax Collector",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://octaxcol.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "OCPA Interactive GIS Parcel Search",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://www.ocpafl.org/Searches/ParcelSearch.aspx",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Orange County myeClerk Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court case records, civil lawsuits, probate & court dockets.",
+        "url": "https://myeclerk.myorangeclerk.com/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Orange County Comptroller (Marriage & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Marriage licenses, official filings & vital records.",
+        "url": "https://www.myorangeclerk.com/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "FL:hillsborough": {
+    "name": "Hillsborough County",
+    "state": "FL",
+    "metro": "Tampa Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Hillsborough Property Appraiser (HCPA)",
+        "scope": "Property Assessment",
+        "desc": "Tampa and Hillsborough County property appraisal records, valuation & parcel lookup.",
+        "url": "https://www.hcpafl.org/",
+        "label": "HCPA Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Hillsborough Clerk of Court (Official Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.hillsclerk.com/official-records",
+        "label": "Official Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Hillsborough County Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://hillsborough.county-taxes.com/public",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "HCPA GIS Parcel Search Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gis.hcpafl.org/propertysearch/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Hillsborough HOVER Court Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://hover.hillsclerk.com/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Hillsborough Clerk (Marriage & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Marriage certificates, vital records & county clerk filings.",
+        "url": "https://www.hillsclerk.com/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "NY:new york": {
+    "name": "New York County (Manhattan)",
+    "state": "NY",
+    "metro": "New York City (Manhattan)",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "NYC Dept of Finance Property Assessment",
+        "scope": "Property Assessment",
+        "desc": "Manhattan real property assessment rolls, valuation, tax class & parcel specs.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "NYC ACRIS (Manhattan Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded land records, deeds, mortgages, UCCs & property transfers.",
+        "url": "https://a836-acris.nyc.gov/CP/",
+        "label": "ACRIS Deeds"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "NYC Dept of Finance Property Tax Bills",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & tax rolls.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "NYC Digital Tax Map & NYCityMap GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial mapping.",
+        "url": "https://maps.nyc.gov/taxmap/",
+        "label": "NYC Tax Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "NYSCEF & WebCivil Supreme / Local Courts",
+        "scope": "Civil & Court Dockets",
+        "desc": "New York Supreme Court civil litigation dockets, judgments & filings.",
+        "url": "https://iapps.courts.state.ny.us/webcivil/ecourtsMain",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "New York County Clerk (Corporate & Liens)",
+        "scope": "DBA & Corporate Registry",
+        "desc": "Business assumed names (DBA), corporate filings, lis pendens & vital statistics.",
+        "url": "https://www.nycourts.gov/courts/1jd/supctmanh/county_clerk.shtml",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "NY:kings": {
+    "name": "Kings County (Brooklyn)",
+    "state": "NY",
+    "metro": "New York City (Brooklyn)",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "NYC Dept of Finance Property Assessment",
+        "scope": "Property Assessment",
+        "desc": "Brooklyn property assessment rolls, assessed valuation & parcel numbers.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "NYC ACRIS (Brooklyn Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://a836-acris.nyc.gov/CP/",
+        "label": "ACRIS Deeds"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "NYC Dept of Finance Tax Bills & Collections",
+        "scope": "Property Taxes",
+        "desc": "Real estate secured tax bills, payment status & tax delinquency lookup.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "NYC Digital Tax Map & NYCityMap GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://maps.nyc.gov/taxmap/",
+        "label": "NYC Tax Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Kings County Supreme Court Civil Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://iapps.courts.state.ny.us/webcivil/ecourtsMain",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Kings County Clerk (DBA & Vital Filings)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA / Sole Proprietorships), notary filings & vital records.",
+        "url": "https://www.nycourts.gov/courts/2jd/kings/countyclerk.shtml",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "NY:queens": {
+    "name": "Queens County",
+    "state": "NY",
+    "metro": "New York City (Queens)",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "NYC Dept of Finance Property Portal",
+        "scope": "Property Assessment",
+        "desc": "Queens real property assessment rolls, valuation & parcel lookup.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "NYC ACRIS (Queens Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://a836-acris.nyc.gov/CP/",
+        "label": "ACRIS Deeds"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "NYC Dept of Finance Tax Billing Statements",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://a836-propertyportal.nyc.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "NYC Digital Tax Map GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://maps.nyc.gov/taxmap/",
+        "label": "NYC Tax Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Queens County Supreme Court Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and county court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://iapps.courts.state.ny.us/webcivil/ecourtsMain",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Queens County Clerk (DBA & Business Records)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names, marriage records & official county filings.",
+        "url": "https://www.nycourts.gov/courts/11jd/queens/countyclerk.shtml",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "NY:nassau": {
+    "name": "Nassau County",
+    "state": "NY",
+    "metro": "Long Island / Nassau",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Nassau Land Records Viewer (LRV)",
+        "scope": "Property Assessment",
+        "desc": "Nassau County property appraisal records, assessed valuation & parcel numbers.",
+        "url": "https://lrv.nassaucountyny.gov/",
+        "label": "LRV Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Nassau County Clerk (Deeds & Mortgages)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.nassaucountyny.gov/435/County-Clerk",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Nassau County Treasurer / Assessment",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://www.nassaucountyny.gov/assessment",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Nassau County GIS Property Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gis.nassaucountyny.gov/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "NYSCEF Nassau Supreme & County Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://iapps.courts.state.ny.us/webcivil/ecourtsMain",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Nassau County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Business assumed names (DBA), notary filings & marriage records.",
+        "url": "https://www.nassaucountyny.gov/435/County-Clerk",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "AZ:maricopa": {
+    "name": "Maricopa County",
+    "state": "AZ",
+    "metro": "Phoenix Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Maricopa County Assessor (Parcel Search)",
+        "scope": "Property Rolls & Values",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://mcassessor.maricopa.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Maricopa County Recorder (Recorded Documents)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://recorder.maricopa.gov/recdocsearch/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Maricopa County Treasurer (Property Taxes)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://treasurer.maricopa.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Maricopa County Enterprise GIS Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, PIN lookup & aerial maps.",
+        "url": "https://maps.maricopa.gov/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Maricopa Superior Court Electronic Records",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www.clerkofcourt.maricopa.gov/records",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Maricopa County Recorder (Voter & Filings)",
+        "scope": "DBA & Vital Records",
+        "desc": "Trade name registrations, voter rolls, notary filings & county records.",
+        "url": "https://recorder.maricopa.gov/",
+        "label": "DBA & Records"
+      }
+    ]
+  },
+  "WA:king": {
+    "name": "King County",
+    "state": "WA",
+    "metro": "Seattle Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "King County Department of Assessments",
+        "scope": "Property Assessment",
+        "desc": "Seattle and King County property appraisal records, valuation & parcel lookup.",
+        "url": "https://recordsearch.kingcounty.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "King County Recorder (Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://kingcounty.gov/en/dept/records-licensing/records-and-licensing/recorder-office",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "King County Treasury (Property Taxes)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://kingcounty.gov/en/dept/finance-business-operations/property-tax-payments",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "King County Parcel Viewer 2.0 GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gismaps.kingcounty.gov/parcelviewer2/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "King County Superior Court ECR Online",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://kingcounty.gov/en/court/superior-court/courts-jails-legal-system/court-records",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "King County Records & Licensing (DBA)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA), business licensing & marriage certificates.",
+        "url": "https://kingcounty.gov/en/dept/records-licensing",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "NV:clark": {
+    "name": "Clark County",
+    "state": "NV",
+    "metro": "Las Vegas Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Clark County Assessor (Parcel Records)",
+        "scope": "Property Rolls & Values",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://maps.clarkcountynv.gov/assessor/AssessorParcelDetail/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Clark County Recorder (Records Search)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://recorder.clarkcountynv.gov/recordssearch/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Clark County Treasurer (Tax Lookup & Pay)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://trweb.co.clark.nv.us/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Clark County OpenWeb GIS Parcel Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, PIN lookup & aerial maps.",
+        "url": "https://maps.clarkcountynv.gov/opengis/",
+        "label": "OpenWeb GIS"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Clark County 8th Judicial District Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www.clarkcountycourts.us/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Clark County Clerk (Marriage & FBN Filings)",
+        "scope": "DBA & Vital Records",
+        "desc": "Fictitious firm names (FBN / DBA), marriage records & official county filings.",
+        "url": "https://www.clarkcountynv.gov/government/elected_officials/county_clerk/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "GA:fulton": {
+    "name": "Fulton County",
+    "state": "GA",
+    "metro": "Atlanta Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Fulton County Board of Assessors (qPublic)",
+        "scope": "Property Assessment",
+        "desc": "Atlanta and Fulton County property appraisal records, valuation & parcel lookup.",
+        "url": "https://qpublic.schneidercorp.com/Application.aspx?App=FultonCountyGA",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Fulton County Clerk of Superior Court (Deeds)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.fultonclerk.org/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Fulton County Tax Commissioner",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://fultoncountytaxes.org/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Fulton County GIS & Parcel Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gis.fultoncountyga.gov/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Fulton County Superior Court Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.fultonclerk.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Fulton County Clerk (Trade Names & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Trade names (DBA), business licenses & marriage certificates.",
+        "url": "https://www.fultonclerk.org/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "PA:philadelphia": {
+    "name": "Philadelphia County",
+    "state": "PA",
+    "metro": "Philadelphia Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Philadelphia Office of Property Assessment (OPA)",
+        "scope": "Property Rolls & Values",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://property.phila.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Philadelphia Department of Records (Deeds)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://philadelphiarecords.com/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Philadelphia Department of Revenue (Taxes)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://www.phila.gov/departments/department-of-revenue/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Philadelphia Atlas GIS Property Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, PIN lookup & aerial maps.",
+        "url": "https://atlas.phila.gov/",
+        "label": "Atlas GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Philadelphia First Judicial District (FJD)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://fjclshub.phila.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Philadelphia City Records (Vital & Business)",
+        "scope": "DBA & Vital Records",
+        "desc": "Business registrations, vital records & municipal archive documents.",
+        "url": "https://www.phila.gov/departments/records/",
+        "label": "City Records"
+      }
+    ]
+  },
+  "NC:mecklenburg": {
+    "name": "Mecklenburg County",
+    "state": "NC",
+    "metro": "Charlotte Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Mecklenburg County Real Estate Assessment",
+        "scope": "Property Assessment",
+        "desc": "Charlotte and Mecklenburg County property appraisal records & assessed valuation.",
+        "url": "https://property.spatialest.com/nc/mecklenburg/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Mecklenburg County Register of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://meckrod.manatron.com/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Mecklenburg County Tax Collector",
+        "scope": "Property Taxes",
+        "desc": "Real estate tax bills, payment status & tax delinquency records.",
+        "url": "https://taxweb.mecklenburgcountync.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "POLARIS 3G Property Mapping GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & aerial imagery.",
+        "url": "https://polaris3g.mecklenburgcountync.gov/",
+        "label": "POLARIS GIS"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "North Carolina Judicial Branch eCourts",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior and district court civil litigation dockets & judgments.",
+        "url": "https://portal-nc.tylertech.cloud/Portal/",
+        "label": "eCourts Portal"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Mecklenburg Register of Deeds (Assumed Names)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA), notary filings & marriage records.",
+        "url": "https://meckrod.manatron.com/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "NC:wake": {
+    "name": "Wake County",
+    "state": "NC",
+    "metro": "Raleigh / Research Triangle",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Wake County Real Estate Search",
+        "scope": "Property Assessment",
+        "desc": "Raleigh and Wake County real estate appraisal records & assessed valuation.",
+        "url": "https://services.wake.gov/realestate/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Wake County Register of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://www.wake.gov/departments-government/register-deeds",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Wake County Tax Administration",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://taxportal.wake.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Wake County iMAPS GIS Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://maps.wake.gov/imaps/",
+        "label": "iMAPS GIS"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Wake County Courts (NC eCourts Portal)",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://portal-nc.tylertech.cloud/Portal/",
+        "label": "eCourts Portal"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Wake County Register of Deeds (Assumed Names)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA), marriage records & vital statistics.",
+        "url": "https://www.wake.gov/departments-government/register-deeds",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "CO:denver": {
+    "name": "Denver County",
+    "state": "CO",
+    "metro": "Denver Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Denver Assessor's Office (Property Search)",
+        "scope": "Property Assessment",
+        "desc": "Denver real property assessment rolls, valuation & parcel lookup.",
+        "url": "https://www.denvergov.org/property",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Denver Clerk and Recorder (Real Estate)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Office-of-the-Clerk-and-Recorder/recordings",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Denver Treasury Division (Tax Lookup)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Department-of-Finance/Treasury-Division",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Denver Property Map & Aerial GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.denvergov.org/maps/map/property",
+        "label": "Denver Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Denver County Court Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.denvercountycourt.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Denver Clerk and Recorder (DBA & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names, marriage certificates & official county recordings.",
+        "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Office-of-the-Clerk-and-Recorder",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "MA:suffolk": {
+    "name": "Suffolk County (Boston)",
+    "state": "MA",
+    "metro": "Boston Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "City of Boston Assessing Department",
+        "scope": "Property Rolls & Values",
+        "desc": "Real property ownership, parcel valuations, building specs & tax assessment rolls.",
+        "url": "https://www.boston.gov/departments/assessing",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Suffolk Registry of Deeds (MassLandRecords)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, mortgages, liens, deeds of trust & plat maps.",
+        "url": "https://www.masslandrecords.com/Suffolk/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Boston Collector-Treasurer (Property Taxes)",
+        "scope": "Tax Bills & Collections",
+        "desc": "Real estate tax bills, payment histories, installment receipts & delinquent tax rolls.",
+        "url": "https://www.boston.gov/departments/collector-treasurer",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Boston Map GIS Parcel Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries, PIN lookup & aerial maps.",
+        "url": "https://boston.maps.arcgis.com/",
+        "label": "Boston GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "MassCourts.org (Suffolk Trial Courts)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www.masscourts.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Boston City Clerk (Business Certificates)",
+        "scope": "DBA & Vital Records",
+        "desc": "Business certificates (DBA), vital records & municipal filings.",
+        "url": "https://www.boston.gov/departments/city-clerk",
+        "label": "City Clerk"
+      }
+    ]
+  },
+  "DC:district of columbia": {
+    "name": "District of Columbia",
+    "state": "DC",
+    "metro": "Washington DC Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "DC Real Property Tax Database (MyTax.DC)",
+        "scope": "Property Assessment",
+        "desc": "Washington DC real property assessment rolls, valuation, square footage & tax class.",
+        "url": "https://mytax.dc.gov/_/#1",
+        "label": "MyTax Assessor"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "DC Recorder of Deeds (OTR Online)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, deeds of trust & liens.",
+        "url": "https://otr.cfo.dc.gov/service/recorder-deeds",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "DC Office of Tax and Revenue (Billing)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, billing statements & tax delinquency verification.",
+        "url": "https://mytax.dc.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "DC PropertyQuest GIS Mapping Tool",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, lot boundaries & historic designations.",
+        "url": "https://propertyquest.dc.gov/",
+        "label": "PropertyQuest"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "DC Superior Court (eAccess Case Search)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://eaccess.dccourts.gov/eaccess/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "DC DLCP (CorpOnline Entity Search)",
+        "scope": "DBA & Corporate Registry",
+        "desc": "Corporate charters, LLC filings, trade names & business licensing.",
+        "url": "https://corponline.dcra.dc.gov/",
+        "label": "CorpOnline"
+      }
+    ]
+  },
+  "MI:wayne": {
+    "name": "Wayne County",
+    "state": "MI",
+    "metro": "Detroit Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Wayne County Property Tax Search",
+        "scope": "Property Assessment",
+        "desc": "Detroit and Wayne County property appraisal records, valuation & parcel lookup.",
+        "url": "https://www.waynecounty.com/departments/treasurer/property-tax-search.aspx",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Wayne County Register of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.waynecounty.com/departments/records/register-deeds.aspx",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Wayne County Treasurer (Tax Payments)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://www.waynecounty.com/departments/treasurer/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Wayne County GIS Parcel Mapping",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.waynecounty.com/departments/records/gis.aspx",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Wayne County 3rd Judicial Circuit Court",
+        "scope": "Civil & Court Dockets",
+        "desc": "Superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.3rdcc.org/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Wayne County Clerk (DBA & Vital)",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA), business licenses & marriage certificates.",
+        "url": "https://www.waynecounty.com/departments/clerk/",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "OH:franklin": {
+    "name": "Franklin County",
+    "state": "OH",
+    "metro": "Columbus Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Franklin County Auditor (Property Search)",
+        "scope": "Property Assessment",
+        "desc": "Columbus and Franklin County real estate appraisal records & assessed valuation.",
+        "url": "https://property.franklincountyauditor.com/",
+        "label": "Auditor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Franklin County Recorder (Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://recorder.franklincountyohio.gov/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Franklin County Treasurer (Property Taxes)",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://treasurer.franklincountyohio.gov/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Franklin County Auditor GIS Map Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://audr-apps.franklincountyohio.gov/gis/",
+        "label": "Auditor GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Franklin County Clerk of Courts Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "Common pleas and municipal court civil litigation dockets & judgments.",
+        "url": "https://fclerk.clerk.franklincountyohio.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Franklin County Recorder (Business Filings)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA), military discharge & official records.",
+        "url": "https://recorder.franklincountyohio.gov/",
+        "label": "DBA & Records"
+      }
+    ]
+  },
+  "MN:hennepin": {
+    "name": "Hennepin County",
+    "state": "MN",
+    "metro": "Minneapolis Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Hennepin County Property Information",
+        "scope": "Property Assessment",
+        "desc": "Minneapolis and Hennepin County property appraisal records, valuation & parcel lookup.",
+        "url": "https://www.hennepin.us/residents/property/property-information-search",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Hennepin County Recorder / Registrar of Titles",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.hennepin.us/residents/property/record-property-document",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Hennepin County Property Tax Department",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://www.hennepin.us/residents/property/property-taxes",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Hennepin County Property Map GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gis.hennepin.us/property/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Minnesota MCRO Public Access (4th District)",
+        "scope": "Civil & Court Dockets",
+        "desc": "District court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://publicaccess.courts.state.mn.us/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Hennepin County Certificates & Vital Records",
+        "scope": "DBA & Vital Registry",
+        "desc": "Certificate of assumed name (DBA), marriage certificates & vital statistics.",
+        "url": "https://www.hennepin.us/residents/licenses-certificates-permits",
+        "label": "DBA & Vital"
+      }
+    ]
+  },
+  "MO:st. louis": {
+    "name": "St. Louis County",
+    "state": "MO",
+    "metro": "St. Louis County",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "St. Louis County Department of Revenue (IAS)",
+        "scope": "Property Assessment",
+        "desc": "St. Louis County property appraisal records, valuation & parcel lookup.",
+        "url": "https://revenue.stlouisco.com/ias/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "St. Louis County Recorder of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://stlouiscountymo.gov/st-louis-county-departments/recorder-of-deeds/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "St. Louis County Collector of Revenue",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://stlouiscountymo.gov/st-louis-county-departments/revenue/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "St. Louis County Public GIS Parcel Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://stlouisco.maps.arcgis.com/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Missouri Case.net (21st Judicial Circuit)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.courts.mo.gov/casenet/",
+        "label": "Case.net Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "St. Louis County County Clerk",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA), business licenses & marriage records.",
+        "url": "https://stlouiscountymo.gov/",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "TN:davidson": {
+    "name": "Davidson County (Nashville)",
+    "state": "TN",
+    "metro": "Nashville Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Nashville & Davidson County Property Assessor",
+        "scope": "Property Assessment",
+        "desc": "Nashville real property assessment rolls, valuation, square footage & tax class.",
+        "url": "https://www.padctn.org/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Nashville & Davidson Register of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, deeds of trust & liens.",
+        "url": "https://www.nashville.gov/departments/register-deeds",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Nashville Metropolitan Trustee (Tax Bills)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, billing statements & tax delinquency verification.",
+        "url": "https://www.nashville.gov/departments/trustee",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Metro Nashville Enterprise GIS (Parcel Viewer)",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, lot boundaries & aerial imagery.",
+        "url": "https://maps.nashville.gov/",
+        "label": "Metro GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Nashville Trial Courts Electronic Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit, chancery and probate court case records search.",
+        "url": "https://circuitclerk.nashville.gov/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Davidson County Clerk (Business Licenses)",
+        "scope": "DBA & Vital Records",
+        "desc": "Business tax registrations, marriage certificates & county filings.",
+        "url": "https://www.nashville.gov/departments/county-clerk",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "IN:marion": {
+    "name": "Marion County (Indianapolis)",
+    "state": "IN",
+    "metro": "Indianapolis Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Marion County Assessor (Property Cards)",
+        "scope": "Property Assessment",
+        "desc": "Indianapolis and Marion County property appraisal records & assessed valuation.",
+        "url": "https://maps.indy.gov/AssessorPropertyCards/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Marion County Recorder",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://www.indy.gov/agency/marion-county-recorder",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Marion County Treasurer (Tax Payments)",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://www.indy.gov/agency/marion-county-treasurer",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "IndyMap Enterprise GIS & Parcel Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://maps.indy.gov/",
+        "label": "IndyMap GIS"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "mycase.IN.gov (Marion County Courts)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit and superior court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://mycase.in.gov/",
+        "label": "MyCase Courts"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Marion County Clerk's Office",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA), marriage records & vital statistics.",
+        "url": "https://www.indy.gov/agency/marion-county-clerk",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "MD:montgomery": {
+    "name": "Montgomery County",
+    "state": "MD",
+    "metro": "Montgomery / DC Suburbs",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Maryland SDAT Real Property Search (Montgomery)",
+        "scope": "Property Assessment",
+        "desc": "State Department of Assessments and Taxation real property search.",
+        "url": "https://sdat.dat.maryland.gov/RealProperty/Pages/default.aspx",
+        "label": "SDAT Assessor"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "MDLandRec (Montgomery County Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Maryland statewide digital land records portal for deeds and mortgages.",
+        "url": "https://mdlandrec.net/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Montgomery County Department of Finance",
+        "scope": "Property Taxes",
+        "desc": "Real property tax bills, payment status & assessment accounts.",
+        "url": "https://www.montgomerycountymd.gov/finance/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Montgomery County MC:Atlas GIS Parcel Viewer",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://mcatlas.org/",
+        "label": "MC:Atlas GIS"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Maryland Judiciary Case Search (Montgomery)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit and district court civil lawsuits, judgments & court dockets.",
+        "url": "https://casesearch.courts.state.md.us/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Montgomery County Circuit Court Clerk",
+        "scope": "DBA & Licensing",
+        "desc": "Business licenses, trade names, notary commissions & marriage records.",
+        "url": "https://www.courts.state.md.us/clerks/montgomery",
+        "label": "Circuit Clerk"
+      }
+    ]
+  },
+  "VA:fairfax": {
+    "name": "Fairfax County",
+    "state": "VA",
+    "metro": "Northern Virginia / DC Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Fairfax County Real Estate Assessment (ICARE)",
+        "scope": "Property Assessment",
+        "desc": "Fairfax County property appraisal records, valuation & parcel lookup.",
+        "url": "https://icare.fairfaxcounty.gov/ffxcare/search/commonsearch.aspx?mode=address",
+        "label": "ICARE Assessor"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Fairfax County Circuit Court Land Records (CPAN)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.fairfaxcounty.gov/circuit/land-records",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Fairfax County Department of Tax Administration",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, real estate tax bills & delinquency search.",
+        "url": "https://www.fairfaxcounty.gov/taxes/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Fairfax County JADE Interactive GIS Map",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.fairfaxcounty.gov/gis/jade/",
+        "label": "JADE GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Virginia Judicial System Case Info (Fairfax)",
+        "scope": "Civil & Court Dockets",
+        "desc": "General district and circuit court civil dockets & judicial records.",
+        "url": "https://eapps.courts.state.va.us/ocis/landing",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Fairfax County Circuit Court Clerk",
+        "scope": "DBA & Vital Registry",
+        "desc": "Fictitious business names (DBA), business licenses & marriage records.",
+        "url": "https://www.fairfaxcounty.gov/circuit/",
+        "label": "Circuit Clerk"
+      }
+    ]
+  },
+  "LA:orleans": {
+    "name": "Orleans Parish (New Orleans)",
+    "state": "LA",
+    "metro": "New Orleans Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Orleans Parish Assessor's Office (qPublic)",
+        "scope": "Property Assessment",
+        "desc": "New Orleans real property assessment rolls, valuation, square footage & tax class.",
+        "url": "https://qpublic.schneidercorp.com/Application.aspx?App=OrleansParishLA",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Orleans Civil District Court Clerk (Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, conveyances, mortgages & liens.",
+        "url": "https://www.orleanscivilclerk.com/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "City of New Orleans Bureau of Treasury",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, billing statements & tax delinquency verification.",
+        "url": "https://nola.gov/treasury/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "City of New Orleans Property Viewer GIS",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, lot boundaries & historic designations.",
+        "url": "https://property.nola.gov/",
+        "label": "Property Viewer"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Orleans Parish Civil District Court Dockets",
+        "scope": "Civil & Court Dockets",
+        "desc": "Civil litigation dockets, small claims, probate, family law & court judgments.",
+        "url": "https://www.orleanscivilclerk.com/",
+        "label": "Court Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Orleans Parish Custodian of Notarial Archives",
+        "scope": "DBA & Notarial Records",
+        "desc": "Notarial acts, trade names & parish archival conveyances.",
+        "url": "https://www.orleanscivilclerk.com/",
+        "label": "Parish Archives"
+      }
+    ]
+  },
+  "UT:salt lake": {
+    "name": "Salt Lake County",
+    "state": "UT",
+    "metro": "Salt Lake City Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Salt Lake County Assessor Parcel Search",
+        "scope": "Property Assessment",
+        "desc": "Salt Lake City and County real estate appraisal records & assessed valuation.",
+        "url": "https://slco.org/assessor/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Salt Lake County Recorder of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://slco.org/recorder/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Salt Lake County Treasurer (Tax Lookup)",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://slco.org/treasurer/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Salt Lake County Public GIS Map Portal",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://slco.org/gis/",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Utah State Courts XChange Case Search",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and justice court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.utcourts.gov/xchange/",
+        "label": "XChange Courts"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Salt Lake County Clerk (Business & Vital)",
+        "scope": "DBA & Vital Records",
+        "desc": "Business registrations, marriage certificates & county election records.",
+        "url": "https://slco.org/clerk/",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "OR:multnomah": {
+    "name": "Multnomah County (Portland)",
+    "state": "OR",
+    "metro": "Portland Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Multnomah Division of Assessment & Taxation",
+        "scope": "Property Assessment",
+        "desc": "Portland and Multnomah County property appraisal records, valuation & parcel lookup.",
+        "url": "https://multcoproptax.com/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Multnomah County Recording Office (Deeds)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, liens & property transfers.",
+        "url": "https://www.multco.us/recording",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Multnomah Property Tax Collections",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://multcoproptax.com/",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "PortlandMaps Interactive GIS & Property Search",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://www.portlandmaps.com/",
+        "label": "PortlandMaps"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Oregon Judicial Information Network (OJCIN)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court register of actions, probate, family dockets & judgments.",
+        "url": "https://www.courts.oregon.gov/services/online/pages/ojcin.aspx",
+        "label": "OJCIN Courts"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Multnomah County Elections & Records",
+        "scope": "DBA & Vital Registry",
+        "desc": "Assumed business names (DBA), business licenses & marriage certificates.",
+        "url": "https://www.multco.us/",
+        "label": "County Records"
+      }
+    ]
+  },
+  "WI:milwaukee": {
+    "name": "Milwaukee County",
+    "state": "WI",
+    "metro": "Milwaukee Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "City of Milwaukee Assessing Department",
+        "scope": "Property Assessment",
+        "desc": "Milwaukee real property assessment rolls, valuation, square footage & tax class.",
+        "url": "https://assessments.milwaukee.gov/",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Milwaukee County Register of Deeds",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, deeds, mortgages, deeds of trust & liens.",
+        "url": "https://county.milwaukee.gov/EN/Register-of-Deeds",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Milwaukee County Treasurer (Tax Portal)",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, billing statements & tax delinquency verification.",
+        "url": "https://county.milwaukee.gov/EN/Treasurer",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Milwaukee County Land Info GIS (MCLIO)",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, lot boundaries & aerial imagery.",
+        "url": "https://mclio.maps.arcgis.com/",
+        "label": "MCLIO GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Wisconsin Circuit Court Access (WCCA Milwaukee)",
+        "scope": "Civil & Court Dockets",
+        "desc": "Circuit court civil litigation dockets, judgments & case records.",
+        "url": "https://wcca.wicourts.gov/",
+        "label": "WCCA Courts"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Milwaukee County Clerk",
+        "scope": "DBA & Vital Records",
+        "desc": "Business registrations, marriage certificates & county filings.",
+        "url": "https://county.milwaukee.gov/",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "OK:oklahoma": {
+    "name": "Oklahoma County",
+    "state": "OK",
+    "metro": "Oklahoma City Metro",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Oklahoma County Assessor Portal",
+        "scope": "Property Assessment",
+        "desc": "Oklahoma City and County property appraisal records & assessed valuation.",
+        "url": "https://oklahomacounty.org/assessor",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Oklahoma County Clerk (Deed Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Recorded land records, deeds, deeds of trust, liens, mortgages & parcel conveyances.",
+        "url": "https://oklahomacounty.org/countyclerk",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Oklahoma County Treasurer (Tax Search)",
+        "scope": "Tax Bills & Payments",
+        "desc": "Property tax payment verification, bill inquiry & installment status.",
+        "url": "https://www.oklahomacounty.org/treasurer",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Oklahoma County Interactive GIS Mapping",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive geographic information system parcel boundaries & tract maps.",
+        "url": "https://oklahomacounty.org/assessor/mapping",
+        "label": "Parcel GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Oklahoma State Courts Network (OSCN)",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and appellate court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.oscn.net/",
+        "label": "OSCN Dockets"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Oklahoma County Clerk (Business Filings)",
+        "scope": "DBA & Vital Records",
+        "desc": "Assumed business names (DBA), marriage records & vital statistics.",
+        "url": "https://oklahomacounty.org/",
+        "label": "County Clerk"
+      }
+    ]
+  },
+  "HI:honolulu": {
+    "name": "Honolulu (City & County)",
+    "state": "HI",
+    "metro": "Honolulu / Oahu",
+    "offices": [
+      {
+        "key": "assessor",
+        "icon": "🏡",
+        "title": "Honolulu Real Property Assessment (qPublic)",
+        "scope": "Property Assessment",
+        "desc": "Honolulu and Oahu real property assessment rolls, valuation & parcel lookup.",
+        "url": "https://qpublic.schneidercorp.com/Application.aspx?App=HonoluluCountyHI",
+        "label": "Assessor Portal"
+      },
+      {
+        "key": "deeds",
+        "icon": "📜",
+        "title": "Hawaii Bureau of Conveyances (BOC Land Records)",
+        "scope": "Deeds & Mortgages",
+        "desc": "Official recorded documents, Regular System & Land Court deeds & mortgages.",
+        "url": "https://dlnr.hawaii.gov/boc/",
+        "label": "Land Records"
+      },
+      {
+        "key": "treasurer",
+        "icon": "💰",
+        "title": "Honolulu Real Property Tax Collections",
+        "scope": "Property Taxes",
+        "desc": "Property tax lookup, secured roll billing statements & delinquency search.",
+        "url": "https://www.honolulu.gov/rpa",
+        "label": "Tax Collector"
+      },
+      {
+        "key": "gis",
+        "icon": "🗺️",
+        "title": "Honolulu Land Information System (HoLIS GIS)",
+        "scope": "GIS & Parcel Maps",
+        "desc": "Interactive parcel GIS map, zoning, parcel lines & planning data.",
+        "url": "https://gis.hicentral.com/",
+        "label": "HoLIS GIS Map"
+      },
+      {
+        "key": "courts",
+        "icon": "⚖️",
+        "title": "Hawaii State Judiciary eCourt Kokua",
+        "scope": "Civil & Court Dockets",
+        "desc": "District and circuit court civil lawsuits, probate, family cases & judicial dockets.",
+        "url": "https://www.courts.state.hi.us/legal_references/records/jims_system_availability",
+        "label": "eCourt Kokua"
+      },
+      {
+        "key": "clerk",
+        "icon": "📋",
+        "title": "Honolulu Office of the City Clerk",
+        "scope": "DBA & Vital Registry",
+        "desc": "City and county legislative records, marriage certificates & official filings.",
+        "url": "https://www.honolulu.gov/clerk",
+        "label": "City Clerk"
+      }
+    ]
+  },
+  "NY:erie": {
+      "name": "Erie County",
+      "state": "NY",
+      "metro": "Buffalo Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Erie County Real Property Tax Services",
+              "scope": "Property Assessment",
+              "desc": "Buffalo and Erie County real property parcel search, assessment rolls & valuations.",
+              "url": "https://www.erie.gov/ecrpts/real-property-parcel-search",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Erie County Clerk (Land Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Official recorded land documents, deeds, mortgages, liens & conveyances.",
+              "url": "https://erie.gov/clerk/land-records",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Erie County Real Property Tax Collections",
+              "scope": "Property Taxes",
+              "desc": "County and municipal tax bill lookup, payment records & tax auction info.",
+              "url": "https://paytax.erie.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Erie County On-Line GIS Parcel Map",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, aerial orthophotography & boundary boundaries.",
+              "url": "https://erie.gov/gis/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Erie County Supreme & County Courts (NYSCEF)",
+              "scope": "Civil & Court Dockets",
+              "desc": "New York State Unified Court System civil dockets, motion decisions & judgment filings.",
+              "url": "https://iapps.courts.state.ny.us/nyscef/Login",
+              "label": "NYSCEF Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Erie County Clerk (DBA & Business Records)",
+              "scope": "DBA & Business Filings",
+              "desc": "Assumed business names (DBA), corporations, notary filings & public records.",
+              "url": "https://erie.gov/clerk/business-certificates",
+              "label": "DBA Registry"
+          }
+      ]
+  },
+  "MO:jackson": {
+      "name": "Jackson County",
+      "state": "MO",
+      "metro": "Kansas City Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Jackson County Assessment Department",
+              "scope": "Property Assessment",
+              "desc": "Kansas City and Jackson County real estate valuation rolls, parcel specs & appraisal records.",
+              "url": "https://ascendweb.jacksongov.org/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Jackson County Recorder of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded real estate documents, warranty deeds, deeds of trust, liens & plats.",
+              "url": "https://www.jacksongov.org/Government/Departments/Recorder-of-Deeds",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Jackson County Collections Department",
+              "scope": "Tax Bills & Payments",
+              "desc": "Real property and personal property tax statements, payments & receipt lookup.",
+              "url": "https://www.jacksongov.org/Government/Departments/Collection",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Jackson County Interactive GIS Parcel Viewer",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive geographic information system parcel boundaries, topography & zoning.",
+              "url": "https://jcgis.jacksongov.org/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "16th Judicial Circuit Court of Missouri (Case.net)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Jackson County civil lawsuits, circuit court judgments, probate & domestic relations.",
+              "url": "https://www.courts.mo.gov/casenet/base/welcome.do",
+              "label": "MO Case.net"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Jackson County Clerk & Business Filings",
+              "scope": "DBA & County Records",
+              "desc": "County licenses, liquor permits, Board of Equalization petitions & county records.",
+              "url": "https://www.jacksongov.org/Government/Departments/County-Clerk",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "PA:allegheny": {
+      "name": "Allegheny County",
+      "state": "PA",
+      "metro": "Pittsburgh Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Allegheny County Real Estate Portal",
+              "scope": "Property Assessment",
+              "desc": "Pittsburgh and Allegheny County property assessments, building specs, sales & parcel data.",
+              "url": "https://alleghenycounty.us/Services/Real-Estate/Real-Estate-Portal",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Allegheny County Department of Real Estate",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded deeds, mortgages, satisfaction pieces, subdivision plans & land title records.",
+              "url": "https://alleghenycontroller.com/real-estate-search/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Allegheny County Treasurer's Office",
+              "scope": "Property Taxes",
+              "desc": "County real estate tax bills, collections, payment status & delinquent tax liens.",
+              "url": "https://alleghenycountytreasurer.us/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Allegheny County GIS Open Data & Parcel Map",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel explorer, cadastral layers, zoning & aerial imagery.",
+              "url": "https://openac-alcogis.hub.arcgis.com/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Allegheny County Court Records (DCR Civil Search)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Department of Court Records civil lawsuit dockets, arbitration, judgments & liens.",
+              "url": "https://dcr.alleghenycounty.us/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Allegheny County Department of Court Records (Wills/Marriage)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Fictitious names, marriage licenses, probate filings & estate inventories.",
+              "url": "https://alleghenycounty.us/Services/Court-Records",
+              "label": "County Registry"
+          }
+      ]
+  },
+  "OH:cuyahoga": {
+      "name": "Cuyahoga County",
+      "state": "OH",
+      "metro": "Cleveland Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Cuyahoga County Fiscal Officer (MyPlace)",
+              "scope": "Property Assessment",
+              "desc": "Cleveland and Cuyahoga County real estate appraisal values, parcel characteristics & tax rolls.",
+              "url": "https://myplace.cuyahogacounty.gov/",
+              "label": "MyPlace Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Cuyahoga County Recorded Documents",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, mortgages, liens, easements & survey plats.",
+              "url": "https://fiscalofficer.cuyahogacounty.gov/en-US/recording.aspx",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Cuyahoga County Treasurer",
+              "scope": "Tax Bills & Payments",
+              "desc": "Real estate property tax statements, payment histories, installment plans & delinquency.",
+              "url": "https://treasurer.cuyahogacounty.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Cuyahoga County Enterprise GIS",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel GIS viewer, property boundary overlay & municipal zoning layers.",
+              "url": "https://gis.cuyahogacounty.gov/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Cuyahoga County Clerk of Courts (Case Docket)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Common Pleas Court civil lawsuits, foreclosure dockets, domestic relations & judgments.",
+              "url": "https://cp.cuyahogacounty.gov/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Cuyahoga County Clerk of Courts (Titles & Records)",
+              "scope": "DBA & Public Filings",
+              "desc": "Auto titles, notary commissions, passport services & civil judgment registry.",
+              "url": "https://coc.cuyahogacounty.gov/",
+              "label": "Clerk of Courts"
+          }
+      ]
+  },
+  "OH:hamilton": {
+      "name": "Hamilton County",
+      "state": "OH",
+      "metro": "Cincinnati Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Hamilton County Auditor Property Search",
+              "scope": "Property Assessment",
+              "desc": "Cincinnati and Hamilton County real estate valuation records, tax rates & parcel data.",
+              "url": "https://propertysearch.myhamiltoncountyauditor.org/",
+              "label": "Auditor Search"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Hamilton County Recorder of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property conveyances, mortgages, condominium declarations & land liens.",
+              "url": "https://recordersoffice.hamilton-co.org/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Hamilton County Treasurer",
+              "scope": "Property Taxes",
+              "desc": "Property tax billing statements, payment processing & delinquent tax rolls.",
+              "url": "https://www.hamiltoncountyohio.gov/government/departments/treasurer",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Cincinnati Area GIS (CAGIS Online)",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping system, building footprints, zoning & contours.",
+              "url": "https://cagisonline.hamilton-co.org/",
+              "label": "CAGIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Hamilton County Clerk of Courts Records Search",
+              "scope": "Civil & Court Dockets",
+              "desc": "Common Pleas and Municipal Court civil actions, lawsuits, evictions & judgments.",
+              "url": "https://www.courtclerk.org/records-search/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Hamilton County Probate Court (Vital & Marriage)",
+              "scope": "Vital & Estate Registry",
+              "desc": "Marriage license registry, probate estates, wills, name changes & guardianship.",
+              "url": "https://www.probatect.org/",
+              "label": "Probate & Vital"
+          }
+      ]
+  },
+  "FL:duval": {
+      "name": "Duval County (Jacksonville)",
+      "state": "FL",
+      "metro": "Jacksonville Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Duval County Property Appraiser (PAO)",
+              "scope": "Property Assessment",
+              "desc": "Jacksonville real estate market valuations, building details, exemptions & parcel GIS.",
+              "url": "https://paopropertysearch.coj.net/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Duval County Clerk of Courts (Official Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded deeds, mortgages, liens, lis pendens, deeds of trust & easements.",
+              "url": "https://or.duvalclerk.com/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Duval County Tax Collector",
+              "scope": "Property Taxes",
+              "desc": "Real estate tax bills, tangible personal property taxes & payment verification.",
+              "url": "https://fl-duval-taxcollector.governmax.com/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "City of Jacksonville Interactive GIS Maps",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel viewer, zoning atlas, FEMA flood maps & council districts.",
+              "url": "https://maps.coj.net/",
+              "label": "Jacksonville GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Duval County Court Records (CORE Search)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Circuit and County court civil litigation, small claims, probate & judicial dockets.",
+              "url": "https://core.duvalclerk.com/",
+              "label": "CORE Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Duval County Clerk of Courts (Public Services)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Marriage licenses, passport records, value adjustment board & official recordings.",
+              "url": "https://www.duvalclerk.com/",
+              "label": "Clerk of Courts"
+          }
+      ]
+  },
+  "FL:palm beach": {
+      "name": "Palm Beach County",
+      "state": "FL",
+      "metro": "West Palm Beach / Boca Raton",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Palm Beach County Property Appraiser (PAPA)",
+              "scope": "Property Assessment",
+              "desc": "West Palm Beach, Boca Raton property valuations, building structural specs & homestead status.",
+              "url": "https://www.pbcgov.org/papa/",
+              "label": "PAPA Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Palm Beach County Clerk Official Records",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded deeds, mortgages, satisfactions, notices of commencement & encumbrances.",
+              "url": "https://www.mypalmbeachclerk.com/records/official-records",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Palm Beach County Tax Collector",
+              "scope": "Property Taxes",
+              "desc": "Real estate property tax statements, installment payments & delinquent tax certificates.",
+              "url": "https://pbctax.com/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Palm Beach County Geographic Information Systems",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive cadastral parcel maps, commission boundaries & environmental layers.",
+              "url": "https://discover.pbcgov.org/iss/gis/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Palm Beach County Clerk eCaseView Court Dockets",
+              "scope": "Civil & Court Dockets",
+              "desc": "15th Judicial Circuit civil lawsuits, probate proceedings, family court & foreclosure cases.",
+              "url": "https://epay.mypalmbeachclerk.com/",
+              "label": "eCaseView Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Palm Beach County Clerk & Comptroller (Vital)",
+              "scope": "Vital & Marriage Registry",
+              "desc": "Marriage applications, passport operations, board records & official registry.",
+              "url": "https://www.mypalmbeachclerk.com/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "FL:pinellas": {
+      "name": "Pinellas County",
+      "state": "FL",
+      "metro": "St. Petersburg / Clearwater",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Pinellas County Property Appraiser (PCPAO)",
+              "scope": "Property Assessment",
+              "desc": "St. Petersburg and Clearwater real estate valuations, building permits & parcel data.",
+              "url": "https://www.pcpao.org/",
+              "label": "PCPAO Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Pinellas County Clerk Official Records Search",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, mortgages, liens & subdivision plats.",
+              "url": "https://officialrecords.mypinellasclerk.gov/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Pinellas County Tax Collector",
+              "scope": "Property Taxes",
+              "desc": "Real property ad valorem tax bills, annual billing & delinquent tax accounts.",
+              "url": "https://pinellastaxcollector.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Pinellas County Interactive GIS Parcel Map",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel explorer, aerial imagery, evacuation zones & property specs.",
+              "url": "https://egis.pinellas.gov/",
+              "label": "Pinellas GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Pinellas County Court Records Search",
+              "scope": "Civil & Court Dockets",
+              "desc": "6th Judicial Circuit civil court actions, probate, family division & lawsuit dockets.",
+              "url": "https://courtcasesearch.mypinellasclerk.gov/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Pinellas County Clerk of the Circuit Court",
+              "scope": "Marriage & Official Filings",
+              "desc": "Marriage licenses, passport filings, fine payments & public record archive.",
+              "url": "https://mypinellasclerk.gov/",
+              "label": "Circuit Clerk"
+          }
+      ]
+  },
+  "MD:baltimore": {
+      "name": "Baltimore County & City",
+      "state": "MD",
+      "metro": "Baltimore Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Maryland SDAT Real Property Search",
+              "scope": "Property Assessment",
+              "desc": "Baltimore County & City real estate appraisal records, parcel ID & tax assessment data.",
+              "url": "https://sdat.dat.maryland.gov/RealProperty/Pages/default.aspx",
+              "label": "SDAT Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Maryland Land Records (MDLandRec)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Official statewide land record archive, recorded deeds, mortgages & title conveyances.",
+              "url": "https://mdlandrec.net/",
+              "label": "MDLandRec"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Baltimore County Property Tax Inquiry",
+              "scope": "Property Taxes",
+              "desc": "Real estate property tax statements, municipal tax bills & payment status.",
+              "url": "https://baltimorecountymd.gov/departments/budfin/taxes/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Baltimore County MyNeighborhood GIS",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundary viewer, zoning layers & historic property maps.",
+              "url": "https://bcgis.baltimorecountymd.gov/",
+              "label": "MyNeighborhood GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Maryland Judiciary Case Search (Casesearch)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Circuit court and District court civil lawsuits, judgments, probate & dockets.",
+              "url": "https://casesearch.courts.state.md.us/casesearch/",
+              "label": "MD Case Search"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Baltimore County Circuit Court Clerk (Licensing)",
+              "scope": "DBA & Business Licenses",
+              "desc": "Business licenses (traders/DBA), marriage licenses & notary public commissions.",
+              "url": "https://www.courts.state.md.us/clerks/baltimore",
+              "label": "Court Clerk"
+          }
+      ]
+  },
+  "CA:sacramento": {
+      "name": "Sacramento County",
+      "state": "CA",
+      "metro": "Sacramento Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Sacramento County Assessor's Office",
+              "scope": "Property Assessment",
+              "desc": "Sacramento real property assessment rolls, parcel specs & assessed valuations.",
+              "url": "https://assessor.saccounty.gov/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Sacramento County Clerk-Recorder",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, grant deeds, deeds of trust, liens & subdivision maps.",
+              "url": "https://recorder.saccounty.gov/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Sacramento County ePropTax Collector",
+              "scope": "Property Taxes",
+              "desc": "Secured property tax bills, installment payment receipts & tax auction notices.",
+              "url": "https://eproptax.saccounty.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Sacramento County GIS Parcel Viewer",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundaries, land zoning, flood hazard zones & supervisorial districts.",
+              "url": "https://generalmap.gis.saccounty.gov/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Sacramento Superior Court Case Search",
+              "scope": "Civil & Court Dockets",
+              "desc": "Superior Court of California civil lawsuits, probate, family court & judgments.",
+              "url": "https://services.saccourt.ca.gov/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Sacramento County Clerk (FBN & Vital)",
+              "scope": "FBN & Vital Registry",
+              "desc": "Fictitious business names (FBN / DBA), marriage certificates & notary public oaths.",
+              "url": "https://ccr.saccounty.gov/",
+              "label": "FBN & Vital"
+          }
+      ]
+  },
+  "WA:pierce": {
+      "name": "Pierce County",
+      "state": "WA",
+      "metro": "Tacoma Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Pierce County Assessor-Treasurer (ARMS)",
+              "scope": "Property Assessment",
+              "desc": "Tacoma and Pierce County property appraisal values, building specs & parcel rolls.",
+              "url": "https://armsweb.co.pierce.wa.us/",
+              "label": "ARMS Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Pierce County Auditor (Recorded Documents)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property conveyances, deeds of trust, liens, covenants & plat surveys.",
+              "url": "https://www.piercecountywa.gov/383/Auditor",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Pierce County Tax Collector",
+              "scope": "Property Taxes",
+              "desc": "Real property tax statements, payments & delinquent tax parcel inquiries.",
+              "url": "https://www.piercecountywa.gov/658/Treasurer-Assessor",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Pierce County PublicGIS Interactive Map",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary dimensions, zoning & critical area layers.",
+              "url": "https://matterhorn.co.pierce.wa.us/publicgis/",
+              "label": "PublicGIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Pierce County LINX Court Records Portal",
+              "scope": "Civil & Court Dockets",
+              "desc": "Legal Information Network Exchange (LINX) superior court civil lawsuits & case dockets.",
+              "url": "https://linxonline.co.pierce.wa.us/linxweb/",
+              "label": "LINX Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Pierce County Clerk (Public Registry)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Marriage certificates, probate matters, domestic relations & official court records.",
+              "url": "https://www.piercecountywa.gov/114/County-Clerk",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "TX:el paso": {
+      "name": "El Paso County",
+      "state": "TX",
+      "metro": "El Paso Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "El Paso Central Appraisal District (EPCAD)",
+              "scope": "Property Assessment",
+              "desc": "El Paso real estate valuations, market value rolls, property specs & exemptions.",
+              "url": "https://www.epcad.org/",
+              "label": "EPCAD Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "El Paso County Clerk (Real Property Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded real property records, deeds, deeds of trust, liens & marriage records.",
+              "url": "https://www.epcounty.com/countyclerk/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "El Paso County Tax Assessor-Collector",
+              "scope": "Property Taxes",
+              "desc": "Consolidated property tax statements, payments & delinquent tax roll inquiry.",
+              "url": "https://www.epcounty.com/taxassessor/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "EPCAD Interactive GIS Parcel Map",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundary viewer, subdivision plats & school district boundaries.",
+              "url": "https://epcad.org/Home/GISMap",
+              "label": "EPCAD GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "El Paso County District Clerk Court Records",
+              "scope": "Civil & Court Dockets",
+              "desc": "District court civil litigation, family division, judgments & electronic dockets.",
+              "url": "https://epcounty.com/districtclerk/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "El Paso County Clerk (Assumed Names / DBA)",
+              "scope": "DBA & Business Registry",
+              "desc": "Assumed business names (DBA), vital statistics & county commissioner records.",
+              "url": "https://www.epcounty.com/countyclerk/",
+              "label": "DBA Registry"
+          }
+      ]
+  },
+  "NM:bernalillo": {
+      "name": "Bernalillo County",
+      "state": "NM",
+      "metro": "Albuquerque Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Bernalillo County Assessor Property Search",
+              "scope": "Property Assessment",
+              "desc": "Albuquerque real estate valuation data, parcel boundaries & property tax assessment rolls.",
+              "url": "https://www.bernco.gov/assessor/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Bernalillo County Clerk (Recorded Documents)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, mortgages, liens & real estate filings.",
+              "url": "https://www.bernco.gov/clerk/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Bernalillo County Treasurer's Office",
+              "scope": "Property Taxes",
+              "desc": "Property tax statements, payment lookup, tax rate schedules & delinquent bills.",
+              "url": "https://www.bernco.gov/treasurer/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Bernalillo County Assessor GIS Mapping",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary overlays & geographic land records.",
+              "url": "https://www.bernco.gov/assessor/gis-mapping/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "New Mexico Courts Case Lookup (Bernalillo)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Second Judicial District Court civil litigation, domestic relations & judgments.",
+              "url": "https://caselookup.nmcourts.gov/caselookup/",
+              "label": "NM Case Lookup"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Bernalillo County Clerk (Bureau of Elections & Vital)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Marriage licenses, notary registry, business filings & county records.",
+              "url": "https://www.bernco.gov/clerk/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "KY:jefferson": {
+      "name": "Jefferson County",
+      "state": "KY",
+      "metro": "Louisville Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Jefferson County Property Valuation Administrator (PVA)",
+              "scope": "Property Assessment",
+              "desc": "Louisville real estate valuations, assessment rolls, parcel specs & property maps.",
+              "url": "https://jeffersonpva.ky.gov/",
+              "label": "PVA Assessor"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Jefferson County Clerk's Office (Land Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded deeds, mortgages, deeds of trust, liens & condominium declarations.",
+              "url": "https://www.jeffersoncountyclerk.org/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Jefferson County Sheriff's Property Tax Division",
+              "scope": "Property Taxes",
+              "desc": "County property tax bill search, payment verification & tax collection records.",
+              "url": "https://www.jeffersoncountysheriff.com/property-tax-search/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Louisville/Jefferson County GIS (LOJIC)",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive LOJIC Online parcel mapping, zoning layers & property boundaries.",
+              "url": "https://lojic.org/",
+              "label": "LOJIC GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Kentucky Court of Justice (KCOJ Online Court Records)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Jefferson Circuit and District court civil lawsuits, probate & court dockets.",
+              "url": "https://kycourts.gov/",
+              "label": "KCOJ Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Jefferson County Clerk (DBA & Marriage)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Assumed business names (DBA), marriage licenses & professional registries.",
+              "url": "https://www.jeffersoncountyclerk.org/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "NE:douglas": {
+      "name": "Douglas County",
+      "state": "NE",
+      "metro": "Omaha Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Douglas County Assessor/Register of Deeds",
+              "scope": "Property Assessment",
+              "desc": "Omaha and Douglas County property valuation data, sales history & parcel rolls.",
+              "url": "https://www.douglascountyassessor.org/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Douglas County Register of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, mortgages, liens & subdivision plats.",
+              "url": "https://www.douglascountyclerk.org/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Douglas County Treasurer",
+              "scope": "Property Taxes",
+              "desc": "Real estate property tax statements, payment status & delinquent tax rolls.",
+              "url": "https://www.dctreasurer.org/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Douglas County GIS (DOGIS Interactive Map)",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary measurements & aerial orthophotos.",
+              "url": "https://dogis.org/",
+              "label": "DOGIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Nebraska Judicial Branch Case Search (JUSTICE)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Douglas County District and County court civil lawsuits, judgments & dockets.",
+              "url": "https://www.nebraska.gov/justice/",
+              "label": "NE JUSTICE"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Douglas County Clerk (Licenses & Filings)",
+              "scope": "DBA & Marriage Registry",
+              "desc": "Marriage licenses, liquor licenses, tobacco permits & county board filings.",
+              "url": "https://www.douglascountyclerk.org/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "OK:tulsa": {
+      "name": "Tulsa County",
+      "state": "OK",
+      "metro": "Tulsa Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Tulsa County Assessor Property Search",
+              "scope": "Property Assessment",
+              "desc": "Tulsa real estate assessments, property characteristics, sales & parcel data.",
+              "url": "https://www.assessor.tulsacounty.org/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Tulsa County Clerk (Land Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property deeds, mortgages, mechanic's liens, deeds of trust & plats.",
+              "url": "https://countyclerk.tulsacounty.org/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Tulsa County Treasurer",
+              "scope": "Property Taxes",
+              "desc": "Real property ad valorem tax bills, payment status & annual tax roll inquiry.",
+              "url": "https://treasurer.tulsacounty.org/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Tulsa County Interactive GIS Mapping",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundaries, zoning overlay, topography & aerial imagery.",
+              "url": "https://maps.tulsacounty.org/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Oklahoma State Courts Network (OSCN Tulsa County)",
+              "scope": "Civil & Court Dockets",
+              "desc": "14th Judicial District Court civil litigation, small claims, probate & dockets.",
+              "url": "https://www.oscn.net/",
+              "label": "OSCN Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Tulsa County Clerk (Business & Vital Filings)",
+              "scope": "DBA & Business Registry",
+              "desc": "Assumed business names (DBA), public filings & county commissioners records.",
+              "url": "https://countyclerk.tulsacounty.org/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "KS:johnson": {
+      "name": "Johnson County",
+      "state": "KS",
+      "metro": "Overland Park / KC Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Johnson County Appraiser's Office",
+              "scope": "Property Assessment",
+              "desc": "Overland Park and Olathe property valuations, appraisal rolls & parcel data.",
+              "url": "https://www.jocogov.org/department/appraiser",
+              "label": "Appraiser Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Johnson County Records & Tax Administration (Deeds)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property deeds, mortgages, liens, easements & real estate instruments.",
+              "url": "https://www.jocogov.org/department/records-and-tax-administration",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Johnson County Treasury & Financial Management",
+              "scope": "Property Taxes",
+              "desc": "Property tax statements, payment confirmation & delinquent tax roll lookup.",
+              "url": "https://www.jocogov.org/department/treasury-and-financial-management",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Johnson County Automated Information Mapping (AIMS)",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive AIMS parcel viewer, property boundaries, aerial imagery & zoning.",
+              "url": "https://aims.jocogov.org/",
+              "label": "AIMS GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Kansas District Courts Public Portal (10th Judicial District)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Johnson County civil lawsuits, limited actions, probate & electronic dockets.",
+              "url": "https://www.kscourts.org/Cases-Opinions/Public-Portal",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Johnson County Department of Records (Licenses)",
+              "scope": "DBA & County Licenses",
+              "desc": "Marriage licenses, passport services, fish & game, and county public filings.",
+              "url": "https://www.jocogov.org/",
+              "label": "County Records"
+          }
+      ]
+  },
+  "TN:shelby": {
+      "name": "Shelby County",
+      "state": "TN",
+      "metro": "Memphis Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Shelby County Assessor of Property",
+              "scope": "Property Assessment",
+              "desc": "Memphis and Shelby County real estate valuation rolls, parcel specs & appraisal records.",
+              "url": "https://www.assessor.shelby.tn.us/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Shelby County Register of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, deeds of trust, liens & subdivision plats.",
+              "url": "https://register.shelby.tn.us/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Shelby County Trustee (Property Tax Search)",
+              "scope": "Property Taxes",
+              "desc": "Property tax statements, payment processing & delinquent tax roll inquiry.",
+              "url": "https://www.payitgov.com/shelby-county-trustee/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Shelby County Register GIS Parcel Viewer",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary measurements & cadastral survey maps.",
+              "url": "https://gis.register.shelby.tn.us/",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Shelby County Circuit & Chancery Court (CourtConnect)",
+              "scope": "Civil & Court Dockets",
+              "desc": "CourtConnect civil lawsuits, chancery court filings, domestic relations & judgments.",
+              "url": "https://courtconnect.shelbycountytn.gov/",
+              "label": "CourtConnect"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Shelby County Clerk (Business Tax & Marriage)",
+              "scope": "DBA & Business Registry",
+              "desc": "County business tax licenses, marriage certificates & notary commissions.",
+              "url": "https://www.shelbycountytn.gov/",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "MI:oakland": {
+      "name": "Oakland County",
+      "state": "MI",
+      "metro": "Detroit Metro / Pontiac",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Oakland County Property Gateway & Equalization",
+              "scope": "Property Assessment",
+              "desc": "Troy, Farmington Hills, Pontiac property assessments, parcel characteristics & tax data.",
+              "url": "https://www.oakgov.com/government/equalization",
+              "label": "Property Gateway"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Oakland County Register of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, mortgages, liens & condominium plats.",
+              "url": "https://www.oakgov.com/government/clerk-register-of-deeds",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Oakland County Treasurer",
+              "scope": "Property Taxes",
+              "desc": "Delinquent property tax lookup, annual tax statements & tax foreclosure info.",
+              "url": "https://www.oakgov.com/government/treasurer",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Oakland County Access Oakland GIS",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive GIS parcel maps, aerial imagery, topography & municipal boundaries.",
+              "url": "https://www.oakgov.com/community/gis-mapping",
+              "label": "Access Oakland GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "6th Judicial Circuit Court of Michigan (Court Explorer)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Oakland County Circuit Court civil lawsuits, domestic relations & judicial dockets.",
+              "url": "https://www.oakgov.com/government/courts",
+              "label": "Court Explorer"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Oakland County Clerk (Assumed Names & Vital)",
+              "scope": "DBA & Vital Registry",
+              "desc": "Assumed business names (DBA / Co-partnerships), marriage licenses & concealed pistol licenses.",
+              "url": "https://www.oakgov.com/government/clerk-register-of-deeds",
+              "label": "County Clerk"
+          }
+      ]
+  },
+  "AZ:pima": {
+      "name": "Pima County",
+      "state": "AZ",
+      "metro": "Tucson Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Pima County Assessor Property Search",
+              "scope": "Property Assessment",
+              "desc": "Tucson and Pima County property appraisal values, residential specs & tax rolls.",
+              "url": "https://www.asr.pima.gov/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Pima County Recorder of Deeds",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, warranty deeds, deeds of trust, liens & subdivision surveys.",
+              "url": "https://www.recorder.pima.gov/",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Pima County Treasurer",
+              "scope": "Property Taxes",
+              "desc": "Real property and personal property tax billing inquiry, payments & tax status.",
+              "url": "https://www.to.pima.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Pima County PimaMaps Interactive GIS",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundaries, elevation contours, floodplains & zoning overlay.",
+              "url": "https://gis.pima.gov/",
+              "label": "PimaMaps GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Pima County Superior Court Clerk Case Search",
+              "scope": "Civil & Court Dockets",
+              "desc": "Superior court civil lawsuits, probate proceedings, domestic relations & judgments.",
+              "url": "https://www.sc.pima.gov/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Pima County Clerk of the Superior Court",
+              "scope": "Marriage & Public Records",
+              "desc": "Marriage licenses, passport processing, legal records & court file archives.",
+              "url": "https://www.cosc.pima.gov/",
+              "label": "Superior Clerk"
+          }
+      ]
+  },
+  "GA:gwinnett": {
+      "name": "Gwinnett County",
+      "state": "GA",
+      "metro": "Atlanta Metro / Lawrenceville",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Gwinnett County Tax Assessor's Office",
+              "scope": "Property Assessment",
+              "desc": "Lawrenceville, Duluth, Norcross real property assessments, building details & tax rolls.",
+              "url": "https://www.gwinnettcounty.com/web/gwinnett/departments/financialservices/taxassessorsoffice",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Gwinnett County Clerk of Superior Court (Deeds)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property deeds, mortgages, liens, UCC financing statements & plat maps.",
+              "url": "https://www.gwinnettcourts.com/clerk/real-estate",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Gwinnett County Tax Commissioner",
+              "scope": "Property Taxes",
+              "desc": "Real estate tax bill lookups, payment processing & property tax receipts.",
+              "url": "https://gwinnetttaxcommissioner.publicaccessnow.com/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Gwinnett County Geographic Information Systems",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundaries, zoning overlay, aerial orthophotography & commission districts.",
+              "url": "https://www.gwinnettcounty.com/web/gwinnett/departments/informationtechnologyservices/gis",
+              "label": "Parcel GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Gwinnett County Courts Case Search",
+              "scope": "Civil & Court Dockets",
+              "desc": "Superior and State court civil litigation, garnishments, foreclosures & case dockets.",
+              "url": "https://www.gwinnettcourts.com/casesearch/",
+              "label": "Court Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Gwinnett County Clerk (Trade Names / DBA)",
+              "scope": "DBA & Business Registry",
+              "desc": "Trade name registration (DBA), notary public commissions & partnership registry.",
+              "url": "https://www.gwinnettcourts.com/",
+              "label": "Trade Names"
+          }
+      ]
+  },
+  "NY:westchester": {
+      "name": "Westchester County",
+      "state": "NY",
+      "metro": "White Plains / NYC Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Westchester County Real Property Tax Services",
+              "scope": "Property Assessment",
+              "desc": "White Plains and Westchester municipal assessment rolls, tax rates & parcel valuations.",
+              "url": "https://tax.westchestergov.com/",
+              "label": "Tax Services"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Westchester County Clerk (PREP Land Records)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Property Records Electronic Portal (PREP) recorded deeds, mortgages & title filings.",
+              "url": "https://westchesterclerk.com/",
+              "label": "PREP Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Westchester County Department of Finance",
+              "scope": "Property Taxes",
+              "desc": "County property tax distributions, municipal apportionments & tax rolls.",
+              "url": "https://finance.westchestergov.com/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Westchester County Geographic Information Systems",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary measurements, zoning & environmental data.",
+              "url": "https://giswww.westchestergov.com/",
+              "label": "Westchester GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Westchester Supreme & County Courts (NYSCEF)",
+              "scope": "Civil & Court Dockets",
+              "desc": "New York State Unified Court System civil dockets, commercial claims & judgments.",
+              "url": "https://iapps.courts.state.ny.us/nyscef/Login",
+              "label": "NYSCEF Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Westchester County Clerk (Business / DBA Records)",
+              "scope": "DBA & Business Registry",
+              "desc": "Business certificates for sole proprietorships (DBA), corporations & notary commissions.",
+              "url": "https://westchesterclerk.com/",
+              "label": "DBA Registry"
+          }
+      ]
+  },
+  "NY:suffolk": {
+      "name": "Suffolk County",
+      "state": "NY",
+      "metro": "Long Island Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Suffolk County Real Property Tax Service Agency",
+              "scope": "Property Assessment",
+              "desc": "Long Island township property assessment rolls, tax maps & assessed parcel data.",
+              "url": "https://www.suffolkcountyny.gov/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Suffolk County Clerk (Recorded Documents)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded land documents, deeds, mortgages, satisfactions, covenants & subdivision plats.",
+              "url": "https://suffolkcountyny.gov/Departments/County-Clerk",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Suffolk County Comptroller",
+              "scope": "Property Taxes",
+              "desc": "County property tax distribution, delinquent tax redemptions & property tax sales.",
+              "url": "https://www.suffolkcountyny.gov/Departments/Comptroller",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Suffolk County GIS Interactive Parcel Viewer",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel mapping, boundary lines, aerial orthophotos & township lines.",
+              "url": "https://gis.suffolkcountyny.gov/",
+              "label": "Suffolk GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Suffolk County Supreme & County Court (NYSCEF)",
+              "scope": "Civil & Court Dockets",
+              "desc": "New York State Unified Court System civil lawsuits, motion decisions & dockets.",
+              "url": "https://iapps.courts.state.ny.us/nyscef/Login",
+              "label": "NYSCEF Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Suffolk County Clerk (Business Certificates / DBA)",
+              "scope": "DBA & Business Registry",
+              "desc": "Certificates of doing business under assumed name (DBA), partnerships & legal filings.",
+              "url": "https://suffolkcountyny.gov/Departments/County-Clerk",
+              "label": "DBA Registry"
+          }
+      ]
+  },
+  "NY:monroe": {
+      "name": "Monroe County",
+      "state": "NY",
+      "metro": "Rochester Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "Monroe County Real Property Portal",
+              "scope": "Property Assessment",
+              "desc": "Rochester and Monroe County real property assessment rolls, property tax bills & parcel info.",
+              "url": "https://www.monroecounty.gov/taxes",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "Monroe County Clerk (Recorded Documents)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property deeds, mortgages, liens, easements & survey map filings.",
+              "url": "https://www.monroecounty.gov/clerk",
+              "label": "Land Records"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "Monroe County Real Property Tax Collections",
+              "scope": "Property Taxes",
+              "desc": "Annual county tax payments, installment plans & delinquent tax roll status.",
+              "url": "https://monroecounty.gov/taxes-pay",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "Monroe County GIS Parcel Viewer",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive parcel boundaries, aerial photography & municipal boundaries.",
+              "url": "https://www.monroecounty.gov/gis",
+              "label": "Monroe GIS Map"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Monroe Supreme & County Courts (NYSCEF)",
+              "scope": "Civil & Court Dockets",
+              "desc": "7th Judicial District civil lawsuits, tort actions, commercial division & judgments.",
+              "url": "https://iapps.courts.state.ny.us/nyscef/Login",
+              "label": "NYSCEF Dockets"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Monroe County Clerk (DBA & Business Records)",
+              "scope": "DBA & Business Registry",
+              "desc": "Business certificates (DBA), partnership filings & notary public registration.",
+              "url": "https://www.monroecounty.gov/clerk",
+              "label": "DBA Registry"
+          }
+      ]
+  },
+  "NY:bronx": {
+      "name": "Bronx County (The Bronx)",
+      "state": "NY",
+      "metro": "New York City Metro",
+      "offices": [
+          {
+              "key": "assessor",
+              "icon": "🏡",
+              "title": "NYC Department of Finance (Property Assessment)",
+              "scope": "Property Assessment",
+              "desc": "The Bronx and NYC property assessment rolls, market valuations & tax bills.",
+              "url": "https://a836-propertyportal.nyc.gov/",
+              "label": "Assessor Portal"
+          },
+          {
+              "key": "deeds",
+              "icon": "📜",
+              "title": "NYC ACRIS (Automated City Register Information System)",
+              "scope": "Deeds & Mortgages",
+              "desc": "Recorded property deeds, mortgages, liens & title conveyances across The Bronx.",
+              "url": "https://a836-acris.nyc.gov/CP/",
+              "label": "ACRIS Deeds"
+          },
+          {
+              "key": "treasurer",
+              "icon": "💰",
+              "title": "NYC Department of Finance (Property Taxes)",
+              "scope": "Property Taxes",
+              "desc": "Property tax bills, quarterly statement of accounts & tax payment receipts.",
+              "url": "https://a836-propertyportal.nyc.gov/",
+              "label": "Tax Collector"
+          },
+          {
+              "key": "gis",
+              "icon": "🗺️",
+              "title": "NYC CityMap Interactive Parcel GIS",
+              "scope": "GIS & Parcel Maps",
+              "desc": "Interactive cadastral parcel boundaries, zoning, tax block/lot (BBL) & aerial imagery.",
+              "url": "https://maps.nyc.gov/doitt/nycitymap/",
+              "label": "CityMap GIS"
+          },
+          {
+              "key": "courts",
+              "icon": "⚖️",
+              "title": "Bronx County Supreme Court (NYSCEF eCourts)",
+              "scope": "Civil & Court Dockets",
+              "desc": "Supreme Court civil lawsuits, commercial actions, foreclosures & judgment rolls.",
+              "url": "https://iapps.courts.state.ny.us/nyscef/Login",
+              "label": "NYSCEF Courts"
+          },
+          {
+              "key": "clerk",
+              "icon": "📋",
+              "title": "Bronx County Clerk (Business & Vital Filings)",
+              "scope": "DBA & Business Registry",
+              "desc": "Assumed business names (DBA), partnership certificates & notary public registry.",
+              "url": "https://www.nycourts.gov/courts/2jd/bronx/",
+              "label": "County Clerk"
+          }
+      ]
+  }
+};
+
+function getDirectCountyHub(stateCode, countyName) {
+  if (!stateCode || !countyName || typeof countyName !== 'string') return null;
+  const s = stateCode.toUpperCase().trim();
+  const raw = countyName.toLowerCase().trim();
+  const withoutParens = raw.replace(/\s*\([^\)]*\)/g, '').trim();
+  const stripped1 = withoutParens.replace(/\s+(county|parish|borough|municipality|city)$/i, '').trim();
+  const stripped2 = raw.replace(/\s+(county|parish|borough|municipality)$/i, '').trim();
+  return COUNTY_NETR_HUBS[`${s}:${stripped1}`] ||
+         COUNTY_NETR_HUBS[`${s}:${withoutParens}`] ||
+         COUNTY_NETR_HUBS[`${s}:${stripped2}`] ||
+         COUNTY_NETR_HUBS[`${s}:${raw}`] ||
+         null;
+}
+
+function getDirectCountyPortal(stateCode, countyName) {
+  const hub = getDirectCountyHub(stateCode, countyName);
+  if (!hub) return null;
+  const assessor = hub.offices.find(o => o.key === 'assessor')?.url || '';
+  const deeds = hub.offices.find(o => o.key === 'deeds')?.url || '';
+  return { name: hub.name, assessor, deeds };
+}
 
 let locationDebounceTimer = null;
 
@@ -3046,23 +7852,25 @@ function resolveJurisdiction(rawLocation) {
   let isExact = false;
 
   // 1. Detect state name or state code
-  for (const [code, info] of Object.entries(US_STATES)) {
-    const namePattern = new RegExp(`\\b${info.name}\\b`, 'i');
-    if (namePattern.test(str)) {
-      stateCode = code;
-      break;
+  // Priority A: State specified after comma: 'Kansas City, MO' or 'Kansas City, Missouri'
+  const commaParts = str.split(',');
+  if (commaParts.length > 1) {
+    const afterComma = commaParts[commaParts.length - 1].trim();
+    const codeMatch = afterComma.match(/^([A-Za-z]{2})\b/);
+    if (codeMatch && US_STATES[codeMatch[1].toUpperCase()]) {
+      stateCode = codeMatch[1].toUpperCase();
+    }
+    if (!stateCode) {
+      for (const [code, info] of Object.entries(US_STATES)) {
+        if (new RegExp(`\\b${info.name}\\b`, 'i').test(afterComma)) {
+          stateCode = code;
+          break;
+        }
+      }
     }
   }
 
-  // Comma followed by 2-letter code: 'Charlotte, NC'
-  if (!stateCode) {
-    const commaMatch = str.match(/,\s*([A-Za-z]{2})\b/);
-    if (commaMatch && US_STATES[commaMatch[1].toUpperCase()]) {
-      stateCode = commaMatch[1].toUpperCase();
-    }
-  }
-
-  // Trailing 2-letter code: 'Charlotte NC'
+  // Priority B: Trailing 2-letter state code: 'Kansas City MO' or 'Charlotte NC'
   if (!stateCode) {
     const endMatch = str.match(/\b([A-Za-z]{2})\s*$/);
     if (endMatch && US_STATES[endMatch[1].toUpperCase()]) {
@@ -3070,12 +7878,41 @@ function resolveJurisdiction(rawLocation) {
     }
   }
 
-  // Standalone uppercase 2-letter code matching a US state
+  // Priority C: Trailing full state name: 'Kansas City Missouri'
+  if (!stateCode) {
+    for (const [code, info] of Object.entries(US_STATES)) {
+      if (new RegExp(`\\b${info.name}\\s*$`, 'i').test(str)) {
+        stateCode = code;
+        break;
+      }
+    }
+  }
+
+  // Priority D: Comma followed by 2-letter code anywhere
+  if (!stateCode) {
+    const commaMatch = str.match(/,\s*([A-Za-z]{2})\b/);
+    if (commaMatch && US_STATES[commaMatch[1].toUpperCase()]) {
+      stateCode = commaMatch[1].toUpperCase();
+    }
+  }
+
+  // Priority E: Standalone uppercase 2-letter code matching a US state
   if (!stateCode) {
     const words = str.split(/[^A-Za-z]/).filter(Boolean);
     for (const w of words) {
       if (w.length === 2 && w === w.toUpperCase() && US_STATES[w]) {
         stateCode = w;
+        break;
+      }
+    }
+  }
+
+  // Priority F: Full state name anywhere in str
+  if (!stateCode) {
+    for (const [code, info] of Object.entries(US_STATES)) {
+      const namePattern = new RegExp(`\\b${info.name}\\b`, 'i');
+      if (namePattern.test(str)) {
+        stateCode = code;
         break;
       }
     }
@@ -3486,6 +8323,14 @@ function setupRecordsTab() {
     btnLogDossier.addEventListener('click', () => {
       const jur = State.jurisdiction;
       const targetName = State.target.name || 'Target';
+      const directHub = getDirectCountyHub(jur.stateCode, jur.county);
+      const portalUrl = directHub
+        ? (directHub.offices.find(o => o.key === 'assessor')?.url || directHub.offices[0]?.url)
+        : `https://publicrecords.netronline.com/state/${jur.stateCode}/`;
+      const notes = directHub
+        ? `Target location: ${targetName} in ${jur.county}, ${jur.stateName}. Verified in-workstation county portal (${directHub.name}) logged.`
+        : `Target location: ${targetName} in ${jur.county}, ${jur.stateName}. Verified County and State official portals logged.`;
+
       State.auditLogs.unshift({
         id: Date.now().toString(),
         target: targetName,
@@ -3493,8 +8338,8 @@ function setupRecordsTab() {
         category: 'Public Legal Record',
         severity: 'info',
         status: 'confirmed',
-        url: `https://publicrecords.netronline.com/state/${jur.stateCode}/`,
-        notes: `Target location: ${targetName} in ${jur.county}, ${jur.stateName}. Verified County and State official portals logged.`,
+        url: portalUrl,
+        notes: notes,
         timestamp: new Date().toISOString()
       });
       saveStoredData();
@@ -3510,6 +8355,7 @@ function renderRecordsTab() {
   const jur = State.jurisdiction;
   const stateObj = US_STATES[jur.stateCode] || US_STATES.NY;
   const targetName = State.target.name || 'Target Name';
+  const directHub = getDirectCountyHub(jur.stateCode, jur.county);
 
   // Banner
   const bannerTitle = document.getElementById('jur-banner-title');
@@ -3521,7 +8367,8 @@ function renderRecordsTab() {
   }
   if (bannerMeta) {
     const metro = jur.city ? `Target Location: ${jur.city} • ` : '';
-    bannerMeta.textContent = `${metro}Target: ${targetName} • Official Domain: ${stateObj.domain} • NETR State Hub: publicrecords.netronline.com/state/${jur.stateCode}/`;
+    const directBadge = directHub ? ` • ⚡ Direct County Hub: ${directHub.name} (${directHub.metro})` : '';
+    bannerMeta.textContent = `${metro}Target: ${targetName} • Official Domain: ${stateObj.domain}${directBadge} • Directory Hub: publicrecords.netronline.com/state/${jur.stateCode}/`;
   }
 
   // Tier headers
@@ -3536,6 +8383,39 @@ function renderRecordsTab() {
   if (t2State) t2State.textContent = stateObj.name;
   if (t4Target) t4Target.textContent = targetName;
 
+  // Tier 1 Badge and Title
+  const t1Badge = document.getElementById('tier1-badge');
+  if (t1Badge) {
+    if (directHub) {
+      t1Badge.textContent = '⚡ DIRECT COUNTY DIRECTORY';
+      t1Badge.classList.add('badge-county-hub', 'badge-netr-clone');
+    } else {
+      t1Badge.textContent = 'TIER 1';
+      t1Badge.classList.remove('badge-county-hub', 'badge-netr-clone');
+    }
+  }
+
+  const t1TitleText = document.getElementById('tier1-title-text');
+  if (t1TitleText) {
+    t1TitleText.textContent = directHub ? 'Official County Directory Hub' : 'County & Local Government Records';
+  }
+
+  const t1NoticeContainer = document.getElementById('tier1-hub-notice-container');
+  if (t1NoticeContainer) {
+    if (directHub) {
+      t1NoticeContainer.innerHTML = `
+        <div class="county-hub-notice">
+          <span class="hub-icon">⚡</span>
+          <div>
+            <span class="hub-title">${escapeHtml(directHub.name)} Directory (${escapeHtml(directHub.metro)})</span>: Direct in-workstation access to official county departmental records (Assessor, Deeds, Tax Collector, GIS, Courts, and Vital records) with zero ads, external paywalls, or adblock restrictions.
+          </div>
+        </div>
+      `;
+    } else {
+      t1NoticeContainer.innerHTML = '';
+    }
+  }
+
   // Tier 1: County & Local Cards
   const t1Grid = document.getElementById('tier1-county-cards');
   if (t1Grid) {
@@ -3548,7 +8428,10 @@ function renderRecordsTab() {
     const assessorDork = jur.city && jur.city !== jur.county
       ? `"${jur.county}" ("${jur.city}" | "property appraiser" | "tax assessor" | "assessment roll" | "gis" | "parcel") site:gov`
       : `"${jur.county}" ("property appraiser" | "tax assessor" | "assessment roll" | "gis" | "parcel") site:gov`;
+    const taxDork = `${locFilter} ("treasurer" | "tax collector" | "property taxes" | "tax bill") site:gov`;
+    const gisDork = `${locFilter} ("gis" | "interactive map" | "parcel viewer" | "cadastral") site:gov`;
     const courtDork = `${locFilter} ("district court" | "county court" | "clerk of court" | "civil docket") site:gov`;
+    const clerkDork = `${locFilter} ("clerk" | "assumed name" | "dba" | "vital statistics" | "marriage license") site:gov`;
     const sheriffDork = `${locFilter} ("sheriff" | "police" | "inmate roster" | "jail" | "booking" | "arrests") site:gov`;
     const boeDork = `${locFilter} ("board of elections" | "election commission" | "registrar of voters" | "voter registration" | "sample ballot") site:gov`;
 
@@ -3561,6 +8444,7 @@ function renderRecordsTab() {
         icon: '🏛️',
         title: `${jur.city} Municipal / Town Hall Records`,
         scope: 'Town & Municipal',
+        isDirect: false,
         desc: `Local municipal codes, city/town hall official notices, building permits, local zoning, and council minutes for ${jur.city}.`,
         dork: municipalDork,
         portalUrl: `https://www.google.com/search?q=${encodeURIComponent(municipalDork)}`,
@@ -3568,73 +8452,136 @@ function renderRecordsTab() {
       });
     }
 
-    countyCards.push(
-      {
-        icon: '📜',
-        title: `${jur.county} Clerk & Recorder of Deeds`,
-        scope: 'Deeds & Mortgages',
-        desc: 'Search property deeds, mortgages, liens, judgments, DBA business names, and marriage records.',
-        dork: deedsDork,
-        portalUrl: netrUrl,
-        portalLabel: 'NETR Directory'
-      },
-      {
-        icon: '🏡',
-        title: `${jur.county} Real Property Tax & GIS Assessor`,
-        scope: 'Property Rolls',
-        desc: `Query property parcel assessment rolls by owner name to verify residential address and valuation${jur.city && jur.city !== jur.county ? ' in ' + jur.city : ''}.`,
-        dork: assessorDork,
-        portalUrl: netrUrl,
-        portalLabel: 'GIS Tax Portal'
-      },
-      {
-        icon: '⚖️',
-        title: `${jur.county} County / District Court Filings`,
-        scope: 'Civil & Criminal',
-        desc: 'Access local civil lawsuits, small claims, traffic infractions, and county court dockets.',
-        dork: courtDork,
-        portalUrl: `https://www.google.com/search?q=${encodeURIComponent(courtDork)}`,
-        portalLabel: 'Court Directory'
-      },
-      {
-        icon: '👮',
-        title: `${jur.county} Sheriff & Jail Inmate Roster`,
-        scope: 'Custody & Warrants',
-        desc: 'Review active detention lists, county jail bookings, warrants, and sheriff notices.',
-        dork: sheriffDork,
-        portalUrl: `https://www.google.com/search?q=${encodeURIComponent(sheriffDork)}`,
-        portalLabel: 'Sheriff Search'
-      },
-      {
-        icon: '🗳️',
-        title: `${jur.county} Board of Elections & Voter Rolls`,
-        scope: 'Voter Registration',
-        desc: `County board of elections, local voter registration rolls, petition filings, and municipal election precincts for ${jur.county}.`,
-        dork: boeDork,
-        portalUrl: stateObj.voterUrl || `https://www.google.com/search?q=${encodeURIComponent(boeDork)}`,
-        portalLabel: 'BOE & Voter Info'
-      },
-      {
-        icon: '🗺️',
-        title: `NETR Online - ${stateObj.name} County Hub`,
-        scope: 'Statewide Index',
-        desc: 'Direct links to Assessor, Recorder of Deeds, and Tax Collector portals for all counties in the state.',
-        dork: `site:publicrecords.netronline.com "${jur.county}"`,
-        portalUrl: netrUrl,
-        portalLabel: 'Open NETR State Hub'
+    if (directHub) {
+      const dorkMap = {
+        assessor: assessorDork,
+        deeds: deedsDork,
+        treasurer: taxDork,
+        gis: gisDork,
+        courts: courtDork,
+        clerk: clerkDork
+      };
+
+      for (const off of directHub.offices) {
+        countyCards.push({
+          icon: off.icon || '🏛️',
+          title: off.title,
+          scope: `${off.scope} (Direct ⚡)`,
+          isDirect: true,
+          desc: off.desc,
+          dork: dorkMap[off.key] || `${locFilter} "${off.title}" site:gov`,
+          portalUrl: off.url,
+          portalLabel: `${off.label} ⚡`
+        });
       }
-    );
+
+      countyCards.push(
+        {
+          icon: '👮',
+          title: `${jur.county} Sheriff & Jail Inmate Roster`,
+          scope: 'Custody & Warrants',
+          isDirect: false,
+          desc: 'Review active detention lists, county jail bookings, warrants, and sheriff notices.',
+          dork: sheriffDork,
+          portalUrl: `https://www.google.com/search?q=${encodeURIComponent(sheriffDork)}`,
+          portalLabel: 'Sheriff Search'
+        },
+        {
+          icon: '🗳️',
+          title: `${jur.county} Board of Elections & Voter Rolls`,
+          scope: 'Voter Registration',
+          isDirect: false,
+          desc: `County board of elections, local voter registration rolls, petition filings, and municipal election precincts for ${jur.county}.`,
+          dork: boeDork,
+          portalUrl: stateObj.voterUrl || `https://www.google.com/search?q=${encodeURIComponent(boeDork)}`,
+          portalLabel: 'BOE & Voter Info'
+        },
+        {
+          icon: '🌐',
+          title: `Statewide Records Directory (${stateObj.name})`,
+          scope: 'Statewide Index Fallback',
+          isDirect: false,
+          desc: 'Direct link to statewide public records directory if you need historical indexes or peripheral townships outside the primary metro hub.',
+          dork: `site:publicrecords.netronline.com "${jur.county}"`,
+          portalUrl: netrUrl,
+          portalLabel: 'Open Statewide Directory ↗'
+        }
+      );
+    } else {
+      countyCards.push(
+        {
+          icon: '📜',
+          title: `${jur.county} Clerk & Recorder of Deeds`,
+          scope: 'Deeds & Mortgages',
+          isDirect: false,
+          desc: 'Search property deeds, mortgages, liens, judgments, DBA business names, and marriage records.',
+          dork: deedsDork,
+          portalUrl: netrUrl,
+          portalLabel: 'NETR Directory'
+        },
+        {
+          icon: '🏡',
+          title: `${jur.county} Real Property Tax & GIS Assessor`,
+          scope: 'Property Rolls',
+          isDirect: false,
+          desc: `Query property parcel assessment rolls by owner name to verify residential address and valuation${jur.city && jur.city !== jur.county ? ' in ' + jur.city : ''}.`,
+          dork: assessorDork,
+          portalUrl: netrUrl,
+          portalLabel: 'GIS Tax Portal'
+        },
+        {
+          icon: '⚖️',
+          title: `${jur.county} County / District Court Filings`,
+          scope: 'Civil & Criminal',
+          isDirect: false,
+          desc: 'Access local civil lawsuits, small claims, traffic infractions, and county court dockets.',
+          dork: courtDork,
+          portalUrl: `https://www.google.com/search?q=${encodeURIComponent(courtDork)}`,
+          portalLabel: 'Court Directory'
+        },
+        {
+          icon: '👮',
+          title: `${jur.county} Sheriff & Jail Inmate Roster`,
+          scope: 'Custody & Warrants',
+          isDirect: false,
+          desc: 'Review active detention lists, county jail bookings, warrants, and sheriff notices.',
+          dork: sheriffDork,
+          portalUrl: `https://www.google.com/search?q=${encodeURIComponent(sheriffDork)}`,
+          portalLabel: 'Sheriff Search'
+        },
+        {
+          icon: '🗳️',
+          title: `${jur.county} Board of Elections & Voter Rolls`,
+          scope: 'Voter Registration',
+          isDirect: false,
+          desc: `County board of elections, local voter registration rolls, petition filings, and municipal election precincts for ${jur.county}.`,
+          dork: boeDork,
+          portalUrl: stateObj.voterUrl || `https://www.google.com/search?q=${encodeURIComponent(boeDork)}`,
+          portalLabel: 'BOE & Voter Info'
+        },
+        {
+          icon: '🗺️',
+          title: `Statewide Records Directory (${stateObj.name})`,
+          scope: 'Statewide Index',
+          isDirect: false,
+          desc: 'Direct directory links to Assessor, Recorder of Deeds, and Tax Collector portals for all counties in the state.',
+          dork: `site:publicrecords.netronline.com "${jur.county}"`,
+          portalUrl: netrUrl,
+          portalLabel: 'Open Statewide Directory ↗'
+        }
+      );
+    }
 
     t1Grid.innerHTML = countyCards.map(c => `
       <div class="record-portal-card">
         <div class="record-portal-top">
           <span class="record-portal-icon">${c.icon}</span>
           <span class="record-portal-title">${escapeHtml(c.title)}</span>
-          <span class="record-portal-scope">${escapeHtml(c.scope)}</span>
+          <span class="record-portal-scope ${c.isDirect ? 'scope-direct' : ''}">${escapeHtml(c.scope)}</span>
         </div>
         <div class="record-portal-desc">${escapeHtml(c.desc)}</div>
         <div class="record-portal-actions">
-          <button type="button" class="btn-micro btn-open-portal" data-url="${escapeHtml(c.portalUrl)}">${escapeHtml(c.portalLabel)} ↗</button>
+          <button type="button" class="btn-micro btn-open-portal ${c.isDirect ? 'btn-portal-direct' : ''}" data-url="${escapeHtml(c.portalUrl)}">${escapeHtml(c.portalLabel)} ↗</button>
           <button type="button" class="btn-micro btn-search-dork" data-query="${escapeHtml(c.dork)}">Dork Portal</button>
         </div>
       </div>
@@ -4097,9 +9044,26 @@ function generateObsidianMarkdown() {
   const target = State.target;
   const targetName = target.name || target.handle || 'Unnamed Profile';
   const now = new Date().toISOString().split('T')[0];
-
   const confirmedFindings = State.auditLogs.filter(l => l.status === 'confirmed');
   const reviewFindings = State.auditLogs.filter(l => l.status === 'investigating');
+  const directHub = getDirectCountyHub(State.jurisdiction.stateCode, State.jurisdiction.county);
+  let countyReportRows = '';
+  if (directHub) {
+    countyReportRows = directHub.offices.map(o =>
+      `| **County** | ${o.title} | ${o.desc} | [${o.label} ↗](${o.url}) |`
+    ).join('\n') + '\n';
+  } else {
+    const directJurPortal = getDirectCountyPortal(State.jurisdiction.stateCode, State.jurisdiction.county);
+    const deedsReportLink = directJurPortal?.deeds
+      ? `[Official Deeds (${directJurPortal.name})](${directJurPortal.deeds})`
+      : `[NETR Directory](https://publicrecords.netronline.com/state/${State.jurisdiction.stateCode}/)`;
+    const assessorReportRow = directJurPortal?.assessor
+      ? `| **County** | ${State.jurisdiction.county} Tax & GIS Assessor | Property parcels, valuations & ownership rolls | [Official Assessor (${directJurPortal.name})](${directJurPortal.assessor}) |\n`
+      : '';
+    countyReportRows = `| **County** | ${State.jurisdiction.county} Real Property & Deeds | Deeds, mortgages, liens & parcel maps | ${deedsReportLink} |\n` +
+      assessorReportRow +
+      `| **County** | ${State.jurisdiction.county} Courts & Civil Dockets | Local civil litigation & judgments | [Google Portal Search](https://www.google.com/search?q=${encodeURIComponent('"' + State.jurisdiction.county + '" ("district court" | "county court" | "clerk of court") site:gov')}) |\n`;
+  }
 
   let md = `---
 aliases:
@@ -4165,13 +9129,11 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
 ---
 
 ## 🏛️ Public Records & Jurisdictional Footprint
-**Audited Jurisdiction**: ${State.jurisdiction.resolvedText || 'Unresolved'} (${State.jurisdiction.county}, ${State.jurisdiction.stateName})
+**Audited Jurisdiction**: ${State.jurisdiction.resolvedText || 'Unresolved'} (${State.jurisdiction.county}, ${State.jurisdiction.stateName})${directHub ? ` • **Direct Metro Hub**: ${directHub.name} (${directHub.metro})` : ''}
 
 | Tier | Portal / Resource | Scope & Purpose | Link |
 | :--- | :--- | :--- | :--- |
-| **County** | ${State.jurisdiction.county} Real Property & Deeds | Deeds, mortgages, liens & parcel maps | [NETR Directory](https://publicrecords.netronline.com/state/${State.jurisdiction.stateCode}/) |
-| **County** | ${State.jurisdiction.county} Courts & Civil Dockets | Local civil litigation & judgments | [Google Portal Search](https://www.google.com/search?q=${encodeURIComponent('"' + State.jurisdiction.county + '" ("district court" | "county court" | "clerk of court") site:gov')}) |
-| **County** | ${State.jurisdiction.county} Board of Elections | County voter registration & election rolls | [BOE Portal / Dork](${US_STATES[State.jurisdiction.stateCode]?.voterUrl || '#'}) |
+${countyReportRows}| **County** | ${State.jurisdiction.county} Board of Elections | County voter registration & election rolls | [BOE Portal / Dork](${US_STATES[State.jurisdiction.stateCode]?.voterUrl || '#'}) |
 | **State** | ${State.jurisdiction.stateName} Courts | ${US_STATES[State.jurisdiction.stateCode]?.courtName || 'State Courts'} | [State Court Portal](${US_STATES[State.jurisdiction.stateCode]?.courtUrl || '#'}) |
 | **State** | ${State.jurisdiction.stateName} Corporate Registrations | ${US_STATES[State.jurisdiction.stateCode]?.corpName || 'Division of Corporations'} | [Business Database](${US_STATES[State.jurisdiction.stateCode]?.corpUrl || '#'}) |
 | **State** | ${State.jurisdiction.stateName} Professional Licensing | ${US_STATES[State.jurisdiction.stateCode]?.licenseName || 'Professional Licensing'} | [Licensing Search](${US_STATES[State.jurisdiction.stateCode]?.licenseUrl || '#'}) |

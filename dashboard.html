@@ -3,7 +3,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Visage - Digital Footprint & Identity Privacy Audit Workstation</title>
+  <title>Visage</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+  <link rel="shortcut icon" href="icons/icon-32.png">
   <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
@@ -20,7 +23,7 @@
         </div>
         <div class="header-right">
           <button type="button" id="btn-open-charter" class="btn-ghost btn-micro" title="View Visage Ethical Charter & Terms of Use" style="margin-right: 6px;">⚖️ Charter</button>
-          <label class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
+          <label id="guidance-toggle-wrapper" class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
             <input type="checkbox" id="toggle-guidance" checked>
             <span class="toggle-track"><span class="toggle-thumb"></span></span>
             <span class="toggle-label">🎓 Guidance</span>
@@ -143,6 +146,19 @@
 
     <!-- RIGHT COLUMN: Guided Audit Methodology & Functional Tabs -->
     <main class="col-right">
+      <!-- Navigation Tabs (Hidden in Personal Privacy Self-Audit, Visible in Defensive Mode) -->
+      <nav class="tabs" id="min-tabs-nav">
+        <button class="tab-btn active" id="tab-btn-identity" data-target="tab-identity">Identity</button>
+        <button class="tab-btn" id="tab-btn-matrix" data-target="tab-matrix">Accounts</button>
+        <button class="tab-btn" id="tab-btn-crypto" data-target="tab-crypto">Crypto</button>
+        <button class="tab-btn" id="tab-btn-breach" data-target="tab-breach">Credential Exposure</button>
+        <button class="tab-btn" id="tab-btn-dorks" data-target="tab-dorks">Search Footprint</button>
+        <button class="tab-btn" id="tab-btn-records" data-target="tab-records">Public Records</button>
+        <button class="tab-btn" id="tab-btn-privacy" data-target="tab-privacy">Privacy Desk</button>
+        <button class="tab-btn" id="tab-btn-dossier" data-target="tab-dossier">Exposure Report <span class="badge-pill" id="tab-audit-badge">0</span></button>
+        <button class="tab-btn" id="tab-btn-profiles" data-target="tab-profiles">Profiles</button>
+      </nav>
+
       <!-- Defensive Privacy & Footprint Workstation Banner -->
       <div class="defensive-banner" id="defensive-banner">
         <span class="defensive-banner-icon" id="banner-icon">🛡️</span>
@@ -150,10 +166,11 @@
           <strong id="banner-mode-title">Personal Privacy Self-Audit Workstation</strong>
           <p id="banner-mode-desc">You are conducting a defensive audit of your own digital footprint. Use findings to submit PII delisting requests, purge data broker aggregators, rotate exposed credentials, and harden your personal privacy perimeter.</p>
         </div>
+        <button type="button" id="btn-dismiss-banner" class="btn-ghost btn-micro btn-dismiss-banner" title="Dismiss banner">&times;</button>
       </div>
 
       <!-- Guided Audit Methodology Bar -->
-      <section id="guided-checklist" class="guided-checklist guidance-item">
+      <section id="guided-checklist" class="guided-checklist">
         <div class="checklist-header">
           <div class="checklist-title">
             <span class="checklist-icon">🧭</span>
@@ -187,7 +204,7 @@
               <span class="step-status" id="step-2-status">⏳</span>
             </div>
             <strong id="step-2-title">Account Matrix</strong>
-            <p id="step-2-desc">100+ platform passive checks.</p>
+            <p id="step-2-desc">140+ platform passive checks.</p>
             <button type="button" id="step-btn-2" class="step-btn">Check Matrix</button>
           </div>
 
@@ -248,26 +265,136 @@
         </div>
       </section>
 
-      <!-- Navigation Tabs -->
-      <nav class="tabs">
-        <button class="tab-btn active" data-target="tab-matrix">Username Matrix</button>
-        <button class="tab-btn" data-target="tab-crypto">Cryptographic Identity</button>
-        <button class="tab-btn" data-target="tab-breach">Credential Exposure</button>
-        <button class="tab-btn" data-target="tab-dorks">Search Footprint</button>
-        <button class="tab-btn" data-target="tab-records">Public Records</button>
-        <button class="tab-btn" data-target="tab-privacy">Privacy & Remediation Desk</button>
-        <button class="tab-btn" data-target="tab-dossier">Exposure Report <span class="badge-pill" id="tab-audit-badge">0</span></button>
-        <button class="tab-btn" data-target="tab-profiles">Profiles</button>
-      </nav>
+      <!-- ========================================================= -->
+      <!-- TAB: IDENTITY SCOPE & AUDIT TARGET -->
+      <!-- ========================================================= -->
+      <div class="tab-content active" id="tab-identity">
+        <div class="toolbar">
+          <div>
+            <h2>Identity Scope & Target Setup</h2>
+            <p class="section-desc">Audit parameters, identity seeds, and reconnaissance scope for the target individual.</p>
+          </div>
+          <div class="toolbar-actions">
+            <button type="button" id="btn-tab-id-save" class="btn-secondary" title="Save profile to local storage">💾 Save Profile</button>
+            <button type="button" id="btn-tab-id-reset" class="btn-secondary" title="Reset all input fields">🔄 Reset Scope</button>
+            <button type="button" id="btn-tab-id-proceed" class="primary" title="Proceed to platform checks">Account Matrix Scan →</button>
+          </div>
+        </div>
+
+        <div class="guidance-callout guidance-item">
+          <strong>💡 Target Parameter Scoping & Defensive OPSEC:</strong>
+          <p>Visage operates on deterministic identity attributes. Define names, handles, emails, and jurisdictions in the left pane to seed passive discovery across accounts, cryptographic registries, data leaks, and jurisdictional public records. No queries are transmitted to external servers without explicit operator action.</p>
+        </div>
+
+        <div class="identity-tab-grid">
+          <!-- Active Target Card -->
+          <div class="identity-card-panel">
+            <div class="identity-card-header">
+              <span class="identity-card-icon">👤</span>
+              <div>
+                <strong id="tab-id-target-name">No Profile Active</strong>
+                <div class="identity-card-sub" id="tab-id-target-meta">Fill target seeds in the left pane to initialize audit</div>
+              </div>
+              <button type="button" id="btn-focus-composer" class="btn-micro" style="margin-left: auto;">Edit Seeds ↗</button>
+            </div>
+            <div class="identity-attributes-list">
+              <div class="id-attr-row">
+                <span class="id-attr-label">Primary Name:</span>
+                <span class="id-attr-val" id="id-val-name">—</span>
+              </div>
+              <div class="id-attr-row">
+                <span class="id-attr-label">Primary Username / Handle:</span>
+                <span class="id-attr-val" id="id-val-handle">—</span>
+              </div>
+              <div class="id-attr-row">
+                <span class="id-attr-label">Known Email:</span>
+                <span class="id-attr-val" id="id-val-email">—</span>
+              </div>
+              <div class="id-attr-row">
+                <span class="id-attr-label">Phone Number:</span>
+                <span class="id-attr-val" id="id-val-phone">—</span>
+              </div>
+              <div class="id-attr-row">
+                <span class="id-attr-label">Employer / Org:</span>
+                <span class="id-attr-val" id="id-val-org">—</span>
+              </div>
+              <div class="id-attr-row">
+                <span class="id-attr-label">Audited Jurisdiction:</span>
+                <span class="id-attr-val" id="id-val-location">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Tiles -->
+          <div class="identity-next-steps">
+            <div class="section-title-sm">Direct Capability Modules</div>
+            <div class="identity-modules-grid">
+              <div class="id-module-card" data-jump="tab-matrix">
+                <div class="id-mod-icon">🌐</div>
+                <div class="id-mod-body">
+                  <strong>Account Matrix</strong>
+                  <p>Check 140+ public developer, social, and forum platforms.</p>
+                </div>
+                <button type="button" class="btn-micro">Open Matrix →</button>
+              </div>
+
+              <div class="id-module-card" data-jump="tab-crypto">
+                <div class="id-mod-icon">🔑</div>
+                <div class="id-mod-body">
+                  <strong>Cryptographic Identity</strong>
+                  <p>Query PGP keyservers & Keybase cryptographic proofs.</p>
+                </div>
+                <button type="button" class="btn-micro">Query Keys →</button>
+              </div>
+
+              <div class="id-module-card" data-jump="tab-breach">
+                <div class="id-mod-icon">🔓</div>
+                <div class="id-mod-body">
+                  <strong>Credential Exposure</strong>
+                  <p>Check public breach dumps, paste sites & k-anonymity hashes.</p>
+                </div>
+                <button type="button" class="btn-micro">Check Leaks →</button>
+              </div>
+
+              <div class="id-module-card" data-jump="tab-dorks">
+                <div class="id-mod-icon">🔍</div>
+                <div class="id-mod-body">
+                  <strong>Search Footprint</strong>
+                  <p>Audit resumes, PDFs, leaked credentials, and PII mentions.</p>
+                </div>
+                <button type="button" class="btn-micro">Audit Dorks →</button>
+              </div>
+
+              <div class="id-module-card" data-jump="tab-records">
+                <div class="id-mod-icon">🏛️</div>
+                <div class="id-mod-body">
+                  <strong>Public Records</strong>
+                  <p>Deeds, GIS parcel assessors, courts, and statewide databases.</p>
+                </div>
+                <button type="button" class="btn-micro">View Records →</button>
+              </div>
+
+              <div class="id-module-card" data-jump="tab-dossier">
+                <div class="id-mod-icon">📋</div>
+                <div class="id-mod-body">
+                  <strong>Exposure Report & Dossier</strong>
+                  <p>Triage findings, review risk ratings, and export Obsidian vaults.</p>
+                </div>
+                <button type="button" class="btn-micro">View Dossier →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- ========================================================= -->
       <!-- TAB 1: USERNAME & ALIAS MATRIX -->
       <!-- ========================================================= -->
-      <div class="tab-content active" id="tab-matrix">
+      <div class="tab-content" id="tab-matrix">
         <div class="toolbar">
           <div>
             <h2>Username & Alias Matrix</h2>
-            <p class="section-desc">Passively discover digital presence across 100+ public social, developer, forum, and media platforms.</p>
+            <p class="section-desc">Passively discover digital presence across 140+ public social, developer, forum, and media platforms.</p>
           </div>
           <div class="toolbar-actions">
             <button type="button" id="btn-matrix-check-all" class="primary">Passive Matrix Scan</button>
@@ -285,12 +412,12 @@
         <!-- Filter and Search Bar -->
         <div class="matrix-filter-bar">
           <div class="filter-categories" id="matrix-category-chips">
-            <button type="button" class="cat-chip active" data-cat="all">All (100+)</button>
-            <button type="button" class="cat-chip" data-cat="dev">Developer (22)</button>
-            <button type="button" class="cat-chip" data-cat="social">Social & Microblog (28)</button>
-            <button type="button" class="cat-chip" data-cat="chat">Messaging & Forums (18)</button>
-            <button type="button" class="cat-chip" data-cat="media">Media & Creative (20)</button>
-            <button type="button" class="cat-chip" data-cat="gaming">Gaming & Misc (14)</button>
+            <button type="button" class="cat-chip active" data-cat="all">All (142)</button>
+            <button type="button" class="cat-chip" data-cat="dev">Developer (33)</button>
+            <button type="button" class="cat-chip" data-cat="social">Social & Microblog (46)</button>
+            <button type="button" class="cat-chip" data-cat="chat">Messaging & Forums (20)</button>
+            <button type="button" class="cat-chip" data-cat="media">Media & Creative (25)</button>
+            <button type="button" class="cat-chip" data-cat="gaming">Gaming & Misc (18)</button>
           </div>
           <div class="matrix-search-box">
             <input type="text" id="matrix-search-input" placeholder="Filter platform name...">
@@ -683,9 +810,10 @@
         <!-- Tier 1: County & Local Government Records -->
         <div class="records-tier-section">
           <div class="tier-header">
-            <span class="tier-badge">TIER 1</span>
-            <h3>County & Local Government Records (<span id="tier1-county-name">New York County</span>)</h3>
+            <span class="tier-badge" id="tier1-badge">TIER 1</span>
+            <h3><span id="tier1-title-text">County & Local Government Records</span> (<span id="tier1-county-name">New York County</span>)</h3>
           </div>
+          <div id="tier1-hub-notice-container"></div>
           <div class="records-cards-grid" id="tier1-county-cards">
             <!-- Populated by JS -->
           </div>
