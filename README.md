@@ -14,48 +14,77 @@
 
 ## 📸 Workstation Screenshots
 
-### 1. 7-Step Digital Footprint Audit & 100+ Platform Username Matrix
+### 1. Personal Privacy Self-Audit & 100+ Platform Username Matrix
 ![Visage Username & Alias Matrix](screenshots/visage_matrix.png)
 
-### 2. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
+### 2. Clean Up & Opt-Out Desk (Remediation Action Plan & Direct Delisting)
+![Visage Clean Up & Opt-Out Desk](screenshots/visage_opt_out_desk.png)
+
+### 3. Defensive Assessment Mode & 50-State Sovereign Records Desk
+![Visage Public Records Desk](screenshots/visage_records.png)
+
+### 4. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
 ![Visage Cryptographic Identity](screenshots/visage_crypto.png)
 
-### 3. 50-State Public Records & Jurisdictional Directory Desk
-![Visage Public Records Desk](screenshots/visage_records.png)
+### 5. Ethical Operations Charter & Rules of Engagement
+![Visage Ethical Charter](screenshots/visage_ethical_charter.png)
 
 ---
 
-## 🧭 The 7-Step Identity Privacy Audit Methodology
+## 🧭 Dual-Mode Identity Audit Methodology
 
-Visage guides analysts through an end-to-end, reproducible identity audit workflow:
+Visage provides two tailored operating contexts depending on your mission and authorization:
+
+### 🛡️ 1. Personal Privacy Self-Audit Mode (Default)
+Streamlined 5-step workflow built specifically for individuals and privacy advocates auditing their own digital footprint, identifying exposed personal data, and executing direct takedowns:
 
 ```mermaid
 flowchart LR
-    S1["1. Scope Profile"] --> S2["2. Username Matrix"]
-    S2 --> S3["3. Cryptographic ID"]
-    S3 --> S4["4. Credential Leaks"]
-    S4 --> S5["5. Search Footprint"]
-    S5 --> S6["6. Public Records"]
-    S6 --> S7["7. Exposure Report"]
+    S1["1. Profile Scope"] --> S2["2. Account Matrix"]
+    S2 --> S3["3. Breach Check"]
+    S3 --> S4["4. Public Dorks"]
+    S4 --> S5["5. Clean Up Desk"]
 ```
 
-1. **Scope Identity Profile**: Dissect full legal name, known aliases, primary email, phone number, location, and employer. Visage automatically generates handle permutation variations (e.g. `first.last`, `flast`, `firstl`, `lastf`) and dynamically resolves jurisdiction down to county/parish and state.
-2. **Username & Alias Matrix**: Passively probe public presence across 100+ platforms (Developer, Social, Messaging, Media, and Gaming) with zero authentication required.
-3. **Cryptographic Signatures & Public Key Telemetry**: Query Ubuntu OpenPGP keyservers (`keyserver.ubuntu.com`, `pgp.surf.nl`), Keybase verified identity proofs, and GitHub commit signatures to link disparate personal and corporate emails.
-4. **Credential Exposure & Leak Telemetry**: Passive audit of public breach exposure, infostealer malware telemetry (Hudson Rock Cavalier), leaked paste shortlinks, and private in-browser **k-Anonymity** password hash range checking.
-5. **Public Footprint Query Compiler**: Curated search queries for resumes/CVs, court records, corporate filings, conference presentations, and exposed documents with multi-engine support (Google with strict verbatim `&tbs=li:1`, Bing, DuckDuckGo, Brave, Yandex).
-6. **Public Records & Jurisdictional Directory**: Multi-tier ground-truth sovereign records across all 50 US states, DC, and PR. Dynamic resolution of County/Parish property deeds, tax assessment GIS portals, board of elections voter rolls, official state voter status lookups, unified court case registers, state corporate/LLC filings, and professional licensing boards.
-7. **Exposure Report Triage & Export**: Classify findings by risk severity, triage status, and remediation notes. Export directly to Markdown reports (with Dataview metadata and callouts), CSV, or JSON. Restore previous audits with 1-click import of any Visage JSON or Markdown report.
+1. **Profile Scope**: Input your name, aliases, email, phone, and home jurisdiction. Generates handle permutations and maps jurisdiction down to county and state.
+2. **Account Matrix**: Check public profile presence across 100+ platforms (Developer, Social, Messaging, Media, and Gaming) with zero authentication.
+3. **Breach Check**: Passive credential compromise evaluation and in-browser **k-Anonymity** password hash check.
+4. **Public Dorks**: Search engine queries to identify exposed contact information, personal documents, and index leaks.
+5. **Clean Up & Opt-Out Desk**: Actionable remediation hub featuring official search engine PII removal forms (Google & Bing), direct opt-out portals for major data brokers (Whitepages, BeenVerified, Radaris, Spokeo, FastPeopleSearch, LexisNexis), and 1-click local audit data purge.
 
 ---
 
-## 🔒 Architecture, OPSEC & Rate-Limit Shields
+### ⚖️ 2. Defensive Exposure Assessment Mode (Authorized Blue-Team)
+Comprehensive 7-step workflow with an amber warning banner for authorized security analysts and corporate blue teams assessing personnel threat surfaces with explicit organizational consent:
+
+```mermaid
+flowchart LR
+    D1["1. Scope Profile"] --> D2["2. Username Matrix"]
+    D2 --> D3["3. Cryptographic ID"]
+    D3 --> D4["4. Credential Leaks"]
+    D4 --> D5["5. Search Footprint"]
+    D5 --> D6["6. Sovereign Records"]
+    D6 --> D7["7. Exposure Report"]
+```
+
+1. **Scope Identity Profile**: Dissect full legal name, known aliases, primary email, phone number, location, and employer. Generates permutations and resolves local jurisdiction.
+2. **Username & Alias Matrix**: Passively evaluate handle presence across 100+ developer, social, and messaging ecosystems.
+3. **Cryptographic Signatures & Public Key Telemetry**: Query Ubuntu OpenPGP keyservers (`keyserver.ubuntu.com`, `pgp.surf.nl`), Keybase verified proofs, and GitHub commit signatures to link corporate and personal identities.
+4. **Credential Exposure & Leak Telemetry**: Passive audit of public breach exposure, infostealer malware telemetry, leaked paste shortlinks, and private k-Anonymity password checks.
+5. **Public Footprint Query Compiler**: Curated search queries for resumes, court records, corporate filings, conference presentations, and exposed documents across Google (verbatim), Bing, DuckDuckGo, Brave, and Yandex.
+6. **Sovereign Public Records & Jurisdictional Directory**: Official ground-truth sovereign portals across all 50 US states, DC, and PR: County/Parish property deeds (GIS), state voter registration status, unified state court registers, corporate/LLC entity filings, and professional licensing boards.
+7. **Exposure Report Triage & Export**: Classify findings by severity, triage status, and remediation notes. Export to Markdown dossiers (with Dataview metadata), CSV, or JSON.
+
+---
+
+## 🔒 Architecture, OPSEC & Ethical Guardrails
 
 - **100% Client-Side**: Visage runs entirely within your browser. No target names, emails, queries, or dossier notes are ever transmitted to external servers.
-- **Zero Remote Scripts**: Built strictly with vanilla HTML5, CSS, and modern JavaScript. Contains no CDN dependencies, no `eval()`, and no remote code in compliance with Mozilla AMO and Chrome Web Store policies.
+- **Zero Remote Scripts**: Built strictly with vanilla HTML5, CSS, and modern JavaScript. Contains no CDN dependencies, no `eval()`, and no remote code in compliance with Mozilla AMO, Chrome Web Store, and Edge Add-ons policies.
+- **Ethical Charter & Affirmation**: Enforces a first-run Rules of Engagement charter and explicit consent modal before accessing defensive multi-source discovery.
 - **Private k-Anonymity Range Queries**: Passwords tested in the breach panel are hashed locally via Web Cryptography `crypto.subtle.digest("SHA-1")` — only a 5-character prefix is queried over the wire.
-- **Rate-Limit & Anti-Bot Shields**: Includes client-side debouncing, Nominatim 1.1s interval guards, staggered tab opening delays (350–450ms) to prevent search engine CAPTCHAs, and transparent diagnostic banners if public unauthenticated API limits are reached (e.g., GitHub 60 req/hr).
-- **Local Storage Isolation**: All audit logs, custom profiles, and findings remain strictly stored on your device via `browser.storage.local`.
+- **Rate-Limit & Anti-Bot Shields**: Includes client-side debouncing, Nominatim 1.1s interval guards, staggered tab opening delays (350–450ms) to prevent search engine CAPTCHAs, and transparent diagnostic banners.
+- **Local Storage Isolation & Instant Purge**: All audit logs and profiles remain on your device via `browser.storage.local`, with an instant 1-click purge button in the Clean Up Desk.
 - **Privacy Policy**: Read our comprehensive zero-telemetry disclosure in [PRIVACY.md](PRIVACY.md).
 
 ---
@@ -75,8 +104,8 @@ npm run build
 ```
 
 The build process produces:
-- `dist/visage-firefox-v1.0.3.zip` (Ready for Mozilla AMO submission)
-- `dist/visage-chrome-v1.0.3.zip` (Ready for Chrome Web Store submission)
+- `dist/visage-firefox-v1.1.0.zip` (Ready for Mozilla AMO submission)
+- `dist/visage-chrome-v1.1.0.zip` (Ready for Chrome Web Store & Edge Add-ons submission)
 - `dist/firefox/` (Unpacked Firefox add-on directory)
 - `dist/chrome/` (Unpacked Chrome extension directory)
 
@@ -103,3 +132,4 @@ Visage is built to work seamlessly with [Vantage](https://github.com/mrnickpeer/
 ## 📄 License
 
 MIT License
+

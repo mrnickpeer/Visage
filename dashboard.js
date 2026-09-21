@@ -16,6 +16,49 @@
 if (typeof browser === 'undefined') {
   var browser = globalThis.browser || globalThis.chrome;
 }
+if (!browser || !browser.storage || !browser.storage.local) {
+  const memStore = {};
+  browser = Object.assign(browser || {}, {
+    storage: {
+      local: {
+        get: async (keys) => {
+          const res = {};
+          const keyList = Array.isArray(keys) ? keys : (typeof keys === 'string' ? [keys] : Object.keys(keys || {}));
+          for (const k of keyList) {
+            try {
+              const val = localStorage.getItem('visage_' + k);
+              if (val !== null) res[k] = JSON.parse(val);
+              else if (k in memStore) res[k] = memStore[k];
+            } catch (e) {
+              if (k in memStore) res[k] = memStore[k];
+            }
+          }
+          return res;
+        },
+        set: async (items) => {
+          for (const [k, v] of Object.entries(items || {})) {
+            memStore[k] = v;
+            try { localStorage.setItem('visage_' + k, JSON.stringify(v)); } catch (e) {}
+          }
+        },
+        clear: async () => {
+          for (const k of Object.keys(memStore)) delete memStore[k];
+          try {
+            const toRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (key && key.startsWith('visage_')) toRemove.push(key);
+            }
+            toRemove.forEach(k => localStorage.removeItem(k));
+          } catch (e) {}
+        }
+      }
+    },
+    tabs: browser && browser.tabs ? browser.tabs : {
+      create: ({ url }) => { window.open(url, '_blank'); }
+    }
+  });
+}
 
 // Helper: Split full name into first, middle, and last components
 function splitFullName(fullName) {
