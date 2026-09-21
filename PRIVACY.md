@@ -1,7 +1,7 @@
 # 🔒 Visage Privacy Policy
 
-**Last Updated:** September 19, 2026  
-**Effective Date:** September 19, 2026  
+**Last Updated:** September 21, 2026  
+**Effective Date:** September 21, 2026  
 
 Visage ("the Extension", "we", "our") is a browser extension developed as a personal identity intelligence and exposure reconnaissance suite. Visage is built on a strict **zero-telemetry, client-side-only** architecture. 
 
@@ -28,7 +28,7 @@ All data created or imported within Visage—including:
 is stored **strictly on your local device** using the browser's isolated `browser.storage.local` API.
 
 - **Data Ownership**: You retain 100% ownership and control over your data.
-- **Data Deletion**: You can permanently purge all stored data at any time by clicking **"Clear All"** in the Dossier tab, deleting individual target profiles, or uninstalling the extension from your browser.
+- **Data Deletion**: You can permanently purge all stored data at any time by clicking **"🗑️ Purge All Data"** in the left scope sidebar, deleting individual target profiles, or uninstalling the extension from your browser.
 
 ---
 
@@ -59,7 +59,7 @@ Visage performs only client-initiated, read-only queries to public OSINT interme
 
 ## ⚖️ 5. Compliance with Store Developer Policies
 
-- **Google Chrome Web Store Single-Purpose Policy**: Visage serves the sole purpose of assisting security professionals and investigators in personal identity intelligence and exposure auditing.
+- **Google Chrome Web Store Single-Purpose Policy**: Visage serves the sole purpose of assisting individuals, security professionals, and privacy advocates in auditing public exposure, evaluating credential risks, and remediating personal digital footprints.
 - **Mozilla Add-on Data Disclosure Policy**: Visage requests only permissions necessary for local operation (`storage`, `tabs`, `contextMenus`).
 
 ---
