@@ -144,26 +144,26 @@
     <!-- RIGHT COLUMN: Guided Audit Methodology & Functional Tabs -->
     <main class="col-right">
       <!-- Defensive Privacy & Footprint Workstation Banner -->
-      <div class="defensive-banner">
-        <span class="defensive-banner-icon">🛡️</span>
+      <div class="defensive-banner" id="defensive-banner">
+        <span class="defensive-banner-icon" id="banner-icon">🛡️</span>
         <div class="defensive-banner-content">
-          <strong id="banner-mode-title">Defensive Footprint & Privacy Workstation</strong>
-          <p id="banner-mode-desc">Visage is designed for individuals, security researchers, and privacy advocates to audit public digital footprints, evaluate exposed credentials, and mitigate social engineering risks. All queries run 100% locally in your browser.</p>
+          <strong id="banner-mode-title">Personal Privacy Self-Audit Workstation</strong>
+          <p id="banner-mode-desc">You are conducting a defensive audit of your own digital footprint. Use findings to submit PII delisting requests, purge data broker aggregators, rotate exposed credentials, and harden your personal privacy perimeter.</p>
         </div>
       </div>
 
-      <!-- 7-Step Guided Audit Methodology Bar -->
+      <!-- Guided Audit Methodology Bar -->
       <section id="guided-checklist" class="guided-checklist guidance-item">
         <div class="checklist-header">
           <div class="checklist-title">
             <span class="checklist-icon">🧭</span>
             <div>
               <strong>Guided Digital Footprint Methodology</strong>
-              <span class="checklist-subtitle">Standard 7-Step Identity Privacy Assessment</span>
+              <span class="checklist-subtitle" id="checklist-subtitle">Streamlined 5-Step Personal Privacy Audit</span>
             </div>
           </div>
           <div class="checklist-actions">
-            <span id="checklist-progress-text" class="badge">0 / 7 Done</span>
+            <span id="checklist-progress-text" class="badge">0 / 5 Done</span>
             <button type="button" id="btn-toggle-checklist" class="btn-ghost" title="Minimize or expand checklist">Minimize</button>
           </div>
         </div>
@@ -171,79 +171,79 @@
         <div id="checklist-steps" class="checklist-steps">
           <div class="step-card" id="step-1-card">
             <div class="step-header">
-              <span class="step-badge">Step 1</span>
+              <span class="step-badge" id="step-1-badge-num">Step 1</span>
               <button type="button" class="step-help-btn" data-step="1" title="Methodology: What & Why for Step 1">?</button>
               <span class="step-status" id="step-1-status">⏳</span>
             </div>
-            <strong>Identity Scope</strong>
-            <p>Name, handle & audit seeds.</p>
+            <strong id="step-1-title">Identity Scope</strong>
+            <p id="step-1-desc">Name, handle & audit seeds.</p>
             <button type="button" id="step-btn-1" class="step-btn">Set Scope</button>
           </div>
 
           <div class="step-card" id="step-2-card">
             <div class="step-header">
-              <span class="step-badge">Step 2</span>
+              <span class="step-badge" id="step-2-badge-num">Step 2</span>
               <button type="button" class="step-help-btn" data-step="2" title="Methodology: What & Why for Step 2">?</button>
               <span class="step-status" id="step-2-status">⏳</span>
             </div>
-            <strong>Username Matrix</strong>
-            <p>100+ platform passive checks.</p>
+            <strong id="step-2-title">Account Matrix</strong>
+            <p id="step-2-desc">100+ platform passive checks.</p>
             <button type="button" id="step-btn-2" class="step-btn">Check Matrix</button>
           </div>
 
-          <div class="step-card" id="step-3-card">
+          <div class="step-card" id="step-3-card" style="display: none;">
             <div class="step-header">
-              <span class="step-badge">Step 3</span>
+              <span class="step-badge" id="step-3-badge-num">Step 3</span>
               <button type="button" class="step-help-btn" data-step="3" title="Methodology: What & Why for Step 3">?</button>
               <span class="step-status" id="step-3-status">⏳</span>
             </div>
-            <strong>Cryptographic ID</strong>
-            <p>PGP keys, Keybase & identity proofs.</p>
+            <strong id="step-3-title">Cryptographic ID</strong>
+            <p id="step-3-desc">PGP keys, Keybase & identity proofs.</p>
             <button type="button" id="step-btn-3" class="step-btn">Query Keys</button>
           </div>
 
           <div class="step-card" id="step-4-card">
             <div class="step-header">
-              <span class="step-badge">Step 4</span>
+              <span class="step-badge" id="step-4-badge-num">Step 3</span>
               <button type="button" class="step-help-btn" data-step="4" title="Methodology: What & Why for Step 4">?</button>
               <span class="step-status" id="step-4-status">⏳</span>
             </div>
-            <strong>Credential Exposure</strong>
-            <p>Leak checks & paste searches.</p>
+            <strong id="step-4-title">Data Leaks</strong>
+            <p id="step-4-desc">Breach checks & password leaks.</p>
             <button type="button" id="step-btn-4" class="step-btn">Check Leaks</button>
           </div>
 
           <div class="step-card" id="step-5-card">
             <div class="step-header">
-              <span class="step-badge">Step 5</span>
+              <span class="step-badge" id="step-5-badge-num">Step 4</span>
               <button type="button" class="step-help-btn" data-step="5" title="Methodology: What & Why for Step 5">?</button>
               <span class="step-status" id="step-5-status">⏳</span>
             </div>
-            <strong>Search Footprint</strong>
-            <p>Public documents, resumes & filings.</p>
-            <button type="button" id="step-btn-5" class="step-btn">Audit Footprint</button>
+            <strong id="step-5-title">Google Exposure</strong>
+            <p id="step-5-desc">Resumes, phone numbers & docs.</p>
+            <button type="button" id="step-btn-5" class="step-btn">Search Google</button>
           </div>
 
-          <div class="step-card" id="step-6-card">
+          <div class="step-card" id="step-6-card" style="display: none;">
             <div class="step-header">
-              <span class="step-badge">Step 6</span>
+              <span class="step-badge" id="step-6-badge-num">Step 6</span>
               <button type="button" class="step-help-btn" data-step="6" title="Methodology: What & Why for Step 6">?</button>
               <span class="step-status" id="step-6-status">⏳</span>
             </div>
-            <strong>Public Records</strong>
-            <p>Property deeds, registries & archives.</p>
+            <strong id="step-6-title">Public Records</strong>
+            <p id="step-6-desc">Property deeds, registries & archives.</p>
             <button type="button" id="step-btn-6" class="step-btn">Check Records</button>
           </div>
 
           <div class="step-card" id="step-7-card">
             <div class="step-header">
-              <span class="step-badge">Step 7</span>
+              <span class="step-badge" id="step-7-badge-num">Step 5</span>
               <button type="button" class="step-help-btn" data-step="7" title="Methodology: What & Why for Step 7">?</button>
               <span class="step-status" id="step-7-status">⏳</span>
             </div>
-            <strong>Exposure Report</strong>
-            <p>Findings triage & Markdown export.</p>
-            <button type="button" id="step-btn-7" class="step-btn">Export Report</button>
+            <strong id="step-7-title">Clean Up & Opt-Out</strong>
+            <p id="step-7-desc">Google delist & broker opt-out.</p>
+            <button type="button" id="step-btn-7" class="step-btn">Opt-Out Desk</button>
           </div>
         </div>
       </section>
@@ -731,8 +731,25 @@
       <div class="tab-content" id="tab-privacy">
         <div class="toolbar">
           <div>
-            <h2>Privacy & Remediation Desk</h2>
-            <p class="section-desc">Official search engine takedown forms, data broker opt-out portals, and digital defense resources.</p>
+            <h2 id="privacy-tab-title">Clean Up & Opt-Out Desk</h2>
+            <p class="section-desc" id="privacy-tab-desc">Official search engine takedown forms, data broker opt-out portals, and digital defense resources.</p>
+          </div>
+        </div>
+
+        <!-- Remediation Action Hub / Quick Export Bar -->
+        <div class="privacy-action-hub" id="privacy-action-hub">
+          <div class="privacy-hub-header">
+            <div>
+              <h3 id="privacy-hub-title">📋 Personal Remediation Action Plan</h3>
+              <p class="text-muted text-xs" id="privacy-hub-subtitle">Actionable checklist compiled from your audit findings, ready for tracking and delisting.</p>
+            </div>
+            <div class="privacy-hub-buttons">
+              <button type="button" id="btn-export-privacy-csv" class="primary btn-sm">📥 Export Action Plan (.csv)</button>
+              <button type="button" id="btn-export-privacy-md" class="btn-secondary btn-sm">📝 Export Markdown Plan (.md)</button>
+            </div>
+          </div>
+          <div id="privacy-hub-findings-preview" class="privacy-hub-findings-preview">
+            <!-- Populated dynamically -->
           </div>
         </div>
 
@@ -1127,6 +1144,37 @@
         <div class="modal-actions" style="margin-top: 0.25rem;">
           <button type="button" id="btn-accept-charter" class="primary" disabled>Accept & Proceed</button>
           <button type="button" id="btn-close-ethical-modal-secondary" class="btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+  <!-- MODAL: Defensive Assessment Mode Consent & Authorization -->
+  <div id="consent-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px; border-color: rgba(245, 158, 11, 0.4);">
+      <div class="modal-header" style="background: rgba(245, 158, 11, 0.12); border-bottom-color: rgba(245, 158, 11, 0.3);">
+        <h3 style="color: #f59e0b;">⚠️ Authorization & Consent Affirmation</h3>
+        <button type="button" id="btn-close-consent-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.85rem; line-height: 1.5; color: #fde68a;">
+          <strong>Attention:</strong> You are switching to <strong>Defensive Exposure Assessment Mode</strong>. This workstation profile unlocks deeper jurisdictional intelligence, court dockets, public property records, and executive filings designed for authorized third-party security audits.
+        </div>
+
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.6rem;">
+          <div><strong style="color: #fff;">1. Explicit Authorization Required:</strong> Assessing individuals other than yourself requires prior written consent, executive protection mandate, or an authorized security engagement agreement.</div>
+          <div><strong style="color: #fff;">2. Strict Anti-Stalking & Anti-Harassment:</strong> Information retrieved via Visage must NEVER be used for personal stalking, unlawful surveillance, intimidation, doxxing, or harassment.</div>
+          <div><strong style="color: #fff;">3. Defensive Scope Limitation:</strong> Queries are permitted solely for external exposure reduction, credential compromise mitigation, and preempting targeted attacks.</div>
+        </div>
+
+        <div style="margin-top: 0.25rem; padding-top: 0.75rem; border-top: 1px solid var(--border);">
+          <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.84rem; color: #fff;">
+            <input type="checkbox" id="chk-consent-confirm" style="cursor: pointer; width: 16px; height: 16px;">
+            <span>I certify that I possess proper authorization and consent to audit this subject.</span>
+          </label>
+        </div>
+
+        <div class="modal-actions" style="margin-top: 0.25rem;">
+          <button type="button" id="btn-confirm-consent" class="primary" style="background: #d97706; border-color: #f59e0b;" disabled>Confirm & Enable Mode</button>
+          <button type="button" id="btn-cancel-consent" class="btn-secondary">Cancel (Stay in Self-Audit)</button>
         </div>
       </div>
     </div>

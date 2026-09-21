@@ -896,47 +896,228 @@ function setupEthicalCharterModal() {
 // Audit Mode & Context Configuration
 // -------------------------------------------------------------
 function applyAuditModeUI(mode) {
+  const banner = document.getElementById('defensive-banner');
+  const bannerIcon = document.getElementById('banner-icon');
   const bannerTitle = document.getElementById('banner-mode-title');
   const bannerDesc = document.getElementById('banner-mode-desc');
+  const checklistSubtitle = document.getElementById('checklist-subtitle');
   const step1Badge = document.getElementById('step-1-badge');
-  const step7Btn = document.getElementById('step-btn-7');
+
+  // Step cards
+  const step3Card = document.getElementById('step-3-card');
+  const step4Card = document.getElementById('step-4-card');
+  const step5Card = document.getElementById('step-5-card');
+  const step6Card = document.getElementById('step-6-card');
   const step7Card = document.getElementById('step-7-card');
 
+  const step4BadgeNum = document.getElementById('step-4-badge-num');
+  const step4Title = document.getElementById('step-4-title');
+  const step4Desc = document.getElementById('step-4-desc');
+  const stepBtn4 = document.getElementById('step-btn-4');
+
+  const step5BadgeNum = document.getElementById('step-5-badge-num');
+  const step5Title = document.getElementById('step-5-title');
+  const step5Desc = document.getElementById('step-5-desc');
+  const stepBtn5 = document.getElementById('step-btn-5');
+
+  const step7BadgeNum = document.getElementById('step-7-badge-num');
+  const step7Title = document.getElementById('step-7-title');
+  const step7Desc = document.getElementById('step-7-desc');
+  const stepBtn7 = document.getElementById('step-btn-7');
+
+  // Nav tabs
+  const tabCryptoBtn = document.querySelector('.tab-btn[data-target="tab-crypto"]');
+  const tabRecordsBtn = document.querySelector('.tab-btn[data-target="tab-records"]');
+  const tabBreachBtn = document.querySelector('.tab-btn[data-target="tab-breach"]');
+  const tabDorksBtn = document.querySelector('.tab-btn[data-target="tab-dorks"]');
+  const tabPrivacyBtn = document.querySelector('.tab-btn[data-target="tab-privacy"]');
+
+  // Tab privacy headers
+  const privacyTabTitle = document.getElementById('privacy-tab-title');
+  const privacyTabDesc = document.getElementById('privacy-tab-desc');
+
   if (mode === 'self') {
+    // Banner styling - clean green
+    if (banner) banner.classList.remove('banner-warning');
+    if (bannerIcon) bannerIcon.textContent = '🛡️';
     if (bannerTitle) bannerTitle.textContent = 'Personal Privacy Self-Audit Workstation';
     if (bannerDesc) bannerDesc.textContent = 'You are conducting a defensive audit of your own digital footprint. Use findings to submit PII delisting requests, purge data broker aggregators, rotate exposed credentials, and harden your personal privacy perimeter.';
+
+    // Checklist subtitle & composer badge
+    if (checklistSubtitle) checklistSubtitle.textContent = 'Streamlined 5-Step Personal Privacy Audit';
     if (step1Badge) step1Badge.textContent = 'STEP 1: AUDIT SCOPE';
-    if (step7Btn) step7Btn.textContent = 'Remediation Plan';
-    if (step7Card) {
-      const strong = step7Card.querySelector('strong');
-      if (strong) strong.textContent = 'Remediation & Export';
-      const p = step7Card.querySelector('p');
-      if (p) p.textContent = 'Actionable hardening & delist export.';
+
+    // Hide Crypto and Public Records cards
+    if (step3Card) step3Card.style.display = 'none';
+    if (step6Card) step6Card.style.display = 'none';
+
+    // Step 4 becomes Step 3 (Data Leaks)
+    if (step4BadgeNum) step4BadgeNum.textContent = 'Step 3';
+    if (step4Title) step4Title.textContent = 'Data Leaks';
+    if (step4Desc) step4Desc.textContent = 'Breach checks & password leaks.';
+    if (stepBtn4) stepBtn4.textContent = 'Check Leaks';
+
+    // Step 5 becomes Step 4 (Google Exposure)
+    if (step5BadgeNum) step5BadgeNum.textContent = 'Step 4';
+    if (step5Title) step5Title.textContent = 'Google Exposure';
+    if (step5Desc) step5Desc.textContent = 'Resumes, phone numbers & docs.';
+    if (stepBtn5) stepBtn5.textContent = 'Search Google';
+
+    // Step 7 becomes Step 5 (Clean Up & Opt-Out)
+    if (step7BadgeNum) step7BadgeNum.textContent = 'Step 5';
+    if (step7Title) step7Title.textContent = 'Clean Up & Opt-Out';
+    if (step7Desc) step7Desc.textContent = 'Google delist & broker opt-out.';
+    if (stepBtn7) stepBtn7.textContent = 'Opt-Out Desk';
+
+    // Navigation tabs: hide technical tabs
+    if (tabCryptoBtn) tabCryptoBtn.style.display = 'none';
+    if (tabRecordsBtn) tabRecordsBtn.style.display = 'none';
+    if (tabBreachBtn) tabBreachBtn.textContent = 'Data Leaks';
+    if (tabDorksBtn) tabDorksBtn.textContent = 'Google Exposure';
+    if (tabPrivacyBtn) tabPrivacyBtn.textContent = 'Clean Up & Opt-Out';
+
+    // If currently viewing a hidden tab, switch to matrix
+    const currentTab = document.querySelector('.tab-btn.active')?.getAttribute('data-target');
+    if (currentTab === 'tab-crypto' || currentTab === 'tab-records') {
+      switchTab('tab-matrix');
     }
+
+    // Privacy tab headers
+    if (privacyTabTitle) privacyTabTitle.textContent = 'Clean Up & Opt-Out Desk';
+    if (privacyTabDesc) privacyTabDesc.textContent = 'Take direct action on your audit findings: delist your PII from search engines, opt out of commercial data brokers, and download your personal action plan.';
   } else {
-    if (bannerTitle) bannerTitle.textContent = 'Defensive Exposure Assessment Workstation';
-    if (bannerDesc) bannerDesc.textContent = 'Conducting an authorized footprint & exposure assessment for an organization or executive asset. Identify exposed corporate accounts, leaked credentials, and executive records to preempt targeted social engineering.';
+    // Banner styling - warm amber warning
+    if (banner) banner.classList.add('banner-warning');
+    if (bannerIcon) bannerIcon.textContent = '🏢';
+    if (bannerTitle) bannerTitle.textContent = 'Defensive Exposure Assessment Mode (Executive / Org)';
+    if (bannerDesc) bannerDesc.textContent = 'Authorized security assessment mode active. Operating on third-party individuals or executive assets requires prior written authorization or explicit consent. All findings must remain confidential and strictly defensive.';
+
+    // Checklist subtitle & composer badge
+    if (checklistSubtitle) checklistSubtitle.textContent = 'Standard 7-Step Identity Privacy Assessment';
     if (step1Badge) step1Badge.textContent = 'STEP 1: TARGET SCOPE';
-    if (step7Btn) step7Btn.textContent = 'Export Report';
-    if (step7Card) {
-      const strong = step7Card.querySelector('strong');
-      if (strong) strong.textContent = 'Exposure Report';
-      const p = step7Card.querySelector('p');
-      if (p) p.textContent = 'Findings triage & Markdown export.';
-    }
+
+    // Show all 7 step cards
+    if (step3Card) step3Card.style.display = '';
+    if (step6Card) step6Card.style.display = '';
+
+    // Step 4 is Credential Exposure
+    if (step4BadgeNum) step4BadgeNum.textContent = 'Step 4';
+    if (step4Title) step4Title.textContent = 'Credential Exposure';
+    if (step4Desc) step4Desc.textContent = 'Leak checks & paste searches.';
+    if (stepBtn4) stepBtn4.textContent = 'Check Leaks';
+
+    // Step 5 is Search Footprint
+    if (step5BadgeNum) step5BadgeNum.textContent = 'Step 5';
+    if (step5Title) step5Title.textContent = 'Search Footprint';
+    if (step5Desc) step5Desc.textContent = 'Public documents, resumes & filings.';
+    if (stepBtn5) stepBtn5.textContent = 'Audit Footprint';
+
+    // Step 7 is Exposure Report
+    if (step7BadgeNum) step7BadgeNum.textContent = 'Step 7';
+    if (step7Title) step7Title.textContent = 'Exposure Report';
+    if (step7Desc) step7Desc.textContent = 'Findings triage & Markdown export.';
+    if (stepBtn7) stepBtn7.textContent = 'Export Report';
+
+    // Navigation tabs: show all
+    if (tabCryptoBtn) tabCryptoBtn.style.display = '';
+    if (tabRecordsBtn) tabRecordsBtn.style.display = '';
+    if (tabBreachBtn) tabBreachBtn.textContent = 'Credential Exposure';
+    if (tabDorksBtn) tabDorksBtn.textContent = 'Search Footprint';
+    if (tabPrivacyBtn) tabPrivacyBtn.textContent = 'Privacy & Remediation Desk';
+
+    // Privacy tab headers
+    if (privacyTabTitle) privacyTabTitle.textContent = 'Privacy & Remediation Desk';
+    if (privacyTabDesc) privacyTabDesc.textContent = 'Official search engine takedown forms, data broker opt-out portals, and digital defense resources.';
+  }
+
+  updatePrivacyHubFindingsPreview();
+  updateMethodologyChecklistUI();
+}
+
+function updatePrivacyHubFindingsPreview() {
+  const container = document.getElementById('privacy-hub-findings-preview');
+  if (!container) return;
+
+  const total = State.auditLogs.length;
+  const confirmed = State.auditLogs.filter(l => l.status === 'confirmed').length;
+
+  if (total > 0) {
+    container.innerHTML = `
+      <span>🔍 <strong>${total} Findings Recorded</strong> (${confirmed} confirmed hits). Delist exposed items below or export your customized remediation checklist.</span>
+    `;
+  } else {
+    container.innerHTML = `
+      <span>✨ <strong>No findings flagged yet.</strong> Run through Steps 2-4 to identify leaks, or use the direct search engine and data broker portals below to proactively scrub your identity.</span>
+    `;
   }
 }
 
 function setupAuditMode() {
   const select = document.getElementById('audit-mode-select');
+  const consentModal = document.getElementById('consent-modal');
+  const chkConsent = document.getElementById('chk-consent-confirm');
+  const btnConfirmConsent = document.getElementById('btn-confirm-consent');
+  const btnCancelConsent = document.getElementById('btn-cancel-consent');
+  const btnCloseConsent = document.getElementById('btn-close-consent-modal');
+
   if (!select) return;
 
-  select.addEventListener('change', () => {
-    State.auditMode = select.value;
-    applyAuditModeUI(select.value);
+  let consentAccepted = false;
+  browser.storage.local.get(['orgConsentAcknowledged']).then(data => {
+    if (data.orgConsentAcknowledged) {
+      consentAccepted = true;
+    }
+  }).catch(e => {});
+
+  function applyAuditMode(mode) {
+    State.auditMode = mode;
+    select.value = mode;
+    applyAuditModeUI(mode);
     saveStoredData();
-    showToast(`Audit context switched to: ${select.value === 'self' ? 'Personal Privacy Self-Audit' : 'Defensive Assessment'}`);
+    showToast(`Audit context: ${mode === 'self' ? 'Personal Privacy Self-Audit' : 'Defensive Exposure Assessment'}`);
+  }
+
+  select.addEventListener('change', () => {
+    const selectedMode = select.value;
+
+    if (selectedMode === 'org' && !consentAccepted) {
+      // Prompt with consent modal before allowing the mode change
+      if (consentModal) {
+        if (chkConsent) chkConsent.checked = false;
+        if (btnConfirmConsent) btnConfirmConsent.disabled = true;
+        consentModal.style.display = 'flex';
+      }
+      return;
+    }
+
+    applyAuditMode(selectedMode);
   });
+
+  if (chkConsent && btnConfirmConsent) {
+    chkConsent.addEventListener('change', () => {
+      btnConfirmConsent.disabled = !chkConsent.checked;
+    });
+
+    btnConfirmConsent.addEventListener('click', async () => {
+      consentAccepted = true;
+      try {
+        await browser.storage.local.set({ orgConsentAcknowledged: true });
+      } catch (e) {
+        console.error('Failed to save consent acknowledgment:', e);
+      }
+      if (consentModal) consentModal.style.display = 'none';
+      applyAuditMode('org');
+    });
+  }
+
+  function cancelConsent() {
+    if (consentModal) consentModal.style.display = 'none';
+    select.value = 'self';
+    applyAuditMode('self');
+  }
+
+  if (btnCancelConsent) btnCancelConsent.addEventListener('click', cancelConsent);
+  if (btnCloseConsent) btnCloseConsent.addEventListener('click', cancelConsent);
 
   applyAuditModeUI(State.auditMode || 'self');
 }
@@ -956,6 +1137,22 @@ function setupPrivacyTab() {
       }
     });
   });
+
+  const btnExportCsv = document.getElementById('btn-export-privacy-csv');
+  if (btnExportCsv) {
+    btnExportCsv.addEventListener('click', () => {
+      exportCsvDossier();
+    });
+  }
+
+  const btnExportMd = document.getElementById('btn-export-privacy-md');
+  if (btnExportMd) {
+    btnExportMd.addEventListener('click', () => {
+      exportObsidianMarkdown();
+    });
+  }
+
+  updatePrivacyHubFindingsPreview();
 }
 
 function applyTargetToInputs() {
@@ -1126,7 +1323,12 @@ function setupMethodologyChecklist() {
     switchTab('tab-records');
   });
   document.getElementById('step-btn-7').addEventListener('click', () => {
-    switchTab('tab-dossier');
+    if (State.auditMode === 'self') {
+      switchTab('tab-privacy');
+      markStep(7, true);
+    } else {
+      switchTab('tab-dossier');
+    }
   });
 
   // Minimize / Expand Checklist
@@ -1157,7 +1359,15 @@ function setupMethodologyChecklist() {
 }
 
 function openStepModal(stepNum) {
-  const step = STEP_EXPLANATIONS[stepNum];
+  let step = STEP_EXPLANATIONS[stepNum];
+  if (stepNum === '7' && State.auditMode === 'self') {
+    step = {
+      title: 'Step 5: Clean Up & Opt-Out Desk',
+      what: 'Submit official search engine de-indexing requests for personal PII, delist from major consumer data brokers, rotate exposed passwords, and download your personal privacy action checklist.',
+      why: 'Auditing your identity is only the diagnostic phase. Directly delisting personal information permanently reduces your attack surface and eliminates unwanted public exposure.',
+      opsec: 'All takedown and opt-out links connect directly to official consumer privacy portals. Visage stores zero telemetry.'
+    };
+  }
   if (!step) return;
 
   document.getElementById('modal-step-title').textContent = step.title;
@@ -1186,12 +1396,10 @@ function markStep(stepNum, completed = true) {
 }
 
 function updateMethodologyChecklistUI() {
-  let doneCount = 0;
   for (let i = 1; i <= 7; i++) {
     const card = document.getElementById(`step-${i}-card`);
     const status = document.getElementById(`step-${i}-status`);
     if (State.stepProgress[i]) {
-      doneCount++;
       if (card) {
         card.classList.add('completed-step');
         card.classList.remove('active-step');
@@ -1205,13 +1413,30 @@ function updateMethodologyChecklistUI() {
 
   const progressText = document.getElementById('checklist-progress-text');
   if (progressText) {
-    progressText.textContent = `${doneCount} / 7 Done`;
-    if (doneCount === 7) {
-      progressText.style.background = '#10b981';
-      progressText.style.color = '#fff';
+    if (State.auditMode === 'self') {
+      const selfSteps = [1, 2, 4, 5, 7];
+      const doneCount = selfSteps.filter(s => State.stepProgress[s]).length;
+      progressText.textContent = `${doneCount} / 5 Done`;
+      if (doneCount === 5) {
+        progressText.style.background = '#10b981';
+        progressText.style.color = '#fff';
+      } else {
+        progressText.style.background = '';
+        progressText.style.color = '';
+      }
     } else {
-      progressText.style.background = '';
-      progressText.style.color = '';
+      let doneCount = 0;
+      for (let i = 1; i <= 7; i++) {
+        if (State.stepProgress[i]) doneCount++;
+      }
+      progressText.textContent = `${doneCount} / 7 Done`;
+      if (doneCount === 7) {
+        progressText.style.background = '#f59e0b';
+        progressText.style.color = '#fff';
+      } else {
+        progressText.style.background = '';
+        progressText.style.color = '';
+      }
     }
   }
 }
@@ -3799,6 +4024,8 @@ function renderAuditLogs() {
       showToast('Deleted finding');
     });
   });
+
+  updatePrivacyHubFindingsPreview();
 }
 
 // -------------------------------------------------------------
