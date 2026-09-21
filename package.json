@@ -1,19 +1,18 @@
 {
   "name": "visage",
-  "version": "1.0.3",
-  "description": "Personal Identity Intelligence, Executive Exposure & People OSINT Suite.",
+  "version": "1.0.4",
+  "description": "Digital Footprint & Identity Privacy Audit Workstation.",
   "scripts": {
     "test": "node -c dashboard.js && node -c background.js",
     "build": "node build.js"
   },
   "keywords": [
-    "osint",
-    "reconnaissance",
-    "identity",
     "privacy",
-    "audit",
-    "people-osint",
-    "dorking"
+    "security",
+    "identity-audit",
+    "footprint",
+    "credential-leak",
+    "developer-tools"
   ],
   "author": "Visage Contributors",
   "license": "MIT"

@@ -1,9 +1,9 @@
-<!-- dashboard.html - Visage Personal Identity Intelligence Workstation -->
+<!-- dashboard.html - Visage Digital Footprint & Identity Privacy Workstation -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Visage - Identity Intelligence & People OSINT Suite</title>
+  <title>Visage - Digital Footprint & Identity Privacy Audit Workstation</title>
   <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
             <span class="brand-icon">👤</span>
             <h1>Visage</h1>
           </div>
-          <span class="sub-heading">Personal Identity & Exposure Suite</span>
+          <span class="sub-heading">Digital Footprint & Privacy Suite</span>
         </div>
         <div class="header-right">
           <label class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
@@ -29,7 +29,7 @@
       
       <!-- Target Scope Inputs -->
       <section class="composer">
-        <div class="section-badge">STEP 1: IDENTITY SCOPE</div>
+        <div class="section-badge">STEP 1: AUDIT SCOPE</div>
 
         <div class="input-name-grid">
           <div class="input-group">
@@ -88,14 +88,14 @@
 
         <!-- Quick Scope Actions -->
         <div class="scope-actions">
-          <button type="button" id="btn-save-profile" class="btn-secondary" title="Save this person's scope into local profiles">💾 Save Target</button>
+          <button type="button" id="btn-save-profile" class="btn-secondary" title="Save this profile into local profiles">💾 Save Profile</button>
           <button type="button" id="btn-reset-scope" class="btn-secondary" title="Reset all input fields">🔄 Reset</button>
         </div>
       </section>
 
       <!-- External Quick Pivots -->
       <section class="pivots-section">
-        <div class="section-title-sm">Quick Identity Pivots</div>
+        <div class="section-title-sm">Public Directory Checks</div>
         <div class="pivot-buttons">
           <button type="button" class="pivot-btn" id="pivot-reverse-image" title="Open Google Lens reverse image lookup">🖼️ Reverse Image</button>
           <button type="button" class="pivot-btn" id="pivot-wayback" title="Search Wayback Machine archives for alias/email">🏛️ Wayback</button>
@@ -109,14 +109,14 @@
         <div class="target-card-header">
           <div class="avatar-ring" id="target-avatar">👤</div>
           <div>
-            <div class="target-display-name" id="card-display-name">No Target Active</div>
-            <div class="target-display-meta" id="card-display-meta">Enter identity details above</div>
+            <div class="target-display-name" id="card-display-name">No Profile Active</div>
+            <div class="target-display-meta" id="card-display-meta">Enter identity details to audit exposure</div>
           </div>
         </div>
         <div class="target-card-stats">
           <div class="stat-pill"><span class="stat-num" id="stat-accounts">0</span> Accounts</div>
           <div class="stat-pill"><span class="stat-num" id="stat-keys">0</span> Keys</div>
-          <div class="stat-pill"><span class="stat-num" id="stat-breaches">0</span> Breaches</div>
+          <div class="stat-pill"><span class="stat-num" id="stat-breaches">0</span> Leaks</div>
           <div class="stat-pill"><span class="stat-num" id="stat-findings">0</span> Findings</div>
         </div>
       </section>
@@ -134,14 +134,23 @@
 
     <!-- RIGHT COLUMN: Guided Audit Methodology & Functional Tabs -->
     <main class="col-right">
+      <!-- Defensive Privacy & Footprint Workstation Banner -->
+      <div class="defensive-banner">
+        <span class="defensive-banner-icon">🛡️</span>
+        <div class="defensive-banner-content">
+          <strong>Defensive Footprint & Privacy Workstation</strong>
+          <p>Visage is designed for individuals, security researchers, and privacy advocates to audit public digital footprints, evaluate exposed credentials, and mitigate social engineering risks. All queries run 100% locally in your browser.</p>
+        </div>
+      </div>
+
       <!-- 7-Step Guided Audit Methodology Bar -->
       <section id="guided-checklist" class="guided-checklist guidance-item">
         <div class="checklist-header">
           <div class="checklist-title">
             <span class="checklist-icon">🧭</span>
             <div>
-              <strong>Guided Identity Recon Methodology</strong>
-              <span class="checklist-subtitle">Standard 7-Step People OSINT Assessment</span>
+              <strong>Guided Digital Footprint Methodology</strong>
+              <span class="checklist-subtitle">Standard 7-Step Identity Privacy Assessment</span>
             </div>
           </div>
           <div class="checklist-actions">
@@ -158,8 +167,8 @@
               <span class="step-status" id="step-1-status">⏳</span>
             </div>
             <strong>Identity Scope</strong>
-            <p>Target name, aliases & seeds.</p>
-            <button type="button" id="step-btn-1" class="step-btn">Scope Target</button>
+            <p>Name, handle & audit seeds.</p>
+            <button type="button" id="step-btn-1" class="step-btn">Set Scope</button>
           </div>
 
           <div class="step-card" id="step-2-card">
@@ -180,7 +189,7 @@
               <span class="step-status" id="step-3-status">⏳</span>
             </div>
             <strong>Cryptographic ID</strong>
-            <p>PGP keys, Keybase & GPG commits.</p>
+            <p>PGP keys, Keybase & identity proofs.</p>
             <button type="button" id="step-btn-3" class="step-btn">Query Keys</button>
           </div>
 
@@ -190,9 +199,9 @@
               <button type="button" class="step-help-btn" data-step="4" title="Methodology: What & Why for Step 4">?</button>
               <span class="step-status" id="step-4-status">⏳</span>
             </div>
-            <strong>Breach Telemetry</strong>
-            <p>Credential dumps & pastes.</p>
-            <button type="button" id="step-btn-4" class="step-btn">Audit Breaches</button>
+            <strong>Credential Exposure</strong>
+            <p>Leak checks & paste searches.</p>
+            <button type="button" id="step-btn-4" class="step-btn">Check Leaks</button>
           </div>
 
           <div class="step-card" id="step-5-card">
@@ -201,9 +210,9 @@
               <button type="button" class="step-help-btn" data-step="5" title="Methodology: What & Why for Step 5">?</button>
               <span class="step-status" id="step-5-status">⏳</span>
             </div>
-            <strong>Person Dorks</strong>
-            <p>Resumes, filings & court records.</p>
-            <button type="button" id="step-btn-5" class="step-btn">Run Dorks</button>
+            <strong>Search Footprint</strong>
+            <p>Public documents, resumes & filings.</p>
+            <button type="button" id="step-btn-5" class="step-btn">Audit Footprint</button>
           </div>
 
           <div class="step-card" id="step-6-card">
@@ -213,7 +222,7 @@
               <span class="step-status" id="step-6-status">⏳</span>
             </div>
             <strong>Public Records</strong>
-            <p>Deeds, courts & LLCs.</p>
+            <p>Property deeds, registries & archives.</p>
             <button type="button" id="step-btn-6" class="step-btn">Check Records</button>
           </div>
 
@@ -223,9 +232,9 @@
               <button type="button" class="step-help-btn" data-step="7" title="Methodology: What & Why for Step 7">?</button>
               <span class="step-status" id="step-7-status">⏳</span>
             </div>
-            <strong>Dossier Export</strong>
-            <p>Triage & Obsidian markdown.</p>
-            <button type="button" id="step-btn-7" class="step-btn">Export Dossier</button>
+            <strong>Exposure Report</strong>
+            <p>Findings triage & Markdown export.</p>
+            <button type="button" id="step-btn-7" class="step-btn">Export Report</button>
           </div>
         </div>
       </section>
@@ -234,10 +243,10 @@
       <nav class="tabs">
         <button class="tab-btn active" data-target="tab-matrix">Username Matrix</button>
         <button class="tab-btn" data-target="tab-crypto">Cryptographic Identity</button>
-        <button class="tab-btn" data-target="tab-breach">Breach & Pastes</button>
-        <button class="tab-btn" data-target="tab-dorks">Person Dorks</button>
+        <button class="tab-btn" data-target="tab-breach">Credential Exposure</button>
+        <button class="tab-btn" data-target="tab-dorks">Search Footprint</button>
         <button class="tab-btn" data-target="tab-records">Public Records</button>
-        <button class="tab-btn" data-target="tab-dossier">Dossier & Audit Log <span class="badge-pill" id="tab-audit-badge">0</span></button>
+        <button class="tab-btn" data-target="tab-dossier">Exposure Report <span class="badge-pill" id="tab-audit-badge">0</span></button>
         <button class="tab-btn" data-target="tab-profiles">Profiles</button>
       </nav>
 
@@ -380,7 +389,7 @@
       <div class="tab-content" id="tab-breach">
         <div class="toolbar">
           <div>
-            <h2>Breach & Leak Telemetry</h2>
+            <h2>Credential Exposure & Leak Telemetry</h2>
             <p class="section-desc">Audit credential compromises, public database leaks, and pastebin dump mentions.</p>
           </div>
           <div class="toolbar-actions">
@@ -389,8 +398,8 @@
         </div>
 
         <div class="guidance-callout guidance-item">
-          <strong>🚨 Exposure Intelligence vs. Active Exploitation:</strong>
-          <p>Identifying that a target's corporate or personal email appears in historic leaks (e.g. LinkedIn 2012, Dropbox, Adobe) proves credential reuse risk and confirms that the email address was actively utilized during that timeframe.</p>
+          <strong>🛡️ Defensive Footprint Auditing:</strong>
+          <p>Auditing whether an email address appears in historic data breaches (e.g. LinkedIn 2012, Dropbox, Adobe) proves credential reuse risk and confirms that the email address was actively utilized during that timeframe.</p>
         </div>
 
         <!-- Breach Intelligence Query Bar -->
@@ -409,10 +418,10 @@
                 <div class="text-muted text-xs">Direct public breach registry search</div>
               </div>
             </div>
-            <p class="breach-card-desc">Verify whether the target email appears in indexed public data breaches.</p>
+            <p class="breach-card-desc">Verify whether the email appears in indexed public data breaches.</p>
             <div class="breach-card-actions">
               <button type="button" id="btn-open-hibp" class="btn-secondary">Open HIBP Search</button>
-              <button type="button" id="btn-log-hibp" class="btn-micro">Log to Dossier</button>
+              <button type="button" id="btn-log-hibp" class="btn-micro">Log to Exposure Report</button>
             </div>
           </div>
 
@@ -424,10 +433,10 @@
                 <div class="text-muted text-xs">Infostealer malware exposure check</div>
               </div>
             </div>
-            <p class="breach-card-desc">Check if the target's computer was compromised by RedLine, Vidar, or Raccoon stealer malware.</p>
+            <p class="breach-card-desc">Check if the email was compromised in stealer malware logs.</p>
             <div class="breach-card-actions">
               <button type="button" id="btn-open-hudsonrock" class="btn-secondary">Open Cavalier Lookup</button>
-              <button type="button" id="btn-log-hudsonrock" class="btn-micro">Log to Dossier</button>
+              <button type="button" id="btn-log-hudsonrock" class="btn-micro">Log to Exposure Report</button>
             </div>
           </div>
 
@@ -466,7 +475,7 @@
         <!-- Leaked Pastes & Dumps Search Dorks -->
         <div class="sub-section-header">
           <h3>Pastebin & Dump Search Shortlinks</h3>
-          <span class="badge">Passive Dorking</span>
+          <span class="badge">Public Index Search</span>
         </div>
         <div class="pastes-grid" id="pastes-grid">
           <!-- Populated by JS with Pastebin, Ghostbin, Gist, Rentry dork links -->
@@ -479,8 +488,8 @@
       <div class="tab-content" id="tab-dorks">
         <div class="toolbar">
           <div>
-            <h2>Person-Centric Dork Compiler</h2>
-            <p class="section-desc">Compile targeted search engine operators to surface resumes, legal filings, conference presentations, and exposed assets.</p>
+            <h2>Public Footprint Query Compiler</h2>
+            <p class="section-desc">Compile targeted search queries to audit exposed resumes, public filings, presentations, and documents.</p>
           </div>
           <div class="toolbar-actions">
             <div class="engines">
@@ -495,9 +504,9 @@
 
         <!-- Dork Categories & Intent Selector -->
         <div class="input-group">
-          <label for="dork-preset-select">Curated Intent Categories <span class="guidance-item">(pre-structured person dorks)</span></label>
+          <label for="dork-preset-select">Curated Exposure Categories <span class="guidance-item">(pre-structured footprint queries)</span></label>
           <select id="dork-preset-select">
-            <option value="">-- Select Person Dork Category --</option>
+            <option value="">-- Select Exposure Category --</option>
           </select>
         </div>
 
@@ -513,7 +522,7 @@
               <span id="dork-what-leaks" class="exp-desc"></span>
             </div>
             <div class="exp-item">
-              <span class="exp-label">🎯 Analyst Verification Sign:</span>
+              <span class="exp-label">🎯 Verification Sign:</span>
               <span id="dork-true-positive" class="exp-desc"></span>
             </div>
             <div class="exp-item">
@@ -530,7 +539,7 @@
             <input type="text" id="df-name" placeholder='"First Last"'>
           </div>
           <div class="input-group">
-            <label for="df-site">Target Site / Domain <span class="guidance-item">(site:)</span></label>
+            <label for="df-site">Domain Scope <span class="guidance-item">(site:)</span></label>
             <input type="text" id="df-site" placeholder="linkedin.com, github.com, etc.">
           </div>
           <div class="input-group">
@@ -576,7 +585,7 @@
         <!-- Compiled Query Preview -->
         <section class="preview-area">
           <div class="preview-header">
-            <span>Compiled Person Dork</span>
+            <span>Compiled Search Query</span>
             <span id="dork-token-count" class="badge">0 words</span>
           </div>
           <textarea id="dork-query-output" readonly></textarea>
@@ -584,14 +593,14 @@
             <button type="button" id="btn-dork-search" class="primary">Search in New Tab</button>
             <button type="button" id="btn-dork-copy">Copy Query</button>
             <button type="button" id="btn-dork-reset">Reset Fields</button>
-            <button type="button" id="btn-dork-to-audit" class="btn-secondary">Send Dork to Dossier</button>
+            <button type="button" id="btn-dork-to-audit" class="btn-secondary">Log Query to Exposure Report</button>
           </div>
         </section>
 
         <!-- Curated Dork Library List -->
         <div class="sub-section-header">
           <div>
-            <h3>Quick-Launch Dork Library</h3>
+            <h3>Footprint Query Library</h3>
             <span class="badge">One-Click Search</span>
           </div>
           <button type="button" id="btn-launch-all-dorks" class="btn-micro" title="Launch all library dorks in staggered tabs (450ms interval) to avoid Google bot detection / CAPTCHAs">🚀 Launch All (Staggered)</button>
@@ -698,7 +707,7 @@
         <div class="records-tier-section">
           <div class="tier-header">
             <span class="tier-badge">TIER 4</span>
-            <h3>Precision Jurisdictional Dorks for <span id="tier4-target-name">Target</span></h3>
+            <h3>Jurisdictional Records Search for <span id="tier4-target-name">Profile</span></h3>
           </div>
           <div class="dorks-jurisdiction-grid" id="tier4-dorks-grid">
             <!-- Populated by JS -->
@@ -707,13 +716,13 @@
       </div>
 
       <!-- ========================================================= -->
-      <!-- TAB 7: DOSSIER TRIAGE & OBSIDIAN EXPORT -->
+      <!-- TAB 7: EXPOSURE FINDINGS & TRIAGE REPORT -->
       <!-- ========================================================= -->
       <div class="tab-content" id="tab-dossier">
         <div class="toolbar">
           <div>
-            <h2>Dossier Findings & Triage Log</h2>
-            <p class="section-desc">Classify exposure severity, add analyst notes, and export comprehensive Obsidian Markdown vaults or GFM dossiers.</p>
+            <h2>Exposure Findings & Audit Log</h2>
+            <p class="section-desc">Classify exposure severity, add remediation notes, and export structured Markdown or CSV audit reports.</p>
           </div>
           <div class="toolbar-actions">
             <select id="audit-filter-status" title="Filter list by triage status">
@@ -735,9 +744,9 @@
             <button type="button" id="btn-clear-fp" title="Remove all False Positive findings">Clear False Positives</button>
             <button type="button" id="btn-clear-audit">Clear All</button>
             <div class="export-dropdown">
-              <button type="button" id="btn-import-dossier" class="btn-secondary" title="Restore dossier from previously exported JSON or Obsidian Markdown">📥 Restore Dossier</button>
+              <button type="button" id="btn-import-dossier" class="btn-secondary" title="Restore audit report from previously exported JSON or Markdown">📥 Restore Audit Log</button>
               <input type="file" id="input-import-dossier" accept=".json,.md,text/markdown,application/json" style="display: none;">
-              <button type="button" id="btn-export-obsidian" class="primary">Export Obsidian (.md)</button>
+              <button type="button" id="btn-export-obsidian" class="primary">Export Markdown (.md)</button>
               <button type="button" id="btn-export-json" class="btn-secondary">Export JSON</button>
               <button type="button" id="btn-export-csv" class="btn-secondary">Export CSV</button>
             </div>
@@ -752,7 +761,7 @@
           <div class="finding-stat"><span class="badge-low" id="count-low">0</span> Low</div>
           <div class="finding-stat"><span class="badge-info" id="count-info">0</span> Info</div>
           <div class="finding-stat" style="margin-left: auto;">
-            <button type="button" id="btn-copy-dossier-md" class="btn-micro">📋 Copy Obsidian Markdown</button>
+            <button type="button" id="btn-copy-dossier-md" class="btn-micro">📋 Copy Markdown Report</button>
           </div>
         </div>
 
@@ -763,13 +772,13 @@
       </div>
 
       <!-- ========================================================= -->
-      <!-- TAB 8: SAVED TARGET PROFILES -->
+      <!-- TAB 8: SAVED IDENTITY PROFILES -->
       <!-- ========================================================= -->
       <div class="tab-content" id="tab-profiles">
         <div class="toolbar">
           <div>
-            <h2>Target Identity Profiles</h2>
-            <p class="section-desc">Manage, restore, and backup investigated individuals and executive profiles.</p>
+            <h2>Saved Identity Profiles</h2>
+            <p class="section-desc">Manage, restore, and backup audited individuals and executive profiles.</p>
           </div>
           <div class="toolbar-actions">
             <button type="button" id="btn-export-profiles" class="btn-secondary">Backup All (JSON)</button>
@@ -781,7 +790,7 @@
         </div>
 
         <div id="profiles-grid" class="profiles-grid">
-          <div class="empty-state">No saved profiles yet. Scope an identity on the left and click 'Save Target'.</div>
+          <div class="empty-state">No saved profiles yet. Scope an identity on the left and click 'Save Profile'.</div>
         </div>
       </div>
     </main>
@@ -804,7 +813,7 @@
   <div id="manual-modal" class="modal-overlay" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Add Dossier Finding</h3>
+        <h3>Add Exposure Finding</h3>
         <button type="button" id="btn-close-manual-modal" class="modal-close">&times;</button>
       </div>
       <div class="modal-body">

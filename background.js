@@ -19,25 +19,25 @@ function setupContextMenus() {
   const createMenus = () => {
     browser.contextMenus.create({
       id: "visage-search-selection",
-      title: "Investigate \"%s\" in Visage",
+      title: "Audit \"%s\" in Visage",
       contexts: ["selection"]
     });
 
     browser.contextMenus.create({
       id: "visage-add-link",
-      title: "Send Link to Visage Dossier",
+      title: "Save Link to Visage Exposure Log",
       contexts: ["link"]
     });
 
     browser.contextMenus.create({
       id: "visage-add-page",
-      title: "Send Current Page to Visage Dossier",
+      title: "Save Current Page to Visage Exposure Log",
       contexts: ["page"]
     });
 
     browser.contextMenus.create({
       id: "visage-open-dash",
-      title: "Open Visage Workstation",
+      title: "Open Visage Privacy Workstation",
       contexts: ["page", "link"]
     });
   };

@@ -267,7 +267,7 @@ const DORK_PRESETS = [
     risk: 'CREDENTIAL COMPROMISE',
     riskBadge: 'CRITICAL',
     whatLeaks: 'Plaintext passwords, credential dumps, API keys, personal email combos, and compromised token lists.',
-    truePositive: 'Target email or username adjacent to password hashes, plaintext passwords, or compromised database headers.',
+    truePositive: 'Audited email or username adjacent to password hashes, plaintext passwords, or compromised database headers.',
     remediation: 'Immediately rotate compromised credentials, invalidate active sessions, and enforce hardware MFA tokens.',
     template: '(site:pastebin.com OR site:rentry.co OR site:ghostbin.com OR site:justpaste.it) ("{email}" OR "{handle}" OR "{name}")',
     site: 'pastebin.com, rentry.co, ghostbin.com',
@@ -283,7 +283,7 @@ const DORK_PRESETS = [
     risk: 'PII EXPOSURE',
     riskBadge: 'HIGH EXPOSURE',
     whatLeaks: 'Personal mobile numbers, home landlines, residential addresses, and private email addresses exposed on personal websites or directories.',
-    truePositive: 'Full 10-digit phone numbers formatted as (XXX) XXX-XXXX or residential street addresses directly associated with target name.',
+    truePositive: 'Full 10-digit phone numbers formatted as (XXX) XXX-XXXX or residential street addresses directly associated with audited profile name.',
     remediation: 'Submit opt-out and deletion requests to public data aggregators (Whitepages, FastPeopleSearch, BeenVerified).',
     template: '"{name}" ("phone" | "mobile" | "cell" | "tel" | "home address" | "residential")',
     site: '',
@@ -334,12 +334,12 @@ const STEP_EXPLANATIONS = {
   1: {
     title: 'Step 1: Identity Scope Normalization & Permutations',
     what: 'Establish the ground-truth seed identifiers for the individual: Legal full name, primary username handle, known personal or corporate emails, phone numbers, and geographical context. Visage parses the name into common permutation variations (e.g. First.Last, FLast, FirstL).',
-    why: 'High-profile targets and executives frequently reuse slight variations of their personal username across different platforms or separate professional and personal identities using predictable naming conventions.',
-    opsec: 'Local scoping is 100% client-side. No user input or target names leave your browser during Step 1.'
+    why: 'Individuals and executives frequently reuse slight variations of their personal username across different platforms or separate professional and personal identities using predictable naming conventions.',
+    opsec: 'Local scoping is 100% client-side. No user input or identity details leave your browser during Step 1.'
   },
   2: {
     title: 'Step 2: Username & Alias Matrix (Passive Presence)',
-    what: 'Test the target handle and generated permutations across 100+ popular public developer, social, chat, media, and gaming platforms.',
+    what: 'Test the audited handle and generated permutations across 100+ popular public developer, social, chat, media, and gaming platforms.',
     why: 'Discovers active digital presence and legacy accounts registered years ago that still link to old emails, forgotten photos, or personal interests.',
     opsec: 'Visage performs zero-touch passive status queries without requiring extension login. For platforms with strict anti-scraping protections, direct formatted review links allow manual inspection.'
   },
@@ -350,14 +350,14 @@ const STEP_EXPLANATIONS = {
     opsec: 'Queries public OpenPGP index APIs and GitHub public events with machine-readable endpoints.'
   },
   4: {
-    title: 'Step 4: Breach & Leak Telemetry',
-    what: 'Cross-reference target emails and usernames against known public database compromises, infostealer malware logs, and pastebin credential dumps. Includes private in-browser k-Anonymity hash range checks.',
+    title: 'Step 4: Credential Exposure & Leak Telemetry',
+    what: 'Cross-reference audited emails and usernames against known public database compromises, infostealer malware logs, and pastebin credential dumps. Includes private in-browser k-Anonymity hash range checks.',
     why: 'Demonstrates credential reuse risk and confirms that an email was active during specific breach years (e.g. LinkedIn 2012, Dropbox, Canva).',
     opsec: 'The k-Anonymity password check hashes candidate passwords locally with SHA-1 and only sends a 5-character prefix, ensuring full cryptographic privacy.'
   },
   5: {
-    title: 'Step 5: Person-Centric Dork Compiler',
-    what: 'Compile specialized search engine operators (filetype:, site:, intitle:, inurl:) specifically tuned for individuals to uncover resumes, court filings, presentations, and leaked configs.',
+    title: 'Step 5: Public Footprint Query Compiler',
+    what: 'Compile specialized search engine operators (filetype:, site:, intitle:, inurl:) specifically tuned for individuals to audit exposed resumes, court filings, presentations, and leaked documents.',
     why: 'Search engines index billions of PDFs and public records that are not linked on main corporate landing pages, establishing location and institutional anchors.',
     opsec: 'Search queries are opened directly in new tabs or copied. Use Verbatim search (&tbs=li:1) in Google to bypass algorithmic synonym dilution.'
   },
@@ -365,13 +365,13 @@ const STEP_EXPLANATIONS = {
     title: 'Step 6: Public Records & Jurisdictional Intelligence',
     what: 'Cross-reference county, state, and federal public directories: Recorder of Deeds, Property Tax Assessors, Unified Court Dockets, State LLC Registrations, Voter Rolls, Professional Licensing Boards, and Inmate Records.',
     why: 'Official government records provide sovereign ground truth, confirming primary residential physical addresses, legal property ownership, corporate directorships, marital assets, and legal civil judgments.',
-    opsec: 'Visage utilizes direct official government links and Google verbatim site dorks. All queries operate zero-touch without submitting non-public credential requests.'
+    opsec: 'Visage utilizes direct official government links and Google verbatim site queries. All queries operate zero-touch without submitting non-public credential requests.'
   },
   7: {
-    title: 'Step 7: Dossier Triage & Obsidian Vault Export',
-    what: 'Classify discovered items by risk severity (Critical, High, Medium, Low), record analyst notes, and generate a fully-structured Obsidian Markdown dossier complete with Dataview metadata and callouts.',
-    why: 'Provides a professional, auditable, and actionable report for red team pretexts, executive protection assessments, or corporate risk audits.',
-    opsec: 'All dossier records and notes remain encrypted in your local browser storage until explicitly exported by the analyst.'
+    title: 'Step 7: Exposure Report & Markdown Export',
+    what: 'Classify discovered items by risk severity (Critical, High, Medium, Low), record remediation notes, and generate a fully-structured Markdown report complete with Dataview metadata and callouts.',
+    why: 'Provides a professional, auditable, and actionable digital footprint assessment report for executive protection, organizational risk reviews, and personal privacy hardening.',
+    opsec: 'All audit records and notes remain stored in your local browser storage until explicitly exported by the analyst.'
   }
 };
 
@@ -520,7 +520,7 @@ function ingestUrlParameters() {
     updateLocationJurisdictionPreview();
     updateTargetCard();
     markStep(1, true);
-    showToast(`Loaded target scope: ${State.target.name || State.target.email || State.target.handle}`);
+    showToast(`Loaded profile: ${State.target.name || State.target.email || State.target.handle}`);
   }
 }
 
@@ -801,7 +801,7 @@ function updateTargetCard() {
   const statBreaches = document.getElementById('stat-breaches');
   const statFindings = document.getElementById('stat-findings');
 
-  const name = State.target.name || State.target.handle || State.target.email || 'No Target Active';
+  const name = State.target.name || State.target.handle || State.target.email || 'No Profile Active';
   displayName.textContent = name;
 
   const metaParts = [];
@@ -2113,7 +2113,7 @@ function setupDorkTab() {
     const query = output.value;
     if (!query) return;
     navigator.clipboard.writeText(query);
-    showToast('Copied dork to clipboard');
+    showToast('Copied query to clipboard');
   });
 
   // Reset Fields
@@ -2137,9 +2137,9 @@ function setupDorkTab() {
 
     State.auditLogs.push({
       id: Date.now().toString(),
-      target: State.target.name || 'Target',
-      title: `Person Dork: ${query.substring(0, 50)}...`,
-      category: 'Person-Centric Dork',
+      target: State.target.name || 'Profile',
+      title: `Footprint Query: ${query.substring(0, 50)}...`,
+      category: 'Search Index Query',
       severity: 'medium',
       status: 'investigating',
       url: `https://www.google.com/search?q=${encodeURIComponent(query)}&tbs=li:1`,
@@ -2151,7 +2151,7 @@ function setupDorkTab() {
     renderAuditLogs();
     updateTargetCard();
     markStep(5, true);
-    showToast('Logged dork to dossier');
+    showToast('Logged query to exposure report');
   });
 
   // Launch all library dorks (Staggered to prevent CAPTCHAs)
@@ -2216,7 +2216,7 @@ function renderDorkLibrary() {
   container.querySelectorAll('.btn-copy-library-dork').forEach(btn => {
     btn.addEventListener('click', () => {
       navigator.clipboard.writeText(btn.getAttribute('data-query'));
-      showToast('Copied dork to clipboard');
+      showToast('Copied query to clipboard');
     });
   });
 }
@@ -3220,7 +3220,7 @@ function renderRecordsTab() {
         <div class="record-portal-desc">${escapeHtml(s.desc)}</div>
         <div class="record-portal-actions">
           <button type="button" class="btn-micro btn-open-portal" data-url="${escapeHtml(s.url)}">Open Official Portal ↗</button>
-          <button type="button" class="btn-micro btn-log-state-portal" data-title="${escapeHtml(s.title)}" data-url="${escapeHtml(s.url)}" data-category="${escapeHtml(s.scope)}">Log to Dossier</button>
+          <button type="button" class="btn-micro btn-log-state-portal" data-title="${escapeHtml(s.title)}" data-url="${escapeHtml(s.url)}" data-category="${escapeHtml(s.scope)}">Log to Exposure Report</button>
         </div>
       </div>
     `).join('');
@@ -3305,7 +3305,7 @@ function renderRecordsTab() {
         <div class="record-portal-desc">${escapeHtml(f.desc)}</div>
         <div class="record-portal-actions">
           <button type="button" class="btn-micro btn-open-portal" data-url="${escapeHtml(f.url)}">Search Portal ↗</button>
-          <button type="button" class="btn-micro btn-log-state-portal" data-title="${escapeHtml(f.title)}" data-url="${escapeHtml(f.url)}" data-category="${escapeHtml(f.scope)}">Log to Dossier</button>
+          <button type="button" class="btn-micro btn-log-state-portal" data-title="${escapeHtml(f.title)}" data-url="${escapeHtml(f.url)}" data-category="${escapeHtml(f.scope)}">Log to Exposure Report</button>
         </div>
       </div>
     `).join('');
@@ -3526,7 +3526,7 @@ function setupDossierTab() {
     renderAuditLogs();
     updateTargetCard();
     markStep(7, true);
-    showToast('Finding added to dossier');
+    showToast('Finding added to exposure report');
   });
 
   // Exporters & Importer
@@ -3652,7 +3652,7 @@ function renderAuditLogs() {
 // -------------------------------------------------------------
 function generateObsidianMarkdown() {
   const target = State.target;
-  const targetName = target.name || target.handle || 'Unnamed Target';
+  const targetName = target.name || target.handle || 'Unnamed Profile';
   const now = new Date().toISOString().split('T')[0];
 
   const confirmedFindings = State.auditLogs.filter(l => l.status === 'confirmed');
@@ -3663,8 +3663,8 @@ aliases:
   - "${escapeMarkdown(targetName)}"
   - "${escapeMarkdown(target.handle || '')}"
 tags:
-  - osint/target
-  - osint/visage
+  - privacy/audit
+  - privacy/visage
   - status/triaged
 target_name: "${escapeMarkdown(target.name || '')}"
 first_name: "${escapeMarkdown(target.firstName || '')}"
@@ -3677,13 +3677,13 @@ location: "${escapeMarkdown(target.location || '')}"
 jurisdiction: "${escapeMarkdown(State.jurisdiction.resolvedText || '')}"
 organization: "${escapeMarkdown(target.org || '')}"
 assessment_date: ${now}
-tool: Visage Personal Identity Intelligence Workstation
+tool: Visage Digital Footprint & Identity Privacy Workstation
 ---
 
-# 👤 Identity Reconnaissance Dossier: ${targetName}
+# 👤 Digital Footprint Assessment Report: ${targetName}
 
-> [!INFO] Executive Summary
-> **Target**: ${targetName}  
+> [!INFO] Assessment Summary
+> **Subject / Profile**: ${targetName}  
 > **Primary Alias**: @${target.handle || 'N/A'}  
 > **Email**: ${target.email || 'N/A'}  
 > **Phone**: ${target.phone || 'N/A'}  
@@ -3693,8 +3693,8 @@ tool: Visage Personal Identity Intelligence Workstation
 
 ---
 
-## 🎯 Target Metadata (Dataview)
-Target:: [[${targetName}]]
+## 🎯 Profile Metadata (Dataview)
+Subject:: [[${targetName}]]
 First Name:: ${target.firstName || 'N/A'}
 Middle Name:: ${target.middleName || 'N/A'}
 Last Name:: ${target.lastName || 'N/A'}
@@ -3710,7 +3710,7 @@ Date:: ${now}
 ## 🌐 Confirmed Accounts & Matrix Presence
 | Platform | Handle | Verification URL | Status |
 | :--- | :--- | :--- | :--- |
-${Object.values(State.matrixResults).filter(r => r.status === 'found').map(r => `| **${r.platform}** | @${target.handle || 'target'} | [Profile Link](${r.url}) | Confirmed Hit |`).join('\n') || '| *None recorded* | - | - | - |'}
+${Object.values(State.matrixResults).filter(r => r.status === 'found').map(r => `| **${r.platform}** | @${target.handle || 'profile'} | [Profile Link](${r.url}) | Confirmed Hit |`).join('\n') || '| *None recorded* | - | - | - |'}
 
 ---
 
@@ -3722,7 +3722,7 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
 ---
 
 ## 🏛️ Public Records & Jurisdictional Footprint
-**Target Jurisdiction**: ${State.jurisdiction.resolvedText || 'Unresolved'} (${State.jurisdiction.county}, ${State.jurisdiction.stateName})
+**Audited Jurisdiction**: ${State.jurisdiction.resolvedText || 'Unresolved'} (${State.jurisdiction.county}, ${State.jurisdiction.stateName})
 
 | Tier | Portal / Resource | Scope & Purpose | Link |
 | :--- | :--- | :--- | :--- |
@@ -3751,7 +3751,7 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
       md += `> [!${calloutType}] ${f.title}\n`;
       md += `> **Category**: ${f.category} | **Severity**: ${f.severity.toUpperCase()}\n`;
       if (f.url) md += `> **Evidence**: [Source Link](${f.url})\n`;
-      if (f.notes) md += `> **Analyst Notes**: ${f.notes}\n`;
+      if (f.notes) md += `> **Remediation Notes**: ${f.notes}\n`;
       md += `> **Discovered**: ${new Date(f.timestamp).toLocaleDateString()}\n\n`;
     });
   }
@@ -3759,13 +3759,13 @@ ${State.cryptoResults.pgp.map(k => `| \`0x${k.keyId}\` | ${k.created} | ${k.uids
   if (reviewFindings.length > 0) {
     md += `### 🟡 Items Under Review\n\n`;
     reviewFindings.forEach(f => {
-      md += `- [ ] **${f.title}** (${f.category}) - ${f.url ? `[Link](${f.url})` : ''} - *${f.notes || 'Under investigation'}*\n`;
+      md += `- [ ] **${f.title}** (${f.category}) - ${f.url ? `[Link](${f.url})` : ''} - *${f.notes || 'Under review'}*\n`;
     });
     md += '\n';
   }
 
   md += `---
-*Generated by [Visage](https://github.com/mrnickpeer/Visage) - Identity Intelligence & Exposure Suite.*
+*Generated by [Visage](https://github.com/mrnickpeer/Visage) - Digital Footprint & Identity Privacy Workstation.*
 `;
 
   return md;
@@ -3778,7 +3778,7 @@ function escapeMarkdown(str) {
 
 function exportObsidianMarkdown() {
   const md = generateObsidianMarkdown();
-  const filename = `dossier-${(State.target.name || State.target.handle || 'target').toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`;
+  const filename = `visage-report-${(State.target.name || State.target.handle || 'profile').toLowerCase().replace(/[^a-z0-9]/g, '-')}.md`;
   downloadFile(filename, 'text/markdown', md);
   markStep(7, true);
   showToast(`Exported ${filename}`);
@@ -3788,7 +3788,7 @@ function copyObsidianMarkdown() {
   const md = generateObsidianMarkdown();
   navigator.clipboard.writeText(md);
   markStep(7, true);
-  showToast('Copied Obsidian Markdown to clipboard');
+  showToast('Copied Markdown Report to clipboard');
 }
 
 function exportJsonDossier() {
@@ -3800,12 +3800,12 @@ function exportJsonDossier() {
     cryptoResults: State.cryptoResults,
     stepProgress: State.stepProgress,
     exportedAt: new Date().toISOString(),
-    generator: 'Visage v1.0.1'
+    generator: 'Visage v1.0.4'
   };
 
   const json = JSON.stringify(payload, null, 2);
-  const targetId = (State.target.handle || State.target.lastName || 'target').toLowerCase();
-  const filename = `visage-dossier-${targetId}.json`;
+  const targetId = (State.target.handle || State.target.lastName || 'profile').toLowerCase();
+  const filename = `visage-audit-${targetId}.json`;
   downloadFile(filename, 'application/json', json);
   markStep(7, true);
   showToast(`Exported ${filename}`);
@@ -4025,11 +4025,11 @@ function importObsidianMarkdownDossier(mdText, filename) {
   renderDorkLibrary();
   renderRecordsTab();
 
-  showToast(`✔ Obsidian Dossier restored from ${filename}: ${State.auditLogs.length} findings, target "${State.target.name || State.target.handle || 'Loaded'}"`, 'success', 4000);
+  showToast(`✔ Audit Report restored from ${filename}: ${State.auditLogs.length} findings, profile "${State.target.name || State.target.handle || 'Loaded'}"`, 'success', 4000);
 }
 
 function exportCsvDossier() {
-  const headers = ['ID', 'Target', 'Title', 'Category', 'Severity', 'Status', 'URL', 'Notes', 'Timestamp'];
+  const headers = ['ID', 'Profile', 'Title', 'Category', 'Severity', 'Status', 'URL', 'Remediation Notes', 'Timestamp'];
   const rows = State.auditLogs.map(l => [
     `"${l.id}"`,
     `"${(l.target || '').replace(/"/g, '""')}"`,
@@ -4043,7 +4043,7 @@ function exportCsvDossier() {
   ]);
 
   const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const filename = `visage-findings-${(State.target.handle || 'target')}.csv`;
+  const filename = `visage-findings-${(State.target.handle || 'profile')}.csv`;
   downloadFile(filename, 'text/csv', csv);
   markStep(7, true);
   showToast(`Exported ${filename}`);
@@ -4100,7 +4100,7 @@ function renderProfilesList() {
   if (!container) return;
 
   if (!State.savedProfiles || State.savedProfiles.length === 0) {
-    container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">No saved profiles yet. Scope an identity on the left and click \'Save Target\'.</div>';
+    container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">No saved profiles yet. Scope an identity on the left and click \'Save Profile\'.</div>';
     return;
   }
 
@@ -4109,7 +4109,7 @@ function renderProfilesList() {
       <div class="profile-card-top">
         <div class="avatar-ring" style="width: 32px; height: 32px; font-size: 0.9rem;">👤</div>
         <div>
-          <div class="profile-card-name">${escapeHtml(p.name || p.handle || 'Unnamed Target')}</div>
+          <div class="profile-card-name">${escapeHtml(p.name || p.handle || 'Unnamed Profile')}</div>
           ${p.handle ? `<div class="profile-card-alias">@${escapeHtml(p.handle)}</div>` : ''}
         </div>
       </div>
@@ -4136,7 +4136,7 @@ function renderProfilesList() {
         generateHandlePermutations();
         updateTargetCard();
         saveStoredData();
-        showToast(`Loaded target: ${p.name || p.handle}`);
+        showToast(`Loaded profile: ${p.name || p.handle}`);
       }
     });
   });
