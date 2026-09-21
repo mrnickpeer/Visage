@@ -4214,7 +4214,7 @@ function exportJsonDossier() {
     cryptoResults: State.cryptoResults,
     stepProgress: State.stepProgress,
     exportedAt: new Date().toISOString(),
-    generator: 'Visage v1.0.4'
+    generator: 'Visage v1.1.0'
   };
 
   const json = JSON.stringify(payload, null, 2);

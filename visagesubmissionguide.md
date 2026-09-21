@@ -10,9 +10,9 @@ The automated build pipeline produces verified, store-ready packages in the `dis
 
 | Store | File / Path | Format | Notes |
 | :--- | :--- | :--- | :--- |
-| **Chrome Web Store (CWS)** | `dist/visage-chrome-v1.0.4.zip` | ZIP archive | Manifest V3 with `background.service_worker` |
-| **Firefox Add-ons (AMO)** | `dist/visage-firefox-v1.0.4.zip` | ZIP archive | Manifest V3 with `background.scripts` & Gecko ID |
-| **Microsoft Edge Add-ons** | `dist/visage-chrome-v1.0.4.zip` | ZIP archive | Same Chromium Manifest V3 bundle as CWS |
+| **Chrome Web Store (CWS)** | `dist/visage-chrome-v1.1.0.zip` | ZIP archive | Manifest V3 with `background.service_worker` |
+| **Firefox Add-ons (AMO)** | `dist/visage-firefox-v1.1.0.zip` | ZIP archive | Manifest V3 with `background.scripts` & Gecko ID |
+| **Microsoft Edge Add-ons** | `dist/visage-chrome-v1.1.0.zip` | ZIP archive | Same Chromium Manifest V3 bundle as CWS |
 | **Chrome / Edge Unpacked** | `dist/chrome/` | Directory | For "Load unpacked" local testing |
 | **Firefox Unpacked** | `dist/firefox/` | Directory | For "Load Temporary Add-on" in Firefox |
 
@@ -31,7 +31,7 @@ The automated build pipeline produces verified, store-ready packages in the `dis
 1. Log in to the [Chrome Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 2. Click **"New Item"** (or open an existing draft).
 3. Drag and drop:  
-   `dist/visage-chrome-v1.0.4.zip`
+   `dist/visage-chrome-v1.1.0.zip`
 
 ### Step 2: Store Listing Tab
 * **Product Name:** `Visage`
@@ -109,7 +109,7 @@ Click **"Submit for review"**. Approval typically takes between 12 and 48 hours.
 2. Click **"Submit a New Add-on"**.
 3. Distribution: Select **"On this site"** (listed publicly in Mozilla's directory).
 4. Upload:  
-   `dist/visage-firefox-v1.0.4.zip`
+   `dist/visage-firefox-v1.1.0.zip`
 
 ### Step 2: Automated Validation
 * Mozilla's automated linter will analyze the bundle.
@@ -140,7 +140,7 @@ Because Microsoft Edge runs on the Chromium engine, it natively accepts the **Ch
 1. Log in to the [Microsoft Partner Center Dashboard](https://partner.microsoft.com/dashboard/microsoftedge).
 2. Click **"Create new extension"**.
 3. Upload:  
-   `dist/visage-chrome-v1.0.4.zip`
+   `dist/visage-chrome-v1.1.0.zip`
 4. Store Listing:
    - **Store Logo:** Upload `icons/icon-300.png` (Edge strictly requires a **300x300 PNG** store logo).
    - **Extension Icon:** Upload `icons/icon-128.png`.

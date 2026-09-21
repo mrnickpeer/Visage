@@ -1,6 +1,6 @@
 {
   "name": "visage",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Digital Footprint & Identity Privacy Audit Workstation.",
   "scripts": {
     "test": "node -c dashboard.js && node -c background.js",
