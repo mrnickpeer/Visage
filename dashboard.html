@@ -9,26 +9,32 @@
   <link rel="shortcut icon" href="icons/icon-32.png">
   <link rel="stylesheet" href="dashboard.css">
 </head>
-<body>
+<body class="show-guidance">
   <div class="layout">
     <!-- LEFT COLUMN: Identity Scope & Target Composer -->
     <aside class="col-left">
-      <header>
-        <div class="brand">
-          <div class="brand-title">
-            <span class="brand-icon">👤</span>
-            <h1>Visage</h1>
+      <header style="display: flex; flex-direction: column; align-items: stretch; gap: 1rem; margin-bottom: 1.5rem;">
+        <!-- Line 1: Branding -->
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <img src="icons/icon.svg" alt="Visage Logo" style="width: 48px; height: 48px;" onerror="this.outerHTML='<span style=\'font-size: 34px; line-height: 1;\'>👤</span>'">
+            <div>
+              <h1 style="margin: 0;">Visage</h1>
+              <span class="sub-heading">Digital Footprint & Privacy Suite</span>
+            </div>
           </div>
-          <span class="sub-heading">Digital Footprint & Privacy Suite</span>
+          <button type="button" id="btn-open-charter" class="btn-ghost btn-micro" title="View Visage Ethical Charter & Terms of Use">⚖️ Charter</button>
         </div>
-        <div class="header-right">
-          <button type="button" id="btn-open-charter" class="btn-ghost btn-micro" title="View Visage Ethical Charter & Terms of Use" style="margin-right: 6px;">⚖️ Charter</button>
-          <label id="guidance-toggle-wrapper" class="guidance-toggle" title="Toggle methodology guidance, operator tips, and risk cards">
-            <input type="checkbox" id="toggle-guidance" checked>
-            <span class="toggle-track"><span class="toggle-thumb"></span></span>
-            <span class="toggle-label">🎓 Guidance</span>
-          </label>
-        </div>
+        
+        <!-- Line 2: Mode Toggle -->
+        <label class="mode-toggle" title="Switch between Guided Mode and Tactical Mode">
+          <input type="checkbox" id="toggle-guidance" checked>
+          <div class="mode-toggle-track" style="width: 100%; height: 34px; padding: 3px;">
+            <span class="mode-tactical-label" style="display: flex; align-items: center; justify-content: center; white-space: nowrap;">⚡ Tactical Mode</span>
+            <span class="mode-guided-label" style="display: flex; align-items: center; justify-content: center; white-space: nowrap;">🎓 Guided Mode</span>
+            <div class="mode-toggle-thumb"></div>
+          </div>
+        </label>
       </header>
       
       <!-- Target Scope Inputs -->

@@ -840,6 +840,11 @@ function setupGuidanceToggle() {
 
   toggle.addEventListener('change', () => {
     const isChecked = toggle.checked;
+    if (isChecked) {
+      document.body.classList.add('show-guidance');
+    } else {
+      document.body.classList.remove('show-guidance');
+    }
     if (checklist) {
       checklist.style.display = isChecked ? '' : 'none';
     }
@@ -1191,6 +1196,8 @@ function applyAuditModeUI(mode) {
     }
     if (toggleGuidance) {
       toggleGuidance.checked = true;
+      toggleGuidance.disabled = true; // Lock into guided mode for self-audit
+      document.body.classList.add('show-guidance');
     }
     if (checklist) {
       checklist.style.display = '';
@@ -1279,8 +1286,16 @@ function applyAuditModeUI(mode) {
     if (guidanceToggleWrapper) {
       guidanceToggleWrapper.style.display = 'inline-flex';
     }
-    if (checklist && toggleGuidance) {
-      checklist.style.display = toggleGuidance.checked ? '' : 'none';
+    if (toggleGuidance) {
+      toggleGuidance.disabled = false;
+      if (checklist) {
+        checklist.style.display = toggleGuidance.checked ? '' : 'none';
+      }
+      if (toggleGuidance.checked) {
+        document.body.classList.add('show-guidance');
+      } else {
+        document.body.classList.remove('show-guidance');
+      }
     }
 
     // Banner styling - warm amber warning with default spacing below tabs
