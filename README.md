@@ -14,24 +14,40 @@
 
 ## 📸 Workstation Screenshots
 
-### 1. Personal Privacy Self-Audit & 100+ Platform Username Matrix
+### 1. Personal Privacy Self-Audit & 140+ Platform Username Matrix
 ![Visage Username & Alias Matrix](screenshots/visage_matrix.png)
 
-### 2. Clean Up & Opt-Out Desk (Remediation Action Plan & Direct Delisting)
+### 2. Tactical Mode: High-Density SOCMINT Recon (v2.0)
+![Visage Tactical Mode](screenshots/visage_tactical.png)
+
+### 3. Clean Up & Opt-Out Desk (Remediation Action Plan & Direct Delisting)
 ![Visage Clean Up & Opt-Out Desk](screenshots/visage_opt_out_desk.png)
 
-### 3. Defensive Assessment Mode & 50-State Sovereign Records Desk
+### 4. Defensive Assessment Mode & 7-Step Enterprise Workflow
+![Visage Defensive Assessment Mode](screenshots/visage_defensive_mode.png)
+
+### 5. 50-State Sovereign Public Records & Jurisdictional Directory
 ![Visage Public Records Desk](screenshots/visage_records.png)
 
-### 4. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
+### 6. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
 ![Visage Cryptographic Identity](screenshots/visage_crypto.png)
 
-### 5. Ethical Operations Charter & Rules of Engagement
+### 7. Ethical Operations Charter & Rules of Engagement
 ![Visage Ethical Charter](screenshots/visage_ethical_charter.png)
 
 ---
 
-## 🧭 Dual-Mode Identity Audit Methodology
+## ⚡ Dual-Audience Architecture: Guided Mode vs. Tactical Mode (New in v2.0)
+
+Visage introduces a dedicated dual-audience operational framework tailored for both trainees and experienced investigators:
+
+- **🎓 Guided Mode**: Features an illuminated horizontal timeline stepper guiding analysts step-by-step through the intelligence lifecycle, interactive "What & Why" educational modals, and structured input guardrails.
+- **⚡ Tactical Mode (Training Wheels OFF)**: Strips out the methodology stepper and educational helper text, providing maximum screen real estate and an ultra-dense workstation for high-speed multi-platform triage.
+- **🔒 Context-Aware Safety Lock**: When operating in *Personal Privacy Self-Audit* mode, the interface automatically enforces Guided Mode to prevent accidental misconfiguration or privacy violations. The Tactical Mode toggle unlocks exclusively when operating in authorized *Defensive Exposure Assessment* mode.
+
+---
+
+## 🧭 Operating Contexts & Methodology
 
 Visage provides two tailored operating contexts depending on your mission and authorization:
 
@@ -104,8 +120,8 @@ npm run build
 ```
 
 The build process produces:
-- `dist/visage-firefox-v1.2.0.zip` (Ready for Mozilla AMO submission)
-- `dist/visage-chrome-v1.2.0.zip` (Ready for Chrome Web Store & Edge Add-ons submission)
+- `dist/visage-firefox-v2.0.0.zip` (Ready for Mozilla AMO submission)
+- `dist/visage-chrome-v2.0.0.zip` (Ready for Chrome Web Store & Edge Add-ons submission)
 - `dist/firefox/` (Unpacked Firefox add-on directory)
 - `dist/chrome/` (Unpacked Chrome extension directory)
 
