@@ -15,25 +15,25 @@
 ## 📸 Workstation Screenshots
 
 ### 1. Personal Privacy Self-Audit & 140+ Platform Username Matrix
-![Visage Username & Alias Matrix](screenshots/visage_matrix.png)
+![Visage Username & Alias Matrix](screenshots/visage_matrix.png?v=2.1.1)
 
 ### 2. Tactical Mode: High-Density SOCMINT Recon (v2.0)
-![Visage Tactical Mode](screenshots/visage_tactical.png)
+![Visage Tactical Mode](screenshots/visage_tactical.png?v=2.1.1)
 
 ### 3. Clean Up & Opt-Out Desk (Remediation Action Plan & Direct Delisting)
-![Visage Clean Up & Opt-Out Desk](screenshots/visage_opt_out_desk.png)
+![Visage Clean Up & Opt-Out Desk](screenshots/visage_opt_out_desk.png?v=2.1.1)
 
 ### 4. Defensive Assessment Mode & 7-Step Enterprise Workflow
-![Visage Defensive Assessment Mode](screenshots/visage_defensive_mode.png)
+![Visage Defensive Assessment Mode](screenshots/visage_defensive_mode.png?v=2.1.1)
 
 ### 5. 50-State Sovereign Public Records & Jurisdictional Directory
-![Visage Public Records Desk](screenshots/visage_records.png)
+![Visage Public Records Desk](screenshots/visage_records.png?v=2.1.1)
 
 ### 6. Cryptographic Identity & Public Key Telemetry (OpenPGP & Keybase)
-![Visage Cryptographic Identity](screenshots/visage_crypto.png)
+![Visage Cryptographic Identity](screenshots/visage_crypto.png?v=2.1.1)
 
 ### 7. Ethical Operations Charter & Rules of Engagement
-![Visage Ethical Charter](screenshots/visage_ethical_charter.png)
+![Visage Ethical Charter](screenshots/visage_ethical_charter.png?v=2.1.1)
 
 ---
 
