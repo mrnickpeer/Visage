@@ -18,12 +18,14 @@
         <div style="display: flex; align-items: center; justify-content: space-between;">
           <div style="display: flex; align-items: center; gap: 0.6rem;">
             <img src="icons/icon.svg" alt="Visage Logo" style="width: 48px; height: 48px;" onerror="this.outerHTML='<span style=\'font-size: 34px; line-height: 1;\'>👤</span>'">
-            <div>
-              <h1 style="margin: 0;">Visage</h1>
-              <span class="sub-heading">Digital Footprint & Privacy Suite</span>
+            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <h1 style="margin: 0; line-height: 1;">Visage</h1>
+                <button type="button" id="btn-open-charter" class="btn-micro" title="View Visage Ethical Charter & Terms of Use" style="margin-left: 22px;">⚖️ Ethical Charter</button>
+              </div>
+              <span class="sub-heading" style="white-space: nowrap; line-height: 1.2;">Digital Footprint & Privacy Suite</span>
             </div>
           </div>
-          <button type="button" id="btn-open-charter" class="btn-ghost btn-micro" title="View Visage Ethical Charter & Terms of Use">⚖️ Charter</button>
         </div>
         
         <!-- Line 2: Mode Toggle -->
@@ -1280,14 +1282,14 @@
           </div>
         </div>
 
-        <div style="margin-top: 0.5rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+        <div id="ethical-charter-checkbox-container" style="margin-top: 0.5rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
           <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.84rem; color: #fff;">
             <input type="checkbox" id="chk-accept-charter" style="cursor: pointer; width: 16px; height: 16px;">
             <span>I acknowledge and agree to abide by this Ethical Charter and Rules of Engagement.</span>
           </label>
         </div>
 
-        <div class="modal-actions" style="margin-top: 0.25rem;">
+        <div id="ethical-charter-actions" class="modal-actions" style="margin-top: 0.25rem;">
           <button type="button" id="btn-accept-charter" class="primary" disabled>Accept & Proceed</button>
           <button type="button" id="btn-close-ethical-modal-secondary" class="btn-secondary">Close</button>
         </div>
@@ -1324,6 +1326,25 @@
           <button type="button" id="btn-confirm-consent" class="primary" style="background: #d97706; border-color: #f59e0b;" disabled>Confirm & Enable Mode</button>
           <button type="button" id="btn-cancel-consent" class="btn-secondary">Cancel (Stay in Self-Audit)</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Profile Preview Modal -->
+  <div id="preview-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 id="preview-modal-platform-name">Profile Preview</h3>
+        <button type="button" id="btn-close-preview-modal" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center;">
+        <img id="preview-modal-avatar" src="" alt="Avatar" style="width: 96px; height: 96px; border-radius: 50%; display: none; object-fit: cover; border: 2px solid var(--primary);">
+        <h4 id="preview-modal-title" style="margin: 0; font-size: 1.1rem; color: var(--text);"></h4>
+        <div id="preview-modal-desc" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; text-align: left; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 6px; width: 100%; display: none;"></div>
+      </div>
+      <div class="modal-actions" style="margin-top: 1.5rem; margin-bottom: 20px; justify-content: center; gap: 1rem;">
+        <button type="button" id="btn-preview-log-hit" class="primary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Log Hit</button>
+        <button type="button" id="btn-close-preview-modal-secondary" class="btn-secondary" style="padding-left: 1.5rem; padding-right: 1.5rem;">Close</button>
       </div>
     </div>
   </div>

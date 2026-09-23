@@ -8,9 +8,9 @@
   --border-light: #383a54;
   --text: #f1f2f8;
   --text-muted: #9499b3;
-  --primary: #8b5cf6;
-  --primary-hover: #7c3aed;
-  --primary-glow: rgba(139, 92, 246, 0.2);
+  --primary: #f97316;
+  --primary-hover: #ea580c;
+  --primary-glow: rgba(249, 115, 22, 0.25);
   --accent-pink: #ec4899;
   --accent-cyan: #06b6d4;
   --accent-blue: #3b82f6;
@@ -207,7 +207,7 @@ header {
 .brand-title h1 {
   font-size: 1.3rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #c084fc, #8b5cf6, #38bdf8);
+  background: linear-gradient(135deg, #fde047, #f97316, #e11d48);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.02em;
@@ -532,7 +532,7 @@ button.primary:hover {
   padding: 0.15rem 0.45rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: #c084fc;
+  color: var(--primary);
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -655,7 +655,7 @@ button.primary:hover {
   display: block;
   font-weight: 700;
   font-size: 0.95rem;
-  color: #c084fc;
+  color: var(--primary);
 }
 
 /* Companion Box */
@@ -807,7 +807,7 @@ button.primary:hover {
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #c084fc;
+  color: var(--primary);
 }
 
 .step-help-btn {
@@ -899,7 +899,7 @@ button.primary:hover {
 }
 
 .tab-btn.active {
-  color: #c084fc;
+  color: var(--primary);
   border-bottom-color: var(--primary);
 }
 
@@ -957,8 +957,8 @@ button.primary:hover {
 
 .identity-card-icon {
   font-size: 1.5rem;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(249, 115, 22, 0.15);
+  border: 1px solid rgba(249, 115, 22, 0.3);
   border-radius: 50%;
   width: 42px;
   height: 42px;
@@ -1100,7 +1100,7 @@ button.primary:hover {
 .guidance-callout strong {
   display: block;
   font-size: 0.78rem;
-  color: #c084fc;
+  color: var(--primary);
   margin-bottom: 0.2rem;
 }
 
@@ -1385,7 +1385,7 @@ button.primary:hover {
 .proof-type {
   font-size: 0.68rem;
   font-weight: 700;
-  color: #c084fc;
+  color: var(--primary);
   text-transform: uppercase;
 }
 
@@ -1466,7 +1466,7 @@ button.primary:hover {
 }
 
 .uid-email {
-  color: #c084fc;
+  color: var(--primary);
   font-weight: 500;
 }
 
@@ -1616,7 +1616,7 @@ button.primary:hover {
 
 .exp-label {
   font-weight: 600;
-  color: #c084fc;
+  color: var(--primary);
   margin-right: 0.35rem;
 }
 
@@ -1689,7 +1689,7 @@ button.primary:hover {
 
 .tip-badge {
   background: #23253a;
-  color: #c084fc;
+  color: var(--primary);
   font-size: 0.62rem;
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
@@ -1730,7 +1730,7 @@ button.primary:hover {
 #dork-query-output {
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  color: #c084fc;
+  color: var(--primary);
   background: #0a0b12;
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -1980,7 +1980,7 @@ button.primary:hover {
 .profile-card-alias {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: #c084fc;
+  color: var(--primary);
 }
 
 .profile-details {
@@ -2096,7 +2096,7 @@ button.primary:hover {
 .modal-desc-title {
   font-size: 0.74rem;
   font-weight: 700;
-  color: #c084fc;
+  color: var(--primary);
   text-transform: uppercase;
 }
 
@@ -2135,7 +2135,7 @@ button.primary:hover {
 
 .jur-badge-text {
   font-size: 0.68rem;
-  color: #c084fc;
+  color: var(--primary);
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -2179,7 +2179,7 @@ button.primary:hover {
 
 .active-jurisdiction-banner {
   background: linear-gradient(135deg, #1b1633, #131422);
-  border: 1px solid #7c3aed;
+  border: 1px solid var(--primary-hover);
   border-radius: 8px;
   padding: 0.85rem 1rem;
   display: flex;
@@ -2200,7 +2200,7 @@ button.primary:hover {
 
 .jur-banner-meta {
   font-size: 0.74rem;
-  color: #c084fc;
+  color: var(--primary);
   margin-top: 0.15rem;
 }
 
@@ -2219,8 +2219,8 @@ button.primary:hover {
 
 .tier-badge {
   background: #23203c;
-  color: #c084fc;
-  border: 1px solid #7c3aed;
+  color: var(--primary);
+  border: 1px solid var(--primary-hover);
   font-size: 0.62rem;
   font-weight: 700;
   padding: 0.1rem 0.4rem;
@@ -2377,7 +2377,7 @@ button.primary:hover {
 .jur-dork-tag {
   font-size: 0.62rem;
   background: #1c1d2e;
-  color: #c084fc;
+  color: var(--primary);
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
 }
@@ -2582,7 +2582,7 @@ button.primary {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 button.primary:hover {
-  background: linear-gradient(180deg, var(--primary-hover) 0%, #4338ca 100%) !important;
+  background: linear-gradient(180deg, var(--primary-hover) 0%, #e11d48 100%) !important;
   box-shadow: 0 4px 12px var(--primary-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
@@ -2774,7 +2774,7 @@ body:not(.show-guidance) .methodology-steps { display: none !important; }
 .step-btn {
   font-size: 0.7rem;
   padding: 0.25rem 0.5rem;
-  background: rgba(139, 92, 246, 0.2);
+  background: rgba(249, 115, 22, 0.2);
   color: #fff;
   border: 1px solid var(--primary);
   border-radius: 4px;

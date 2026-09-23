@@ -469,7 +469,7 @@ function showToast(message, type = 'success', durationMs = 2500) {
   const existing = document.getElementById('visage-toast');
   if (existing) existing.remove();
 
-  let bg = '#8b5cf6'; // default purple (success)
+  let bg = '#f97316'; // default purple (success)
   if (type === false || type === 'error') {
     bg = '#ef4444'; // red
   } else if (type === 'warning') {
@@ -529,6 +529,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupIdentityTab();
   setupGuidanceToggle();
   setupEthicalCharterModal();
+  setupPreviewModal();
   setupAuditMode();
   setupPrivacyTab();
   setupScopeInputs();
@@ -1086,7 +1087,20 @@ function setupEthicalCharterModal() {
   if (!modal) return;
 
   function openModal() {
-    modal.style.display = 'flex';
+    browser.storage.local.get(['ethicalCharterAccepted']).then(data => {
+      const isAccepted = !!data.ethicalCharterAccepted;
+      const checkboxContainer = document.getElementById('ethical-charter-checkbox-container');
+      const actionsContainer = document.getElementById('ethical-charter-actions');
+      
+      if (isAccepted) {
+        if (checkboxContainer) checkboxContainer.style.display = 'none';
+        if (actionsContainer) actionsContainer.style.display = 'none';
+      } else {
+        if (checkboxContainer) checkboxContainer.style.display = 'block';
+        if (actionsContainer) actionsContainer.style.display = 'flex';
+      }
+      modal.style.display = 'flex';
+    });
   }
 
   function closeModal() {
@@ -1097,8 +1111,30 @@ function setupEthicalCharterModal() {
     btnOpen.addEventListener('click', openModal);
   }
 
-  if (btnClose) btnClose.addEventListener('click', closeModal);
-  if (btnCloseSec) btnCloseSec.addEventListener('click', closeModal);
+  function handleCloseRequest() {
+    browser.storage.local.get(['ethicalCharterAccepted']).then(data => {
+      if (!data.ethicalCharterAccepted) {
+        if (confirm("You must accept the Ethical Charter to use Visage. Do you want to close this tab?")) {
+          if (browser.tabs && browser.tabs.getCurrent) {
+            browser.tabs.getCurrent().then(tab => {
+              if (tab && tab.id) {
+                browser.tabs.remove(tab.id);
+              } else {
+                window.close();
+              }
+            }).catch(() => window.close());
+          } else {
+            window.close();
+          }
+        }
+      } else {
+        closeModal();
+      }
+    });
+  }
+
+  if (btnClose) btnClose.addEventListener('click', handleCloseRequest);
+  if (btnCloseSec) btnCloseSec.addEventListener('click', handleCloseRequest);
 
   if (chkAccept && btnAccept) {
     chkAccept.addEventListener('change', () => {
@@ -2058,9 +2094,27 @@ function renderMatrixGrid() {
 
     const cardClass = result.status === 'found' ? 'found' : (result.status === 'available' ? 'available' : '');
 
+    const snippetHtml = (result.status === 'found' && result.snippet) ? `
+      <div class="platform-snippet" style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(0,0,0,0.15); border-left: 2px solid var(--primary); border-radius: 4px; font-size: 0.75rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.3rem; overflow: hidden; max-height: 80px;">
+        ${result.snippet.avatar ? `<img src="${escapeHtml(result.snippet.avatar)}" style="width: 24px; height: 24px; border-radius: 50%; float: left; margin-right: 0.4rem; margin-bottom: 0.2rem;" alt="">` : ''}
+        ${result.snippet.title ? `<strong style="color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(result.snippet.title)}</strong>` : ''}
+        ${result.snippet.description ? `<span style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;">${escapeHtml(result.snippet.description)}</span>` : ''}
+      </div>
+    ` : '';
+
+    const hasSnippet = result.status === 'found' && result.snippet;
+    const headerClickableAttr = hasSnippet ? `class="platform-header clickable-header" style="cursor: pointer;" title="Click for larger preview"` : `class="platform-header"`;
+    const snippetDataAttrs = hasSnippet ? `
+        data-platform="${escapeHtml(p.name)}" 
+        data-url="${escapeHtml(targetUrl)}"
+        data-title="${escapeHtml(result.snippet.title || '')}"
+        data-desc="${escapeHtml(result.snippet.description || '')}"
+        data-avatar="${escapeHtml(result.snippet.avatar || '')}"
+    ` : '';
+
     return `
       <div class="platform-card ${cardClass}" data-platform="${escapeHtml(p.name)}">
-        <div class="platform-header">
+        <div ${headerClickableAttr} ${snippetDataAttrs}>
           <div class="platform-identity">
             <span class="platform-icon">${p.icon}</span>
             <span class="platform-name">${escapeHtml(p.name)}</span>
@@ -2070,6 +2124,7 @@ function renderMatrixGrid() {
         <a href="${escapeHtml(targetUrl)}" target="_blank" rel="noopener noreferrer" class="platform-url" title="${escapeHtml(targetUrl)}">
           ${escapeHtml(targetUrl)}
         </a>
+        ${snippetHtml}
         <div class="platform-actions">
           <button type="button" class="btn-micro btn-inspect-platform" data-url="${escapeHtml(targetUrl)}">Open Tab</button>
           <button type="button" class="btn-micro btn-log-platform" data-platform="${escapeHtml(p.name)}" data-url="${escapeHtml(targetUrl)}">Log Hit</button>
@@ -2095,6 +2150,70 @@ function renderMatrixGrid() {
       logManualHit(platform, url);
     });
   });
+
+  container.querySelectorAll('.clickable-header').forEach(header => {
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const platform = header.getAttribute('data-platform');
+      const url = header.getAttribute('data-url');
+      const title = header.getAttribute('data-title');
+      const desc = header.getAttribute('data-desc');
+      const avatar = header.getAttribute('data-avatar');
+      
+      openPreviewModal(platform, url, title, desc, avatar);
+    });
+  });
+}
+
+function setupPreviewModal() {
+  const modal = document.getElementById('preview-modal');
+  const btnClose = document.getElementById('btn-close-preview-modal');
+  const btnCloseSec = document.getElementById('btn-close-preview-modal-secondary');
+  
+  if (btnClose) btnClose.addEventListener('click', () => modal.style.display = 'none');
+  if (btnCloseSec) btnCloseSec.addEventListener('click', () => modal.style.display = 'none');
+}
+
+function openPreviewModal(platform, url, title, desc, avatar) {
+  const modal = document.getElementById('preview-modal');
+  if (!modal) return;
+  
+  document.getElementById('preview-modal-platform-name').textContent = `${platform} Preview`;
+  
+  const avatarEl = document.getElementById('preview-modal-avatar');
+  if (avatar) {
+    avatarEl.src = avatar;
+    avatarEl.style.display = 'block';
+  } else {
+    avatarEl.style.display = 'none';
+  }
+  
+  const titleEl = document.getElementById('preview-modal-title');
+  if (title) {
+    titleEl.textContent = title;
+    titleEl.style.display = 'block';
+  } else {
+    titleEl.style.display = 'none';
+  }
+  
+  const descEl = document.getElementById('preview-modal-desc');
+  if (desc) {
+    descEl.textContent = desc;
+    descEl.style.display = 'block';
+  } else {
+    descEl.style.display = 'none';
+  }
+  
+  const btnLogHit = document.getElementById('btn-preview-log-hit');
+  const newBtnLogHit = btnLogHit.cloneNode(true);
+  btnLogHit.parentNode.replaceChild(newBtnLogHit, btnLogHit);
+  
+  newBtnLogHit.addEventListener('click', () => {
+    logManualHit(platform, url);
+    modal.style.display = 'none';
+  });
+  
+  modal.style.display = 'flex';
 }
 
 function logManualHit(platform, url) {
@@ -2396,37 +2515,46 @@ async function checkPlatformPresence(p, handle, deepScanActive) {
       if (p.errorString && bodySnippet && bodySnippet.includes(p.errorString)) {
         return { platform: p.name, status: 'available', url: targetUrl };
       }
+      let isFound = false;
+
       if (p.matchString && bodySnippet && bodySnippet.includes(p.matchString)) {
-        return { platform: p.name, status: 'found', url: targetUrl };
-      }
-
-      // Check Steam profile
-      if (p.probeRule === 'steam') {
+        isFound = true;
+      } else if (p.probeRule === 'steam') {
         if (status === 200 && !bodySnippet.includes('The specified profile could not be found')) {
-          return { platform: p.name, status: 'found', url: targetUrl };
+          isFound = true;
+        } else {
+          return { platform: p.name, status: 'available', url: targetUrl };
         }
-        return { platform: p.name, status: 'available', url: targetUrl };
-      }
-
-      // Check Telegram
-      if (p.probeRule === 'telegram') {
+      } else if (p.probeRule === 'telegram') {
         if (status === 200 && !bodySnippet.includes('noindex, nofollow')) {
-          return { platform: p.name, status: 'found', url: targetUrl };
+          isFound = true;
+        } else {
+          return { platform: p.name, status: 'available', url: targetUrl };
         }
-        return { platform: p.name, status: 'available', url: targetUrl };
-      }
-
-      // Standard status checks
-      if (status === 200) {
+      } else if (status === 200) {
         const lowerBody = (bodySnippet || '').toLowerCase();
         if (lowerBody.includes('<title>404') || lowerBody.includes('page not found') || lowerBody.includes('user not found')) {
           return { platform: p.name, status: 'available', url: targetUrl };
         }
-        return { platform: p.name, status: 'found', url: targetUrl };
+        isFound = true;
       } else if (status === 404 || status === 410) {
         return { platform: p.name, status: 'available', url: targetUrl };
       } else {
         return { platform: p.name, status: 'error', url: targetUrl };
+      }
+
+      if (isFound) {
+        let snippet = null;
+        try {
+          const doc = new DOMParser().parseFromString(bodySnippet, 'text/html');
+          const title = doc.querySelector('title')?.innerText || doc.querySelector('meta[property="og:title"]')?.content || '';
+          const desc = doc.querySelector('meta[name="description"]')?.content || doc.querySelector('meta[property="og:description"]')?.content || '';
+          const avatar = doc.querySelector('meta[property="og:image"]')?.content || doc.querySelector('meta[name="twitter:image"]')?.content || '';
+          if (title || desc || avatar) {
+            snippet = { title, description: desc, avatar };
+          }
+        } catch (e) {}
+        return { platform: p.name, status: 'found', url: targetUrl, snippet };
       }
     }
   } catch (_) {
@@ -2529,7 +2657,7 @@ async function queryOpenPGP(query) {
   const serverChoice = document.getElementById('crypto-server-select').value;
 
   status.textContent = 'Querying OpenPGP Keyserver...';
-  status.style.color = '#c084fc';
+  status.style.color = '#f97316';
 
   const host = serverChoice === 'surf' ? 'https://pgp.surf.nl' : 'https://keyserver.ubuntu.com';
   const url = `${host}/pks/lookup?search=${encodeURIComponent(query)}&op=index&options=mr`;
@@ -2890,7 +3018,7 @@ async function queryGitHub(handle) {
 
         ${commitEmailsList.length > 0 ? `
           <div style="background: #181928; padding: 0.5rem; border-radius: 4px;">
-            <span class="text-xs" style="color: #c084fc; font-weight: 600;">🎯 Unlisted Git Commit Emails Extracted from Public Events:</span>
+            <span class="text-xs" style="color: #f97316; font-weight: 600;">🎯 Unlisted Git Commit Emails Extracted from Public Events:</span>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.3rem;">
               ${commitEmailsList.map(em => `
                 <code class="uid-email" style="font-size: 0.72rem; cursor: pointer;" title="Click to adopt email">${escapeHtml(em)}</code>
@@ -3055,7 +3183,7 @@ function setupKAnonymityChecker() {
     }
 
     resultDiv.textContent = 'Computing SHA-1 hash and checking k-Anonymity range...';
-    resultDiv.style.color = '#c084fc';
+    resultDiv.style.color = '#f97316';
 
     try {
       // 100% Client-side SHA-1 hashing via subtle crypto
